@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Application", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFolder", "SharedFolder", "{B4F979F5-F7BA-4B83-AEBA-417A8DFC1C17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Repositories", "Shared\Shared.Repositories\Shared.Repositories.csproj", "{5D7FE6CB-BEBB-4CE5-88D5-61CA458C7C22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Repositories", "Shared\Shared.Repositories\Shared.Repositories.csproj", "{5D7FE6CB-BEBB-4CE5-88D5-61CA458C7C22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealProject.Application", "DealProject\DealProject.Application\DealProject.Application.csproj", "{8C69F74D-DC8B-4604-9FDA-DDC9C3FDF84A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{5D7FE6CB-BEBB-4CE5-88D5-61CA458C7C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D7FE6CB-BEBB-4CE5-88D5-61CA458C7C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D7FE6CB-BEBB-4CE5-88D5-61CA458C7C22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C69F74D-DC8B-4604-9FDA-DDC9C3FDF84A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C69F74D-DC8B-4604-9FDA-DDC9C3FDF84A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C69F74D-DC8B-4604-9FDA-DDC9C3FDF84A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C69F74D-DC8B-4604-9FDA-DDC9C3FDF84A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +102,7 @@ Global
 		{C08C9E39-2A34-413D-9C04-4D3857D13725} = {45963E66-FCCF-40B1-86A2-0EFE115B68BA}
 		{6B1EC5A0-CBB8-49EA-B120-9CB101256CA5} = {45963E66-FCCF-40B1-86A2-0EFE115B68BA}
 		{5D7FE6CB-BEBB-4CE5-88D5-61CA458C7C22} = {B4F979F5-F7BA-4B83-AEBA-417A8DFC1C17}
+		{8C69F74D-DC8B-4604-9FDA-DDC9C3FDF84A} = {6E20A666-DE04-4419-8170-13B79092F1AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {11CFDC9D-82C2-4BDF-90FF-A018D150BF33}

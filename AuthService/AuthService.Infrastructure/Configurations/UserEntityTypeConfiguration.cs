@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AuthService.Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Diagnostics.CodeAnalysis;
 
-namespace AuthService.Domain.Configurations.EntityTypeConfigurations;
+namespace AuthService.Infrastructure;
 
 [ExcludeFromCodeCoverage]
 internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>

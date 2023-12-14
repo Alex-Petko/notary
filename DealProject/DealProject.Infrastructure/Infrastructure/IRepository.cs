@@ -1,8 +1,8 @@
 ﻿using Shared.Repositories;
 
-namespace AuthService.Infrastructure;
+namespace DealProject.Infrastructure;
 
 public interface IRepository : IBaseRepositoryHub
 {
-    IUserRepository Users { get; }
+    IDebtRepository Debts { get; }
 }
