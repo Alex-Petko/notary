@@ -1,39 +1,51 @@
-using AuthService;
-using AuthService.Domain.Extensions;
+using AuthService.Application;
 using AuthService.Infrastructure;
 using AuthService.Infrastructure.Extensions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using FluentValidation;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
-//Integrated Security = true
+[ExcludeFromCodeCoverage]
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-var builder = WebApplication.CreateBuilder(args);
+        var assembly = Assembly.GetExecutingAssembly();
+        builder.Services.AddValidatorsFromAssembly(assembly);
 
-var connectionString = builder.Configuration.GetConnectionString("Default");
-builder.Services.AddEntityConfigurations();
-builder.Services.AddRepository(connectionString);
-builder.Services.AddControllers();
-builder.Services.AddOptions<JwtOptions>().Bind(builder.Configuration.GetSection("JwtOptions"));
-builder.Services.AddSwaggerGen();
+        var connectionString = builder.Configuration.GetConnectionString("Default");
+        builder.Services.AddRepository(connectionString);
 
-var app = builder.Build();
+        builder.Services.AddApplication();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+        var section = builder.Configuration.GetSection("JwtOptions");
+        builder.Services.AddOptions<JwtOptions>().Bind(section);
 
-//try
-//{
-//    using (var scope = app.Services.CreateScope())
-//    using (var repository = scope.ServiceProvider.GetService<IRepository>()!)
-//    {
-//        repository.EnsureDatabaseCreated();
-//    }
-//}
-//catch (Exception e)
-//{
+        builder.Services.AddSwaggerGen();
+        builder.Services.AddControllers();
 
-//}
+        var app = builder.Build();
 
-app.MapControllers();
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
-app.Run();
+        ILogger<Program> logger = null!;
+        try
+        {
+            using var scope = app.Services.CreateScope();
+            using var repository = scope.ServiceProvider.GetRequiredService<IRepository>();
+            logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+            repository.EnsureDatabaseCreated();
+        }
+        catch (Exception e)
+        {
+            logger!.LogError(e, e.Message);
+        }
+
+        app.MapControllers();
+        app.Run();
+    }
+}

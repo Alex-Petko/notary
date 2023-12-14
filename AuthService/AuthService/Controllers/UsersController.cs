@@ -1,33 +1,23 @@
-﻿using AuthService.Domain;
-using AuthService.Infrastructure;
-using AutoMapper;
+﻿using AuthService.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthService.Controllers;
 
-[ApiController]
+[Route("[controller]")]
 public class UsersController : ControllerBase
 {
-    private readonly IRepository _repository;
-    private readonly IMapper _mapper;
+    private readonly IUserCreator _userCreator;
 
-    public UsersController(IRepository repository, IMapper mapper)
+    public UsersController(IUserCreator userCreator)
     {
-        _repository = repository;
-        _mapper = mapper;
+        _userCreator = userCreator;
     }
 
-    [HttpPost("[controller]")]
+    [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(CreateUserDto dto)
     {
-        var user = _mapper.Map<User>(dto);
-
-        var userCreated = await _repository.Users.TryCreateUser(user);
-        if (userCreated)
-            return Ok();
-
-        return BadRequest();
+        return await _userCreator.ExecuteAsync(dto) ? Ok() : BadRequest();
     }
 }

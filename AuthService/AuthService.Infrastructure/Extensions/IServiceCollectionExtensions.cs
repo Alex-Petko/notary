@@ -1,17 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AuthService.Infrastructure.Extensions;
+
+[ExcludeFromCodeCoverage]
 public static class IServiceCollectionExtensions
 {
     public static IServiceCollection AddRepository(this IServiceCollection services, string connectionString)
     {
-        services.AddDbContextPool<UserContext>(options =>
+        services.AddDbContext<UserContext>(options =>
         {
-            options.UseSqlServer(connectionString);
+            options.UseNpgsql(connectionString);
         });
 
-        services.AddEntityFrameworkSqlServer();
+        services.AddEntityFrameworkNpgsql();
 
         services.AddScoped<IRepository, Repository>();
 

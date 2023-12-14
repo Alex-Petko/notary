@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DealProject", "DealProject\DealProject\DealProject.csproj", "{7A2E43CE-7AE6-4342-975F-72A8EB0D7BA4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DealProject.Tests", "DealProject\Tests\DealProject.Tests\DealProject.Tests.csproj", "{640208FD-AEBD-45CC-B5E1-E0B276084020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DealProject.Tests", "DealProject\DealProject.Tests\DealProject.Tests.csproj", "{640208FD-AEBD-45CC-B5E1-E0B276084020}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\AuthService\AuthService.csproj", "{C47BF6A0-D65A-4FCA-9CD7-3F998C20BA00}"
 EndProject
@@ -15,17 +15,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Infrastructure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Domain", "AuthService\AuthService.Domain\AuthService.Domain.csproj", "{9DF2E944-164E-47DE-A5FE-6314443286EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealProject.Domain", "DealProject\DealProject.Domain\DealProject.Domain.csproj", "{E232B65F-9E72-4E75-847D-93E83EBBC100}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DealProject.Domain", "DealProject\DealProject.Domain\DealProject.Domain.csproj", "{E232B65F-9E72-4E75-847D-93E83EBBC100}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealProject.Infrastructure", "DealProject\DealProject.Infrastructure\DealProject.Infrastructure.csproj", "{86CD2C04-5154-4E52-9E56-08FECE5B0328}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DealProject.Infrastructure", "DealProject\DealProject.Infrastructure\DealProject.Infrastructure.csproj", "{86CD2C04-5154-4E52-9E56-08FECE5B0328}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthServiceFolder", "AuthServiceFolder", "{45963E66-FCCF-40B1-86A2-0EFE115B68BA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DealProjectFolder", "DealProjectFolder", "{6E20A666-DE04-4419-8170-13B79092F1AF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2CA40D32-5D07-4257-BB2A-E06C13D0F4E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Tests", "AuthService\AuthService.Tests\AuthService.Tests.csproj", "{C08C9E39-2A34-413D-9C04-4D3857D13725}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DealProject.Infrastructure.Tests", "DealProject\Tests\DealProject.Infrastructure.Tests\DealProject.Infrastructure.Tests.csproj", "{70C567AF-48BC-4E78-8AE6-AD846749E757}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Application", "AuthService\AuthService.Application\AuthService.Application.csproj", "{6B1EC5A0-CBB8-49EA-B120-9CB101256CA5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFolder", "SharedFolder", "{B4F979F5-F7BA-4B83-AEBA-417A8DFC1C17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Repositories", "Shared\Shared.Repositories\Shared.Repositories.csproj", "{5D7FE6CB-BEBB-4CE5-88D5-61CA458C7C22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,24 +69,33 @@ Global
 		{86CD2C04-5154-4E52-9E56-08FECE5B0328}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86CD2C04-5154-4E52-9E56-08FECE5B0328}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86CD2C04-5154-4E52-9E56-08FECE5B0328}.Release|Any CPU.Build.0 = Release|Any CPU
-		{70C567AF-48BC-4E78-8AE6-AD846749E757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70C567AF-48BC-4E78-8AE6-AD846749E757}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70C567AF-48BC-4E78-8AE6-AD846749E757}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70C567AF-48BC-4E78-8AE6-AD846749E757}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C08C9E39-2A34-413D-9C04-4D3857D13725}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C08C9E39-2A34-413D-9C04-4D3857D13725}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C08C9E39-2A34-413D-9C04-4D3857D13725}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C08C9E39-2A34-413D-9C04-4D3857D13725}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B1EC5A0-CBB8-49EA-B120-9CB101256CA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B1EC5A0-CBB8-49EA-B120-9CB101256CA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B1EC5A0-CBB8-49EA-B120-9CB101256CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B1EC5A0-CBB8-49EA-B120-9CB101256CA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D7FE6CB-BEBB-4CE5-88D5-61CA458C7C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D7FE6CB-BEBB-4CE5-88D5-61CA458C7C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D7FE6CB-BEBB-4CE5-88D5-61CA458C7C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D7FE6CB-BEBB-4CE5-88D5-61CA458C7C22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7A2E43CE-7AE6-4342-975F-72A8EB0D7BA4} = {6E20A666-DE04-4419-8170-13B79092F1AF}
-		{640208FD-AEBD-45CC-B5E1-E0B276084020} = {2CA40D32-5D07-4257-BB2A-E06C13D0F4E2}
+		{640208FD-AEBD-45CC-B5E1-E0B276084020} = {6E20A666-DE04-4419-8170-13B79092F1AF}
 		{C47BF6A0-D65A-4FCA-9CD7-3F998C20BA00} = {45963E66-FCCF-40B1-86A2-0EFE115B68BA}
 		{89822146-649B-418B-B092-4F7DFF77BA57} = {45963E66-FCCF-40B1-86A2-0EFE115B68BA}
 		{9DF2E944-164E-47DE-A5FE-6314443286EA} = {45963E66-FCCF-40B1-86A2-0EFE115B68BA}
 		{E232B65F-9E72-4E75-847D-93E83EBBC100} = {6E20A666-DE04-4419-8170-13B79092F1AF}
 		{86CD2C04-5154-4E52-9E56-08FECE5B0328} = {6E20A666-DE04-4419-8170-13B79092F1AF}
-		{2CA40D32-5D07-4257-BB2A-E06C13D0F4E2} = {6E20A666-DE04-4419-8170-13B79092F1AF}
-		{70C567AF-48BC-4E78-8AE6-AD846749E757} = {2CA40D32-5D07-4257-BB2A-E06C13D0F4E2}
+		{C08C9E39-2A34-413D-9C04-4D3857D13725} = {45963E66-FCCF-40B1-86A2-0EFE115B68BA}
+		{6B1EC5A0-CBB8-49EA-B120-9CB101256CA5} = {45963E66-FCCF-40B1-86A2-0EFE115B68BA}
+		{5D7FE6CB-BEBB-4CE5-88D5-61CA458C7C22} = {B4F979F5-F7BA-4B83-AEBA-417A8DFC1C17}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {11CFDC9D-82C2-4BDF-90FF-A018D150BF33}
