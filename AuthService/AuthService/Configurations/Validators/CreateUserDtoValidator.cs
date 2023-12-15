@@ -11,8 +11,10 @@ public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
     {
         RuleFor(x => x.Login)
             .NotEmpty().WithMessage("The login cannot be empty")
-            .MaximumLength(64).WithMessage($"The password length must not exceed {64}");
+            .MaximumLength(128).WithMessage("The password length must not exceed 128");
 
-        RuleFor(x => x.PasswordHash);
+        RuleFor(x => x.PasswordHash)
+            .NotEmpty().WithMessage("The password cannot be empty")
+            .MaximumLength(128).WithMessage("The passwordHash length must not exceed 128");
     }
 }

@@ -7,18 +7,18 @@ public class BorrowDebtDtoValidator : AbstractValidator<BorrowDebtDto>
 {
     public BorrowDebtDtoValidator()
     {
-
         RuleFor(x => x.Login)
-            .NotEmpty();
+            .NotEmpty().WithMessage("The login cannot be empty")
+            .MaximumLength(128).WithMessage("The password length must not exceed 128");
 
         RuleFor(x => x.Sum)
-            .GreaterThan(0);
+            .GreaterThan(0).WithMessage("The sum must be greater than 0");
 
         RuleFor(x => x.Begin)
-            .LessThanOrEqualTo(DateTime.UtcNow);
+            .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("The begin must be less than or equal to 0");
 
         RuleFor(x => x.End)
             .GreaterThan(x => x.Begin)
-            .When(x => x.End.HasValue);
+            .When(x => x.End.HasValue).WithMessage("The end must be greater than the begin");
     }
 }

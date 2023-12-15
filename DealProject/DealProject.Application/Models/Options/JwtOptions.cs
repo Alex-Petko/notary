@@ -1,4 +1,4 @@
-﻿namespace DealProject;
+﻿namespace DealProject.Application;
 
 public class JwtOptions
 {
