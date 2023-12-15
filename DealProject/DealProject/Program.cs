@@ -61,7 +61,7 @@ internal class Program
             using var repository = scope.ServiceProvider.GetRequiredService<IRepository>();
             logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-            repository.EnsureDatabaseCreated();
+            repository.Migrate();
         }
         catch (Exception e)
         {

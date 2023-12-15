@@ -27,10 +27,15 @@ public abstract class BaseRepositoryHub : IBaseRepositoryHub
     public void EnsureDatabaseCreated()
         => _context.Database.EnsureCreated();
 
+    public void EnsureDatabaseDeleted()
+        => _context.Database.EnsureDeleted();
+
     public void Migrate()
         => _context.Database.Migrate();
 
-    public void Dispose() => _context.Dispose();
+    public void Dispose() 
+        => _context.Dispose();
      
-    public ValueTask DisposeAsync() => _context.DisposeAsync();
+    public ValueTask DisposeAsync() 
+        => _context.DisposeAsync();
 }
