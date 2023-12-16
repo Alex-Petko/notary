@@ -52,6 +52,15 @@ internal class Program
                 };
 
                 option.MapInboundClaims = false;
+
+                option.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        context.Token = context.Request.Cookies["JwtBearer"];
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
         var app = builder.Build();

@@ -14,7 +14,7 @@ public class TokensController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(CreateTokenDto dto)
     {
@@ -23,6 +23,7 @@ public class TokensController : ControllerBase
         if (token == null)
             return BadRequest();
 
-        return Ok(token);
+        Response.Cookies.Append("JwtBearer", token);
+        return Ok();
     }
 }
