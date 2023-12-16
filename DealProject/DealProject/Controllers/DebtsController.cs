@@ -1,8 +1,8 @@
 ﻿using DealProject.Application;
+using DealProject.Attributes;
 using DealProject.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace DealProject;
 
@@ -36,9 +36,8 @@ public class DebtsController : ControllerBase
 
     [HttpPost("{controller}/lend")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Lend(LendDebtDto dto)
+    public async Task<IActionResult> Lend(LendDebtDto dto, [FromSubClaim] string login)
     {
-        var login = GetLogin();
         var id = await _service.LendAsync(login, dto);
 
         return Created("", id);
@@ -46,9 +45,8 @@ public class DebtsController : ControllerBase
 
     [HttpPost("{controller}/borrow")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Borrow(BorrowDebtDto dto)
+    public async Task<IActionResult> Borrow(BorrowDebtDto dto, [FromSubClaim] string login)
     {
-        var login = GetLogin();
         var id = await _service.BorrowAsync(login, dto);
 
         return Created("", id);
@@ -56,10 +54,9 @@ public class DebtsController : ControllerBase
 
     [HttpPost("{controller}/accept")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Accept(AcceptDebtDto dto)
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Accept(AcceptDebtDto dto, [FromSubClaim] string login)
     {
-        var login = GetLogin();
         var status = await _service.AcceptAsync(login, dto);
 
         return status != null ? Ok(status) : BadRequest();
@@ -67,10 +64,9 @@ public class DebtsController : ControllerBase
 
     [HttpPost("{controller}/cancel")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Cancel(CancelDebtDto dto)
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Cancel(CancelDebtDto dto, [FromSubClaim] string login)
     {
-        var login = GetLogin();
         var status = await _service.CancelAsync(login, dto);
 
         return status != null ? Ok(status) : BadRequest();
@@ -78,14 +74,11 @@ public class DebtsController : ControllerBase
 
     [HttpPost("{controller}/close")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Close(CloseDebtDto dto)
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Close(CloseDebtDto dto, [FromSubClaim] string login)
     {
-        var login = GetLogin();
         var status = await _service.CloseAsync(login, dto);
 
         return status != null ? Ok(status) : BadRequest();
     }
-
-    private string GetLogin() => User.FindFirstValue("sub");
 }

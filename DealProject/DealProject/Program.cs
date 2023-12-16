@@ -1,5 +1,6 @@
 using DealProject;
 using DealProject.Application;
+using DealProject.Attributes;
 using DealProject.Infrastructure;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -28,7 +29,10 @@ internal class Program
         builder.Services.AddOptions<JwtOptions>().Bind(section);
 
         builder.Services.AddSwaggerGen();
-        builder.Services.AddControllers();
+        builder.Services.AddControllers(options =>
+        {
+            options.ValueProviderFactories.Add(new ClaimValueProviderFactory());
+        });
 
         builder.Services.AddAuthorization();
 
