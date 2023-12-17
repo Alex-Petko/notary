@@ -1,3 +1,4 @@
+using AuthService;
 using AuthService.Application;
 using AuthService.Infrastructure;
 using AuthService.Infrastructure.Extensions;

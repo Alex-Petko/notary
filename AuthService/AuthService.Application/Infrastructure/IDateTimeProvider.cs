@@ -1,6 +1,6 @@
 ﻿namespace AuthService.Application;
 
-internal interface IDateTimeProvider
+public interface IDateTimeProvider
 {
     DateTime UtcNow { get; }
 }

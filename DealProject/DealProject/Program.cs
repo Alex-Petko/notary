@@ -1,14 +1,8 @@
-using DealProject;
 using DealProject.Application;
-using DealProject.Attributes;
 using DealProject.Infrastructure;
 using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Text;
 
 [ExcludeFromCodeCoverage]
 internal class Program
@@ -17,69 +11,18 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        var assebly = Assembly.GetExecutingAssembly();
-        builder.Services.AddValidatorsFromAssembly(assebly);
-
-        var connectionString = builder.Configuration.GetConnectionString("Default");
-        builder.Services.AddRepository(connectionString);
-
-        builder.Services.AddApplication();
-
-        var section = builder.Configuration.GetSection("JwtOptions");
-        builder.Services.AddOptions<JwtOptions>().Bind(section);
-
-        builder.Services.AddSwaggerGen();
-        builder.Services.AddControllers(options =>
-        {
-            options.ValueProviderFactories.Add(new ClaimValueProviderFactory());
-        });
-
-        builder.Services.AddAuthorization();
-
-        JwtOptions jwtOptions = null!;
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(option =>
-            {
-                option.TokenValidationParameters = new()
-                {
-                    ValidateAudience = false,
-                    ValidateIssuer = false,
-
-                    ValidateLifetime = true,
-
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions!.Key))
-                };
-
-                option.MapInboundClaims = false;
-
-                option.Events = new JwtBearerEvents
-                {
-                    OnMessageReceived = context =>
-                    {
-                        context.Token = context.Request.Cookies["JwtBearer"];
-                        return Task.CompletedTask;
-                    }
-                };
-            });
+        builder.Services
+            .AddValidators()
+            .AddDealRepository(builder.Configuration)
+            .AddApplication()
+            .AddSwaggerGen()
+            .AddDealControllers()
+            .AddAuthorization()
+            .AddJwtAuthentication(builder.Configuration);
 
         var app = builder.Build();
 
-        jwtOptions = app.Services.GetService<IOptions<JwtOptions>>()!.Value;
-
-        ILogger<Program> logger = null!;
-        try
-        {
-            using var scope = app.Services.CreateScope();
-            using var repository = scope.ServiceProvider.GetRequiredService<IRepository>();
-            logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-            repository.Migrate();
-        }
-        catch (Exception e)
-        {
-            logger!.LogError(e, e.Message);
-        }
+        app.ApplyMigration();
 
         app.UseDeveloperExceptionPage();
 

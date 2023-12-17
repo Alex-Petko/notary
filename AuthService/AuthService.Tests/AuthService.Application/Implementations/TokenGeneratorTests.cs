@@ -23,10 +23,6 @@ public class TokenGeneratorTests
         var transactions = new Mock<ITransactions>();
         transactions.Setup(x => x.ContainsAsync(user)).ReturnsAsync(true);
 
-        var options = new Mock<IOptionsSnapshot<JwtOptions>>();
-        options.SetupGet(x => x.Value.ExpiresMinutes).Returns(1);
-        options.Setup(x => x.Value.Key).Returns(new string('x', 16));
-
         var mapper = new Mock<IMapper>();
         mapper.Setup(x => x.Map<User>(dto)).Returns(user);
 
@@ -35,14 +31,13 @@ public class TokenGeneratorTests
 
         var tokenGenerator = new TokenGenerator(
             transactions.Object,
-            options.Object,
             mapper.Object,
             dateTimeProvider.Object);
 
         var validTo = dateTimeProvider.Object.UtcNow.AddMinutes(1);
 
         // Act
-        var token = await tokenGenerator.ExecuteAsync(dto);
+        var token = await tokenGenerator.ExecuteAsync(dto, new string('x', 16), 1);
 
         // Assert
 
@@ -75,12 +70,11 @@ public class TokenGeneratorTests
 
         var tokenGenerator = new TokenGenerator(
             transactions.Object,
-            options.Object,
             mapper.Object,
             dateTimeProvider.Object);
 
         // Act
-        var token = await tokenGenerator.ExecuteAsync(dto);
+        var token = await tokenGenerator.ExecuteAsync(dto, new string('x', 16), 1);
 
         // Assert
         Assert.Null(token);
