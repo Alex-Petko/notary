@@ -1,23 +1,24 @@
 ﻿using AuthService.Application;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthService.Controllers;
 
 [Route("[controller]")]
-public class UsersController : ControllerBase
+public sealed class UsersController : ControllerBase
 {
-    private readonly IUserCreator _userCreator;
+    private readonly IMediator _mediator;
 
-    public UsersController(IUserCreator userCreator)
+    public UsersController(IMediator mediator)
     {
-        _userCreator = userCreator;
+        _mediator = mediator;
     }
 
-    [HttpPost]
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Create(CreateUserDto dto)
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<IActionResult> Create([FromBody] CreateUserDto dto, CancellationToken cancellationToken)
     {
-        return await _userCreator.ExecuteAsync(dto) ? Ok() : BadRequest();
+        return await _mediator.Send(new CreateUserRequest(dto), cancellationToken);
     }
 }

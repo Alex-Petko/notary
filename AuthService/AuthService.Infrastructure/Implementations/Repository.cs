@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace AuthService.Infrastructure;
 
 [ExcludeFromCodeCoverage]
-internal class Repository : BaseRepositoryHub, IRepository
+internal sealed class Repository : BaseRepositoryHub, IRepository
 {
     public IUserRepository Users { get; }
 

@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Shared.Attributes\Shared.Attributes.csproj" />
     <ProjectReference Include="..\DealProject.Application\DealProject.Application.csproj" />
   </ItemGroup>
 

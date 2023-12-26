@@ -1,5 +1,5 @@
-﻿using DealProject.Attributes;
-using FluentValidation;
+﻿using FluentValidation;
+using Shared.Attributes;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
@@ -20,7 +20,7 @@ public static partial class IServiceCollectionExtensions
     }
 
     public static IServiceCollection AddDealRepository(
-        this IServiceCollection services, 
+        this IServiceCollection services,
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Default");

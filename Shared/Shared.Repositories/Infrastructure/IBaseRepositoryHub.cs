@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
+using System.Data;
 
 namespace Shared.Repositories;
 
 public interface IBaseRepositoryHub : IDisposable, IAsyncDisposable
 {
     Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
+    Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken = default);
     Task CommitTransactionAsync(CancellationToken cancellationToken = default);
     void EnsureDatabaseCreated();
     void EnsureDatabaseDeleted();

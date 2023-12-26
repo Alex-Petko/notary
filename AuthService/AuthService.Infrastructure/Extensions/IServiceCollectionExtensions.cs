@@ -17,6 +17,7 @@ public static class IServiceCollectionExtensions
         services.AddEntityFrameworkNpgsql();
 
         services.AddScoped<IRepository, Repository>();
+        services.AddTransient<ITransactions, Transactions>();
 
         return services;
     }

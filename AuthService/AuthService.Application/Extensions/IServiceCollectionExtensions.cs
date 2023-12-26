@@ -1,9 +1,8 @@
-﻿using AuthService.Application;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace AuthService.Infrastructure.Extensions;
+namespace AuthService.Application;
 
 [ExcludeFromCodeCoverage]
 public static class IServiceCollectionExtensions
@@ -13,11 +12,8 @@ public static class IServiceCollectionExtensions
         var assembly = Assembly.GetExecutingAssembly();
 
         services.AddAutoMapper(assembly);
-        services.AddTransient<ITokenGenerator, TokenGenerator>();
-        services.AddTransient<IUserCreator, UserCreator>();
 
         services.AddTransient<IDateTimeProvider, DateTimeProvider>();
-        services.AddTransient<ITransactions, Transactions>();
 
         return services;
     }

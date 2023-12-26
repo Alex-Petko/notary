@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace AuthService.Infrastructure;
 
 [ExcludeFromCodeCoverage]
-internal class UserContext : DbContext
+internal sealed class UserContext : DbContext
 {
     public DbSet<User> Users { get; set; } = null!;
 

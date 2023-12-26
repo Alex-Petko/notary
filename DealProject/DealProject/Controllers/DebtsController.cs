@@ -1,8 +1,8 @@
 ﻿using DealProject.Application;
-using DealProject.Attributes;
 using DealProject.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Attributes;
 
 namespace DealProject;
 
@@ -36,7 +36,7 @@ public class DebtsController : ControllerBase
 
     [HttpPost("{controller}/lend")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Lend(LendDebtDto dto, [FromSubClaim] string login)
+    public async Task<IActionResult> Lend([FromBody] LendDebtDto dto, [FromSubClaim] string login)
     {
         var id = await _service.LendAsync(login, dto);
 
@@ -45,7 +45,7 @@ public class DebtsController : ControllerBase
 
     [HttpPost("{controller}/borrow")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Borrow(BorrowDebtDto dto, [FromSubClaim] string login)
+    public async Task<IActionResult> Borrow([FromBody] BorrowDebtDto dto, [FromSubClaim] string login)
     {
         var id = await _service.BorrowAsync(login, dto);
 
@@ -55,7 +55,7 @@ public class DebtsController : ControllerBase
     [HttpPost("{controller}/accept")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Accept(AcceptDebtDto dto, [FromSubClaim] string login)
+    public async Task<IActionResult> Accept([FromBody] AcceptDebtDto dto, [FromSubClaim] string login)
     {
         var status = await _service.AcceptAsync(login, dto);
 
@@ -65,7 +65,7 @@ public class DebtsController : ControllerBase
     [HttpPost("{controller}/cancel")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Cancel(CancelDebtDto dto, [FromSubClaim] string login)
+    public async Task<IActionResult> Cancel([FromBody] CancelDebtDto dto, [FromSubClaim] string login)
     {
         var status = await _service.CancelAsync(login, dto);
 
@@ -75,7 +75,7 @@ public class DebtsController : ControllerBase
     [HttpPost("{controller}/close")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Close(CloseDebtDto dto, [FromSubClaim] string login)
+    public async Task<IActionResult> Close([FromBody] CloseDebtDto dto, [FromSubClaim] string login)
     {
         var status = await _service.CloseAsync(login, dto);
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Data;
 
 namespace Shared.Repositories;
 
@@ -14,6 +15,9 @@ public abstract class BaseRepositoryHub : IBaseRepositoryHub
 
     public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
         => _context.Database.BeginTransactionAsync(cancellationToken);
+
+    public Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken = default)
+       => _context.Database.BeginTransactionAsync(isolationLevel, cancellationToken);
 
     public Task CommitTransactionAsync(CancellationToken cancellationToken = default)
         => _context.Database.CommitTransactionAsync(cancellationToken);

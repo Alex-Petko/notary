@@ -1,13 +1,11 @@
-using AuthService;
 using AuthService.Application;
 using AuthService.Infrastructure;
-using AuthService.Infrastructure.Extensions;
 using FluentValidation;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 [ExcludeFromCodeCoverage]
-internal class Program
+internal sealed class Program
 {
     private static void Main(string[] args)
     {
@@ -20,6 +18,10 @@ internal class Program
         builder.Services.AddRepository(connectionString);
 
         builder.Services.AddApplication();
+        builder.Services.AddMediatR(configuration =>
+        {
+            configuration.RegisterServicesFromAssemblyContaining<CreateTokenRequest>();
+        });
 
         var section = builder.Configuration.GetSection("JwtOptions");
         builder.Services.AddOptions<JwtOptions>().Bind(section);

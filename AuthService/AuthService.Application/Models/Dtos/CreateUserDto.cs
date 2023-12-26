@@ -3,7 +3,7 @@
 namespace AuthService.Application;
 
 [ExcludeFromCodeCoverage]
-public record CreateUserDto(
+public sealed record CreateUserDto(
     string Login,
     string PasswordHash
 );

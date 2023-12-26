@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace AuthService;
 
 [ExcludeFromCodeCoverage]
-public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
+public sealed class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
 {
     public CreateUserDtoValidator()
     {

@@ -3,7 +3,7 @@
 namespace AuthService.Domain;
 
 [ExcludeFromCodeCoverage]
-public class User
+public sealed class User
 {
     public string Login { get; set; } = null!;
     public string PasswordHash { get; set; } = null!;

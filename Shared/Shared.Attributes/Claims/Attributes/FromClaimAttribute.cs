@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace DealProject.Attributes;
+namespace Shared.Attributes;
 
 [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = true)]
 public class FromClaimAttribute : Attribute, IBindingSourceMetadata, IModelNameProvider
 {
-    public BindingSource BindingSource => BindingSourceResources.Claim;
+    public BindingSource BindingSource => CustomBindingSource.Claim;
 
     public string? Name { get; }
 

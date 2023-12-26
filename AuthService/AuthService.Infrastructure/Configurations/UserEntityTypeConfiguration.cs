@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace AuthService.Infrastructure;
 
 [ExcludeFromCodeCoverage]
-internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
+internal sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {

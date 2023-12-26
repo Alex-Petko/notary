@@ -1,5 +1,7 @@
 ﻿using AuthService.Application;
 using AuthService.Controllers;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -8,38 +10,19 @@ namespace AuthService.Tests;
 public class UsersControllerTests
 {
     [Fact]
-    public async Task Create_Ok()
+    public async Task Create()
     {
         // Arrange
-        var userCreator = new Mock<IUserCreator>();
-        userCreator.Setup(x => x.ExecuteAsync(It.IsAny<CreateUserDto>())).ReturnsAsync(true);
+        var mediator = new Mock<IMediator>();
+        mediator.Setup(x => x.Send(It.IsAny<CreateUserRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(new OkResult());
 
-        var controller = new UsersController(userCreator.Object);
-
-        var dto = new CreateUserDto("1", "2");
+        var controller = new UsersController(mediator.Object);
+        controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
         // Act
-        var result = await controller.Create(dto);
+        var result = await controller.Create(null!, default);
 
         // Assert
         Assert.IsType<OkResult>(result);
-    }
-
-    [Fact]
-    public async Task Create_BadRequestResult()
-    {
-        // Arrange
-        var userCreator = new Mock<IUserCreator>();
-        userCreator.Setup(x => x.ExecuteAsync(It.IsAny<CreateUserDto>())).ReturnsAsync(false);
-
-        var controller = new UsersController(userCreator.Object);
-
-        var dto = new CreateUserDto("1", "2");
-
-        // Act
-        var result = await controller.Create(dto);
-
-        // Assert
-        Assert.IsType<BadRequestResult>(result);
     }
 }

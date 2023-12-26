@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Security.Claims;
 
-namespace DealProject.Attributes;
+namespace Shared.Attributes;
 
 public class ClaimValueProvider : BindingSourceValueProvider
 {

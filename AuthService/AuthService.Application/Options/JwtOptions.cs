@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace AuthService;
+namespace AuthService.Application;
 
 [ExcludeFromCodeCoverage]
 public class JwtOptions
