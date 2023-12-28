@@ -1,4 +1,5 @@
 ﻿using AuthService.Application;
+using AutoMapper.Execution;
 using FluentValidation;
 using System.Diagnostics.CodeAnalysis;
 
@@ -10,11 +11,11 @@ public sealed class CreateTokenDtoValidator : AbstractValidator<CreateTokenDto>
     public CreateTokenDtoValidator()
     {
         RuleFor(x => x.Login)
-            .NotEmpty().WithMessage("The login cannot be empty")
-            .MaximumLength(128).WithMessage("The password length must not exceed 128");
+            .NotEmptyWithMessage()
+            .MaximumLengthWithMessage(128);
 
         RuleFor(x => x.PasswordHash)
-            .NotEmpty().WithMessage("The password cannot be empty")
-            .MaximumLength(128).WithMessage("The passwordHash length must not exceed 128");
+            .NotEmptyWithMessage()
+            .MaximumLengthWithMessage(128); ;
     }
 }
