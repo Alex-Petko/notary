@@ -1,6 +1,6 @@
 ﻿using AuthService.Application;
-using AutoMapper.Execution;
 using FluentValidation;
+using Shared.FluentValidation.Extensions;
 using System.Diagnostics.CodeAnalysis;
 
 namespace AuthService;
