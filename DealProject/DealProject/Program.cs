@@ -1,8 +1,6 @@
 using DealProject.Application;
 using DealProject.Infrastructure;
-using FluentValidation;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 
 [ExcludeFromCodeCoverage]
 internal class Program

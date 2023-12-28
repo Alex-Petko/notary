@@ -2,7 +2,7 @@
 
 namespace DealProject.Application;
 
-public class GetDebtDto 
+public class GetDebtDto
 {
     public Guid Id { get; set; }
 

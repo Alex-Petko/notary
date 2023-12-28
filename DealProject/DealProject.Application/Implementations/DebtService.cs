@@ -32,7 +32,6 @@ internal class DebtService : IDebtService, IDisposable, IAsyncDisposable
         return debt != null ? _mapper.Map<GetDebtDto>(debt) : null;
     }
 
-
     public async Task<Guid> LendAsync(string userlogin, LendDebtDto dto)
     {
         var debt = _mapper.Map<Debt>(dto);
@@ -177,5 +176,4 @@ internal class DebtService : IDebtService, IDisposable, IAsyncDisposable
     {
         return _repository.DisposeAsync();
     }
-
 }

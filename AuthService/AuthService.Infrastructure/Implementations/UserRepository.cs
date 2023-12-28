@@ -11,4 +11,3 @@ internal sealed class UserRepository : Repository<User, string>, IUserRepository
     {
     }
 }
-

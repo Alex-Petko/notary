@@ -37,9 +37,9 @@ public abstract class BaseRepositoryHub : IBaseRepositoryHub
     public void Migrate()
         => _context.Database.Migrate();
 
-    public void Dispose() 
+    public void Dispose()
         => _context.Dispose();
-     
-    public ValueTask DisposeAsync() 
+
+    public ValueTask DisposeAsync()
         => _context.DisposeAsync();
 }

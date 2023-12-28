@@ -5,6 +5,5 @@ public class FromSubClaimAttribute : FromClaimAttribute
 {
     public FromSubClaimAttribute() : base("sub")
     {
-        
     }
 }

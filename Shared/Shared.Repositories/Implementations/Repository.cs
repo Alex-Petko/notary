@@ -33,4 +33,3 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntit
     public ValueTask<TEntity?> FindAsync(TKey key)
         => _dbSet.FindAsync(key);
 }
-

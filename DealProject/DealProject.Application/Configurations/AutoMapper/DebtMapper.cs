@@ -11,7 +11,7 @@ internal class DebtMapper : Profile
     {
         CreateMap<Debt, GetDebtDto>();
         CreateMap<LendDebtDto, Debt>()
-            .AfterMap((source, destination) 
+            .AfterMap((source, destination)
                 => destination.Begin = DateTime.SpecifyKind(destination.Begin, DateTimeKind.Utc));
 
         CreateMap<BorrowDebtDto, Debt>()

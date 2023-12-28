@@ -4,5 +4,5 @@ using Microsoft.AspNetCore.Mvc;
 namespace AuthService.Application;
 
 public sealed record CreateUserRequest(
-    CreateUserDto Dto) 
+    CreateUserDto Dto)
     : IRequest<IActionResult>;

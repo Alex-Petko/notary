@@ -3,7 +3,6 @@ using DealProject.Application;
 using DealProject.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
 
 namespace DealProjectTest;
 
@@ -33,7 +32,7 @@ public class DebtsControllerTests
         // Arrange
         var guid = Guid.NewGuid();
         var debtService = new Mock<IDebtService>();
-        debtService.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(new GetDebtDto() { Id= guid });
+        debtService.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(new GetDebtDto() { Id = guid });
 
         var controller = new DebtsController(debtService.Object);
 
@@ -52,7 +51,7 @@ public class DebtsControllerTests
         // Arrange
         var guid = Guid.NewGuid();
         var debtService = new Mock<IDebtService>();
-        debtService.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(value:null);
+        debtService.Setup(x => x.GetAsync(It.IsAny<Guid>())).ReturnsAsync(value: null);
 
         var controller = new DebtsController(debtService.Object);
 
