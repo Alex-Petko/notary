@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.Attributes\Shared.Attributes.csproj" />
+    <ProjectReference Include="..\..\Shared\Shared.FluentValidation.Extensions\Shared.FluentValidation.Extensions.csproj" />
     <ProjectReference Include="..\DealProject.Application\DealProject.Application.csproj" />
   </ItemGroup>
 

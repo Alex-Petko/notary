@@ -37,7 +37,7 @@ namespace AuthService.Tests.Configurations.Validators
         }
 
         [Fact]
-        public async Task Validate_LoginMoreThen128_MaximumLengthErrorMessage()
+        public async Task Validate_LoginMoreThan128_MaximumLengthErrorMessage()
         {
             // Arrange
             var createTokenDtoValidator = new CreateUserDtoValidator();
@@ -47,7 +47,7 @@ namespace AuthService.Tests.Configurations.Validators
             var result = await createTokenDtoValidator.TestValidateAsync(dto);
 
             // Assert
-            var message = ValidationErrorMessages.MaximumLength<CreateUserDto, string>(x => x.Login, 128);
+            var message = ValidationErrorMessages.MaximumLength<CreateUserDto>(x => x.Login, 128);
             result.ShouldHaveValidationErrorFor(x => x.Login)
                 .WithErrorMessage(message);
         }
@@ -69,7 +69,7 @@ namespace AuthService.Tests.Configurations.Validators
         }
 
         [Fact]
-        public async Task Validate_PasswordHashMoreThen128_MaximumLengthErrorMessage()
+        public async Task Validate_PasswordHashMoreThan128_MaximumLengthErrorMessage()
         {
             // Arrange
             var createTokenDtoValidator = new CreateUserDtoValidator();
@@ -79,7 +79,7 @@ namespace AuthService.Tests.Configurations.Validators
             var result = await createTokenDtoValidator.TestValidateAsync(dto);
 
             // Assert
-            var message = ValidationErrorMessages.MaximumLength<CreateUserDto, string>(x => x.PasswordHash, 128);
+            var message = ValidationErrorMessages.MaximumLength<CreateUserDto>(x => x.PasswordHash, 128);
             result.ShouldHaveValidationErrorFor(x => x.PasswordHash)
                 .WithErrorMessage(message);
         }
