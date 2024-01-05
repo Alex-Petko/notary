@@ -7,7 +7,7 @@ namespace DealProject.Infrastructure;
 [ExcludeFromCodeCoverage]
 public static class IServiceCollectionExtensions
 {
-    public static IServiceCollection AddRepository(this IServiceCollection services, string connectionString)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, string connectionString)
     {
         services.AddDbContext<DealContext>(options =>
         {
@@ -16,7 +16,7 @@ public static class IServiceCollectionExtensions
 
         services.AddEntityFrameworkNpgsql();
 
-        services.AddScoped<IRepository, Repository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

@@ -7,7 +7,7 @@ namespace AuthService.Infrastructure;
 [ExcludeFromCodeCoverage]
 public static class IServiceCollectionExtensions
 {
-    public static IServiceCollection AddRepository(this IServiceCollection services, string connectionString)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, string connectionString)
     {
         services.AddDbContext<UserContext>(options =>
         {
@@ -16,7 +16,7 @@ public static class IServiceCollectionExtensions
 
         services.AddEntityFrameworkNpgsql();
 
-        services.AddScoped<IRepository, Repository>();
+        services.AddScoped<IRepository, UnitOfWork>();
         services.AddTransient<ITransactions, Transactions>();
 
         return services;

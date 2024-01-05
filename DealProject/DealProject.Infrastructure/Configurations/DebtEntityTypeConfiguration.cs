@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DealProject.Infrastructure;
 
 [ExcludeFromCodeCoverage]
-internal class DebtEntityTypeConfiguration : IEntityTypeConfiguration<Debt>
+internal sealed class DebtEntityTypeConfiguration : IEntityTypeConfiguration<Debt>
 {
     public void Configure(EntityTypeBuilder<Debt> builder)
     {

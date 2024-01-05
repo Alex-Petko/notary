@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DealProject.Infrastructure;
 
 [ExcludeFromCodeCoverage]
-internal class DealContext : DbContext
+internal sealed class DealContext : DbContext
 {
     public DealContext(DbContextOptions<DealContext> options) : base(options)
     {

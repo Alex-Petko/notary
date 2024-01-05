@@ -3,7 +3,7 @@
 namespace Shared.Attributes;
 
 [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = true)]
-public class FromClaimAttribute : Attribute, IBindingSourceMetadata, IModelNameProvider
+public sealed class FromClaimAttribute : Attribute, IBindingSourceMetadata, IModelNameProvider
 {
     public BindingSource BindingSource => CustomBindingSource.Claim;
 

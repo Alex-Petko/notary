@@ -1,4 +1,5 @@
 ﻿using AutoMapper.EquivalencyExpression;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
@@ -18,7 +19,12 @@ public static class IServiceCollectionExtensions
             config.AddMaps(assembly);
         });
 
-        services.AddTransient<IDebtService, DebtService>();
+        services.AddValidatorsFromAssembly(assembly);
+
+        services.AddMediatR(configuration =>
+        {
+            configuration.RegisterServicesFromAssembly(assembly);
+        });
 
         return services;
     }

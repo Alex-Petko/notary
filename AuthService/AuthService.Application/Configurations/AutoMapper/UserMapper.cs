@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace AuthService.Application;
 
 [ExcludeFromCodeCoverage]
-internal class UserMapper : Profile
+internal sealed class UserMapper : Profile
 {
     public UserMapper()
     {

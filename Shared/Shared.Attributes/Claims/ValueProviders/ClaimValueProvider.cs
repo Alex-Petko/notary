@@ -3,7 +3,7 @@ using System.Security.Claims;
 
 namespace Shared.Attributes;
 
-public class ClaimValueProvider : BindingSourceValueProvider
+public sealed class ClaimValueProvider : BindingSourceValueProvider
 {
     private readonly ClaimsPrincipal _claimsPrincipal;
 

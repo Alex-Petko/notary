@@ -38,6 +38,20 @@ namespace DealProject.Tests.Configurations.Validators
         }
 
         [Fact]
+        public async Task Validate_BeginNull_UtcNow()
+        {
+            // Arrange
+            var dto = new BorrowDebtDto("1", 1, null);
+            var borrowDebtDtoValidator = new BorrowDebtDtoValidator();
+
+            // Act
+            var result = await borrowDebtDtoValidator.TestValidateAsync(dto);
+
+            // Assert
+            result.ShouldNotHaveAnyValidationErrors();
+        }
+
+        [Fact]
         public async Task Validate_LoginEmpty_EmptyErrorMessage()
         {
             // Arrange

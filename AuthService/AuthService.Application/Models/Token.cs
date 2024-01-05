@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AuthService.Application;
 
-internal class Token
+internal sealed class Token
 {
     private readonly IEnumerable<Claim> _claims;
     private readonly DateTime _expires;

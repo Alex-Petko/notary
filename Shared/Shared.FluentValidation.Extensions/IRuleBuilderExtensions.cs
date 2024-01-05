@@ -14,7 +14,8 @@ public static class IRuleBuilderExtensions
 	/// <typeparam name="TProperty">Type of property being validated</typeparam>
 	/// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
 	/// <returns></returns>
-    public static IRuleBuilderOptions<T, TProperty> NotEmptyWithMessage<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder)
+    public static IRuleBuilderOptions<T, TProperty> NotEmptyWithMessage<T, TProperty>(
+        this IRuleBuilder<T, TProperty> ruleBuilder)
     {
         string memberName = GetMemberName(ruleBuilder);
 
@@ -32,7 +33,9 @@ public static class IRuleBuilderExtensions
 	/// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
 	/// <param name="maximumLength"></param>
 	/// <returns></returns>
-    public static IRuleBuilderOptions<T, string> MaximumLengthWithMessage<T>(this IRuleBuilder<T, string> ruleBuilder, int maximumLength)
+    public static IRuleBuilderOptions<T, string> MaximumLengthWithMessage<T>(
+        this IRuleBuilder<T, string> ruleBuilder, 
+        int maximumLength)
     {
         string memberName = GetMemberName(ruleBuilder);
 
@@ -51,7 +54,9 @@ public static class IRuleBuilderExtensions
 	/// <typeparam name="TProperty">Type of property being validated</typeparam>
 	/// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
 	/// <param name="expression">The value being compared</param>
-    public static IRuleBuilderOptions<T, TProperty> GreaterThanWithMessage<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder, Expression<Func<T, TProperty>> expression)
+    public static IRuleBuilderOptions<T, TProperty> GreaterThanWithMessage<T, TProperty>(
+        this IRuleBuilder<T, TProperty> ruleBuilder, 
+        Expression<Func<T, TProperty>> expression)
         where TProperty : IComparable<TProperty>, IComparable
     {
         string memberName = GetMemberName(ruleBuilder);
@@ -71,8 +76,31 @@ public static class IRuleBuilderExtensions
 	/// <typeparam name="TProperty">Type of property being validated</typeparam>
 	/// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
 	/// <param name="expression">The value being compared</param>
-    public static IRuleBuilderOptions<T, TProperty?> GreaterThanWithMessage<T, TProperty>(this IRuleBuilder<T, TProperty?> ruleBuilder,
+    public static IRuleBuilderOptions<T, TProperty?> GreaterThanWithMessage<T, TProperty>(
+        this IRuleBuilder<T, TProperty?> ruleBuilder,
         Expression<Func<T, TProperty>> expression)
+        where TProperty : struct, IComparable<TProperty>, IComparable
+    {
+        string memberName = GetMemberName(ruleBuilder);
+
+        return ruleBuilder
+            .GreaterThan(expression)
+            .WithMessage(ValidationErrorMessages.GreaterThan(memberName, expression));
+    }
+
+    /// <summary>
+	/// Defines a 'greater than' validator on the current rule builder using a lambda expression.
+    /// Adds a default error message.
+	/// The validation will succeed if the property value is greater than the specified value.
+	/// The validation will fail if the property value is less than or equal to the specified value.
+	/// </summary>
+	/// <typeparam name="T">Type of object being validated</typeparam>
+	/// <typeparam name="TProperty">Type of property being validated</typeparam>
+	/// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
+	/// <param name="expression">The value being compared</param>
+    public static IRuleBuilderOptions<T, TProperty?> GreaterThanWithMessage<T, TProperty>(
+        this IRuleBuilder<T, TProperty?> ruleBuilder,
+        Expression<Func<T, TProperty?>> expression)
         where TProperty : struct, IComparable<TProperty>, IComparable
     {
         string memberName = GetMemberName(ruleBuilder);
@@ -92,7 +120,9 @@ public static class IRuleBuilderExtensions
     /// <typeparam name="TProperty">Type of property being validated</typeparam>
     /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
     /// <param name="valueToCompare">The value being compared</param>
-    public static IRuleBuilderOptions<T, TProperty> GreaterThanWithMessage<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder, TProperty valueToCompare)
+    public static IRuleBuilderOptions<T, TProperty> GreaterThanWithMessage<T, TProperty>(
+        this IRuleBuilder<T, TProperty> ruleBuilder, 
+        TProperty valueToCompare)
         where TProperty : IComparable<TProperty>, IComparable
     {
         string memberName = GetMemberName(ruleBuilder);
@@ -113,7 +143,9 @@ public static class IRuleBuilderExtensions
 	/// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
 	/// <param name="valueToCompare">The value being compared</param>
 	/// <returns></returns>
-    public static IRuleBuilderOptions<T, TProperty> GreaterThanOrEqualToWithMessage<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder, TProperty valueToCompare)
+    public static IRuleBuilderOptions<T, TProperty> GreaterThanOrEqualToWithMessage<T, TProperty>(
+        this IRuleBuilder<T, TProperty> ruleBuilder, 
+        TProperty valueToCompare)
         where TProperty : IComparable<TProperty>, IComparable
     {
         string memberName = GetMemberName(ruleBuilder);
@@ -134,7 +166,9 @@ public static class IRuleBuilderExtensions
 	/// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
 	/// <param name="valueToCompare">The value being compared</param>
 	/// <returns></returns>
-    public static IRuleBuilderOptions<T, TProperty> LessThanWithMessage<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder, TProperty valueToCompare)
+    public static IRuleBuilderOptions<T, TProperty> LessThanWithMessage<T, TProperty>(
+        this IRuleBuilder<T, TProperty> ruleBuilder,
+        TProperty valueToCompare)
         where TProperty : IComparable<TProperty>, IComparable
     {
         string memberName = GetMemberName(ruleBuilder);
@@ -155,8 +189,33 @@ public static class IRuleBuilderExtensions
 	/// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
 	/// <param name="valueToCompare">The value being compared</param>
 	/// <returns></returns>
-    public static IRuleBuilderOptions<T, TProperty> LessThanOrEqualToWithMessage<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder, TProperty valueToCompare)
+    public static IRuleBuilderOptions<T, TProperty> LessThanOrEqualToWithMessage<T, TProperty>(
+        this IRuleBuilder<T, TProperty> ruleBuilder, 
+        TProperty valueToCompare)
         where TProperty : IComparable<TProperty>, IComparable
+    {
+        string memberName = GetMemberName(ruleBuilder);
+
+        return ruleBuilder
+            .LessThanOrEqualTo(valueToCompare)
+            .WithMessage(ValidationErrorMessages.LessThanOrEqualTo(memberName, valueToCompare));
+    }
+
+    /// <summary>
+	/// Defines a 'less than or equal' validator on the current rule builder.
+    /// Adds a default error message.
+	/// The validation will succeed if the property value is less than or equal to the specified value.
+	/// The validation will fail if the property value is greater than the specified value.
+	/// </summary>
+	/// <typeparam name="T">Type of object being validated</typeparam>
+	/// <typeparam name="TProperty">Type of property being validated</typeparam>
+	/// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
+	/// <param name="valueToCompare">The value being compared</param>
+	/// <returns></returns>
+    public static IRuleBuilderOptions<T, TProperty?> LessThanOrEqualToWithMessage<T, TProperty>(
+        this IRuleBuilder<T, TProperty?> ruleBuilder, 
+        TProperty valueToCompare)
+        where TProperty : struct, IComparable<TProperty>, IComparable
     {
         string memberName = GetMemberName(ruleBuilder);
 

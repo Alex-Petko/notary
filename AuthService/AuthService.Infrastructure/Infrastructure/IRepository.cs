@@ -2,7 +2,7 @@
 
 namespace AuthService.Infrastructure;
 
-public interface IRepository : IBaseRepositoryHub
+public interface IRepository : IUnitOfWorkBase
 {
     IUserRepository Users { get; }
 }

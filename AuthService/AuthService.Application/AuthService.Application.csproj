@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Shared.FluentValidation.Extensions\Shared.FluentValidation.Extensions.csproj" />
     <ProjectReference Include="..\AuthService.Infrastructure\AuthService.Infrastructure.csproj" />
   </ItemGroup>
 

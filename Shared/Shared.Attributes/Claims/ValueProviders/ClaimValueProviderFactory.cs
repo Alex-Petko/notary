@@ -2,7 +2,7 @@
 
 namespace Shared.Attributes;
 
-public class ClaimValueProviderFactory : IValueProviderFactory
+public sealed class ClaimValueProviderFactory : IValueProviderFactory
 {
     public Task CreateValueProviderAsync(ValueProviderFactoryContext context)
     {
