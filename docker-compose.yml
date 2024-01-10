@@ -1,33 +1,34 @@
 version: '3.4'
 
 services:
-  dealproject:
-    image: ${DOCKER_REGISTRY-}dealproject
+  debt:
+    image: ${DOCKER_REGISTRY-}debt
     build:
       context: .
-      dockerfile: DealProject/DealProject/Dockerfile
+      dockerfile: Debt/Debt.Api/Dockerfile
     ports:
       - "10001:80"
-  authservice:
-    image: ${DOCKER_REGISTRY-}authservice
+  access_control:
+    image: ${DOCKER_REGISTRY-}access_control
+    container_name: access_control
     build:
       context: .
-      dockerfile: AuthService/AuthService/Dockerfile
+      dockerfile: AccessControl/AccessControl.Api/Dockerfile
     ports:
       - "10002:80"
-  dealproject-db:
+  debt_db:
     image: postgres
-    container_name: dealproject-db
+    container_name: debt_db
     user: postgres
     restart: always
     secrets:
-      - dealproject-db-password
+      - debt_db_password
     volumes:
-      - dealproject-db-data:/var/lib/postgresal/data
+      - debt_db_data:/var/lib/postgresal/data
     environment:
-      - POSTGRES_DB=dealproject
-#      - POSTGRES_PASSWORD_FILE=/run/secrets/dealproject-db-password
-      - POSTGRES_USER=dealproject
+      - POSTGRES_DB=debt
+#      - POSTGRES_PASSWORD_FILE=/run/secrets/debt_db_password
+      - POSTGRES_USER=debt
       - POSTGRES_PASSWORD=1234
     expose:
       - "8001:5432"
@@ -36,19 +37,19 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  authservice-db:
+  access_control_db:
     image: postgres
-    container_name: authservice-db
+    container_name: access_control_db
     user: postgres
     restart: always
     secrets:
-      - authservice-db-password
+      - access_control_db_password
     volumes:
-      - authservice-db-data:/var/lib/postgresal/data
+      - access_control_db_data:/var/lib/postgresal/data
     environment:
-      - POSTGRES_DB=authservice
-#      - POSTGRES_PASSWORD_FILE=/run/secrets/authservice-db-password
-      - POSTGRES_USER=authservice
+      - POSTGRES_DB=access_control
+#      - POSTGRES_PASSWORD_FILE=/run/secrets/access_control_db_password
+      - POSTGRES_USER=access_control
       - POSTGRES_PASSWORD=1234
     expose:
       - 5432
@@ -58,10 +59,10 @@ services:
       timeout: 5s
       retries: 5
 volumes:
-  dealproject-db-data:    
-  authservice-db-data:
+  debt_db_data:    
+  access_control_db_data:
 secrets:
-  dealproject-db-password:
-    file: Secrets/dealproject-db-password.txt
-  authservice-db-password:
-    file: Secrets/authservice-db-password.txt
+  debt_db_password:
+    file: Secrets/debt_db_password
+  access_control_db_password:
+    file: Secrets/access_control_db_password

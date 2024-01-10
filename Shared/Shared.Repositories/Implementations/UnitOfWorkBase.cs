@@ -13,19 +13,26 @@ public abstract class UnitOfWorkBase : IUnitOfWorkBase
         _context = context;
     }
 
-    public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
+    public Task<IDbContextTransaction> BeginTransactionAsync(
+        CancellationToken cancellationToken = default)
         => _context.Database.BeginTransactionAsync(cancellationToken);
 
-    public Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken = default)
+    public Task<IDbContextTransaction> BeginTransactionAsync(
+        IsolationLevel isolationLevel,
+        CancellationToken cancellationToken = default)
        => _context.Database.BeginTransactionAsync(isolationLevel, cancellationToken);
 
-    public Task CommitTransactionAsync(CancellationToken cancellationToken = default)
+    public Task CommitTransactionAsync(
+        CancellationToken cancellationToken = default)
         => _context.Database.CommitTransactionAsync(cancellationToken);
 
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public Task<int> SaveChangesAsync(
+        CancellationToken cancellationToken = default)
         => _context.SaveChangesAsync(true, cancellationToken);
 
-    public Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    public Task<int> SaveChangesAsync(
+        bool acceptAllChangesOnSuccess,
+        CancellationToken cancellationToken = default)
         => _context.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 
     public void EnsureDatabaseCreated()

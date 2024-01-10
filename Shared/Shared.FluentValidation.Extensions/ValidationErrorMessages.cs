@@ -251,6 +251,20 @@ public static class ValidationErrorMessages
     /// <summary>
     ///
     /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TProperty"></typeparam>
+    /// <param name="expression"></param>
+    /// <param name="valueToCompare"></param>
+    /// <returns>"The {memberName} must be less than or equal to {valueToCompare}"</returns>
+    public static string LessThanOrEqualTo<T, TProperty>(
+        Expression<Func<T, TProperty?>> expression,
+        TProperty valueToCompare)
+        where TProperty : struct, IComparable<TProperty>, IComparable
+        => LessThanOrEqualTo(GetMemberName(expression), valueToCompare);
+
+    /// <summary>
+    ///
+    /// </summary>
     /// <typeparam name="TProperty"></typeparam>
     /// <param name="memberName"></param>
     /// <param name="valueToCompare"></param>

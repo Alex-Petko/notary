@@ -6,7 +6,7 @@
     <ProjectGuid>7fa97094-c2ca-4b0a-9d84-7292148ea737</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
-    <DockerServiceName>dealproject</DockerServiceName>
+    <DockerServiceName>notary</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

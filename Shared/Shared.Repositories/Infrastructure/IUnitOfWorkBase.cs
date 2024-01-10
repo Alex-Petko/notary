@@ -5,11 +5,15 @@ namespace Shared.Repositories;
 
 public interface IUnitOfWorkBase : IDisposable, IAsyncDisposable
 {
-    Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
+    Task<IDbContextTransaction> BeginTransactionAsync(
+        CancellationToken cancellationToken = default);
 
-    Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken = default);
+    Task<IDbContextTransaction> BeginTransactionAsync(
+        IsolationLevel isolationLevel, 
+        CancellationToken cancellationToken = default);
 
-    Task CommitTransactionAsync(CancellationToken cancellationToken = default);
+    Task CommitTransactionAsync(
+        CancellationToken cancellationToken = default);
 
     void EnsureDatabaseCreated();
 
@@ -17,7 +21,10 @@ public interface IUnitOfWorkBase : IDisposable, IAsyncDisposable
 
     void Migrate();
 
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task<int> SaveChangesAsync(
+        CancellationToken cancellationToken = default);
 
-    Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);
+    Task<int> SaveChangesAsync
+        (bool acceptAllChangesOnSuccess, 
+        CancellationToken cancellationToken = default);
 }
