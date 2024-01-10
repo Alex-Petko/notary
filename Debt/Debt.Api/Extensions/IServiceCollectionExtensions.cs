@@ -1,4 +1,6 @@
-﻿using DebtManager.Infrastructure;
+﻿using Debt.Api;
+using DebtManager.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using Shared.Attributes;
 using System.Diagnostics.CodeAnalysis;
 
@@ -8,12 +10,22 @@ namespace DebtManager.Api;
 public static partial class IServiceCollectionExtensions
 {
     public static IServiceCollection AddApi(
-        this IServiceCollection services)
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
-        services.AddControllers(options =>
-        {
-            options.ValueProviderFactories.Add(new ClaimValueProviderFactory());
-        });
+        services
+            .Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true)
+            .AddSwaggerGen(options =>
+            {
+                options.OperationFilter<OpenApiParameterRemover<FromClaimAttribute>>();
+                options.OperationFilter<OpenApiParameterRemover<SwaggerIgnoreAttribute>>();
+            })
+            .AddAuthorization()
+            .AddJwtAuthentication(configuration)
+            .AddControllers(options =>
+            {
+                options.ValueProviderFactories.Add(new ClaimValueProviderFactory());
+            });
 
         return services;
     }

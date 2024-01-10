@@ -14,5 +14,5 @@ internal sealed class BorrowDebtHandler : InitDebtHandler<BorrowDebtRequest>
 
     protected override string GetBorrowerLogin(BorrowDebtRequest request) => request.Sub;
 
-    protected override string GetLenderLogin(BorrowDebtRequest request) => request.Login;
+    protected override string GetLenderLogin(BorrowDebtRequest request) => request.Body.Login;
 }

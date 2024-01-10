@@ -13,10 +13,7 @@ internal class Program
         builder.Services
             .AddInfrastructure(builder.Configuration)
             .AddApplication()
-            .AddApi()
-            .AddSwaggerGen()
-            .AddAuthorization()
-            .AddJwtAuthentication(builder.Configuration);
+            .AddApi(builder.Configuration);
 
         var app = builder.Build();
 

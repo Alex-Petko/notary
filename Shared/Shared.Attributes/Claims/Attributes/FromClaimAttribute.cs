@@ -2,7 +2,7 @@
 
 namespace Shared.Attributes;
 
-[AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = true)]
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter, AllowMultiple = false, Inherited = true)]
 public class FromClaimAttribute : Attribute, IBindingSourceMetadata, IModelNameProvider
 {
     public BindingSource BindingSource => CustomBindingSource.Claim;

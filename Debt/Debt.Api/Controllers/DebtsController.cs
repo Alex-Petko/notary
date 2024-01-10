@@ -26,10 +26,10 @@ public class DebtsController : ControllerBase
         return Ok(debts);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{request.Id}")]
     [ProducesResponseType(typeof(GetDebtDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get([FromQuery] GetDebtRequest request)
+    public async Task<IActionResult> Get(GetDebtRequest request)
     {
         var debt = await _mediator.Send(request);
         return debt is not null ? Ok(debt) : NotFound();
@@ -45,7 +45,7 @@ public class DebtsController : ControllerBase
 
     [HttpPost("borrow")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Borrow([FromBody] BorrowDebtRequest request)
+    public async Task<IActionResult> Borrow(BorrowDebtRequest request)
     {
         var id = await _mediator.Send(request);
         return Created("", id);
@@ -54,7 +54,7 @@ public class DebtsController : ControllerBase
     [HttpPost("accept")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Accept([FromBody] AcceptDebtRequest request)
+    public async Task<IActionResult> Accept(AcceptDebtRequest request)
     {
         var status = await _mediator.Send(request);
         return status is not null ? Ok(status) : BadRequest();
@@ -63,7 +63,7 @@ public class DebtsController : ControllerBase
     [HttpPost("cancel")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Cancel([FromBody] CancelDebtRequest request)
+    public async Task<IActionResult> Cancel(CancelDebtRequest request)
     {
         var status = await _mediator.Send(request);
         return status is not null ? Ok(status) : BadRequest();
@@ -72,7 +72,7 @@ public class DebtsController : ControllerBase
     [HttpPost("close")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Close([FromBody] CloseDebtRequest request)
+    public async Task<IActionResult> Close(CloseDebtRequest request)
     {
         var status = await _mediator.Send(request);
         return status is not null ? Ok(status) : BadRequest();

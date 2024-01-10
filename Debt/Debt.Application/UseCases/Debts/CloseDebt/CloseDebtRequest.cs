@@ -1,3 +1,3 @@
 ﻿namespace DebtManager.Application;
 
-public sealed record CloseDebtRequest(Guid DebtId) : DebtStatusRequest(DebtId);
+public sealed record CloseDebtRequest : DebtStatusRequest;

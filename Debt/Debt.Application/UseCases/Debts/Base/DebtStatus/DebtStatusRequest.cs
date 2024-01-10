@@ -5,8 +5,11 @@ using Shared.Attributes;
 
 namespace DebtManager.Application;
 
-public record class DebtStatusRequest([FromBody] Guid DebtId) : IRequest<DealStatusType?>
+public record class DebtStatusRequest : IRequest<DealStatusType?>
 {
+    [FromBody]
+    public Guid DebtId { get; init; }
+
     [FromSubClaim]
     public string Login { get; init; } = null!;
 }

@@ -2,4 +2,4 @@
 
 namespace DebtManager.Application;
 
-public sealed record GetAllDebtsRequest() : IRequest<IEnumerable<GetDebtDto>>;
+public sealed record GetAllDebtsRequest : IRequest<IEnumerable<GetDebtDto>>;
