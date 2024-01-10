@@ -8,6 +8,7 @@ namespace DebtManager.Api;
 
 [Authorize]
 [ApiController]
+[Route("[controller]")]
 public class DebtsController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -17,7 +18,7 @@ public class DebtsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("{controller}")]
+    [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<GetDebtDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
@@ -25,7 +26,7 @@ public class DebtsController : ControllerBase
         return Ok(debts);
     }
 
-    [HttpGet("{controller}/{id}")]
+    [HttpGet("{id}")]
     [ProducesResponseType(typeof(GetDebtDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get([FromQuery] GetDebtRequest request)
@@ -34,7 +35,7 @@ public class DebtsController : ControllerBase
         return debt is not null ? Ok(debt) : NotFound();
     }
 
-    [HttpPost("{controller}/lend")]
+    [HttpPost("lend")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     public async Task<IActionResult> Lend(LendDebtRequest request)
     {
@@ -42,7 +43,7 @@ public class DebtsController : ControllerBase
         return Created("", id);
     }
 
-    [HttpPost("{controller}/borrow")]
+    [HttpPost("borrow")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     public async Task<IActionResult> Borrow([FromBody] BorrowDebtRequest request)
     {
@@ -50,7 +51,7 @@ public class DebtsController : ControllerBase
         return Created("", id);
     }
 
-    [HttpPost("{controller}/accept")]
+    [HttpPost("accept")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Accept([FromBody] AcceptDebtRequest request)
@@ -59,7 +60,7 @@ public class DebtsController : ControllerBase
         return status is not null ? Ok(status) : BadRequest();
     }
 
-    [HttpPost("{controller}/cancel")]
+    [HttpPost("cancel")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Cancel([FromBody] CancelDebtRequest request)
@@ -68,7 +69,7 @@ public class DebtsController : ControllerBase
         return status is not null ? Ok(status) : BadRequest();
     }
 
-    [HttpPost("{controller}/close")]
+    [HttpPost("close")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Close([FromBody] CloseDebtRequest request)
