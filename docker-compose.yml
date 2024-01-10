@@ -21,8 +21,6 @@ services:
     container_name: debt_db
     user: postgres
     restart: always
-    secrets:
-      - debt_db_password
     volumes:
       - debt_db_data:/var/lib/postgresal/data
     environment:
@@ -41,8 +39,6 @@ services:
     container_name: access_control_db
     user: postgres
     restart: always
-    secrets:
-      - access_control_db_password
     volumes:
       - access_control_db_data:/var/lib/postgresal/data
     environment:
