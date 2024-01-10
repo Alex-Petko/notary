@@ -18,17 +18,17 @@ public sealed class Debt
 
     public DealStatusType Status { get; set; }
 
-    public DateTime Begin 
-    { 
-        get => _begin ??= DateTime.UtcNow; 
-        set => _begin = DateTime.SpecifyKind(value, DateTimeKind.Utc); 
+    public DateTime Begin
+    {
+        get => _begin ??= DateTime.UtcNow;
+        set => _begin = DateTime.SpecifyKind(value, DateTimeKind.Utc);
     }
 
-    public DateTime? End 
-    { 
-        get => _end; 
-        set => _end = value is not null 
-            ? DateTime.SpecifyKind(value.Value, DateTimeKind.Utc) 
-            : null; 
+    public DateTime? End
+    {
+        get => _end;
+        set => _end = value is not null
+            ? DateTime.SpecifyKind(value.Value, DateTimeKind.Utc)
+            : null;
     }
 }

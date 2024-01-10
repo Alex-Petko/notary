@@ -9,7 +9,7 @@ public interface IUnitOfWorkBase : IDisposable, IAsyncDisposable
         CancellationToken cancellationToken = default);
 
     Task<IDbContextTransaction> BeginTransactionAsync(
-        IsolationLevel isolationLevel, 
+        IsolationLevel isolationLevel,
         CancellationToken cancellationToken = default);
 
     Task CommitTransactionAsync(
@@ -25,6 +25,6 @@ public interface IUnitOfWorkBase : IDisposable, IAsyncDisposable
         CancellationToken cancellationToken = default);
 
     Task<int> SaveChangesAsync
-        (bool acceptAllChangesOnSuccess, 
+        (bool acceptAllChangesOnSuccess,
         CancellationToken cancellationToken = default);
 }

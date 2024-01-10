@@ -136,7 +136,6 @@ public class InitDebtRequestValidatorTests
             Sum = SumMin - 1,
             Begin = Begin,
             End = End,
-
         };
 
         // Act

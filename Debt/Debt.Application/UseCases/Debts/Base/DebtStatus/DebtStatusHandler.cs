@@ -4,7 +4,7 @@ using MediatR;
 
 namespace DebtManager.Application;
 
-internal abstract class DebtStatusHandler<TRequest> : IRequestHandler<TRequest, DealStatusType?> 
+internal abstract class DebtStatusHandler<TRequest> : IRequestHandler<TRequest, DealStatusType?>
     where TRequest : DebtStatusRequest
 {
     private readonly IUnitOfWork _unitOfWork;

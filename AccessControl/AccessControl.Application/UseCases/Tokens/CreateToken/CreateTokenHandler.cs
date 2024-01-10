@@ -53,7 +53,7 @@ internal sealed class CreateTokenHandler : IRequestHandler<CreateTokenRequest, I
         };
 
         // doto
-       _httpContextAccessor.HttpContext?.Response.Cookies.Append("JwtBearer", jwt, cookieOptions);
+        _httpContextAccessor.HttpContext?.Response.Cookies.Append("JwtBearer", jwt, cookieOptions);
 
         return new OkResult();
     }

@@ -1,11 +1,10 @@
-﻿using Castle.DynamicProxy.Generators;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Linq.Expressions;
 
 namespace Shared.Tests;
+
 public static class TestHelper
 {
     public static string String(int length = 128) => new string('x', length);

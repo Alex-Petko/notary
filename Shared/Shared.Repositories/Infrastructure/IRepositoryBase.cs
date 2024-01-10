@@ -1,6 +1,6 @@
 ﻿namespace Shared.Repositories;
 
-public interface IRepositoryBase<TEntity, TKey> 
+public interface IRepositoryBase<TEntity, TKey>
     where TEntity : class
 {
     void Add(TEntity entity);

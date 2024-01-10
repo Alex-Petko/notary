@@ -1,6 +1,5 @@
 ﻿using DebtManager.Domain;
 using DebtManager.Infrastructure;
-using MediatR;
 
 namespace DebtManager.Application;
 

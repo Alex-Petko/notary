@@ -34,7 +34,7 @@ public static class IRuleBuilderExtensions
 	/// <param name="maximumLength"></param>
 	/// <returns></returns>
     public static IRuleBuilderOptions<T, string> MaximumLengthWithMessage<T>(
-        this IRuleBuilder<T, string> ruleBuilder, 
+        this IRuleBuilder<T, string> ruleBuilder,
         int maximumLength)
     {
         string memberName = GetMemberName(ruleBuilder);
@@ -55,7 +55,7 @@ public static class IRuleBuilderExtensions
 	/// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
 	/// <param name="expression">The value being compared</param>
     public static IRuleBuilderOptions<T, TProperty> GreaterThanWithMessage<T, TProperty>(
-        this IRuleBuilder<T, TProperty> ruleBuilder, 
+        this IRuleBuilder<T, TProperty> ruleBuilder,
         Expression<Func<T, TProperty>> expression)
         where TProperty : IComparable<TProperty>, IComparable
     {
@@ -121,7 +121,7 @@ public static class IRuleBuilderExtensions
     /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
     /// <param name="valueToCompare">The value being compared</param>
     public static IRuleBuilderOptions<T, TProperty> GreaterThanWithMessage<T, TProperty>(
-        this IRuleBuilder<T, TProperty> ruleBuilder, 
+        this IRuleBuilder<T, TProperty> ruleBuilder,
         TProperty valueToCompare)
         where TProperty : IComparable<TProperty>, IComparable
     {
@@ -144,7 +144,7 @@ public static class IRuleBuilderExtensions
 	/// <param name="valueToCompare">The value being compared</param>
 	/// <returns></returns>
     public static IRuleBuilderOptions<T, TProperty> GreaterThanOrEqualToWithMessage<T, TProperty>(
-        this IRuleBuilder<T, TProperty> ruleBuilder, 
+        this IRuleBuilder<T, TProperty> ruleBuilder,
         TProperty valueToCompare)
         where TProperty : IComparable<TProperty>, IComparable
     {
@@ -190,7 +190,7 @@ public static class IRuleBuilderExtensions
 	/// <param name="valueToCompare">The value being compared</param>
 	/// <returns></returns>
     public static IRuleBuilderOptions<T, TProperty> LessThanOrEqualToWithMessage<T, TProperty>(
-        this IRuleBuilder<T, TProperty> ruleBuilder, 
+        this IRuleBuilder<T, TProperty> ruleBuilder,
         TProperty valueToCompare)
         where TProperty : IComparable<TProperty>, IComparable
     {
@@ -213,7 +213,7 @@ public static class IRuleBuilderExtensions
 	/// <param name="valueToCompare">The value being compared</param>
 	/// <returns></returns>
     public static IRuleBuilderOptions<T, TProperty?> LessThanOrEqualToWithMessage<T, TProperty>(
-        this IRuleBuilder<T, TProperty?> ruleBuilder, 
+        this IRuleBuilder<T, TProperty?> ruleBuilder,
         TProperty valueToCompare)
         where TProperty : struct, IComparable<TProperty>, IComparable
     {

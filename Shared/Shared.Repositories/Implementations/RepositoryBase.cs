@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Shared.Repositories;
 
 [ExcludeFromCodeCoverage]
-public class RepositoryBase<TEntity, TKey> 
+public class RepositoryBase<TEntity, TKey>
     : IRepositoryBase<TEntity, TKey> where TEntity : class
 {
     private readonly DbContext _context;

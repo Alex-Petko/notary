@@ -2,9 +2,7 @@
 using AccessControl.Application;
 using AutoFixture.Xunit2;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Moq;
 using Shared.Tests;
 
 namespace AccessControl.Tests;

@@ -9,7 +9,7 @@ public record InitDebtRequest : IRequest<Guid>
 
     public int Sum { get; init; }
 
-    public DateTime? Begin {  get; init; }
+    public DateTime? Begin { get; init; }
 
     public DateTime? End { get; init; }
 

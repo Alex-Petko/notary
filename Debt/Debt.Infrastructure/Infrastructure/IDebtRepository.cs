@@ -1,5 +1,4 @@
-﻿using DebtManager.Domain;
-using Shared.Repositories;
+﻿using Shared.Repositories;
 
 namespace DebtManager.Infrastructure;
 
