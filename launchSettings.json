@@ -6,6 +6,28 @@
       "serviceActions": {
         "access_control": "StartDebugging"
       }
-    }
+    },
+    "Debt Swagger": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
+      "composeLaunchServiceName": "debt",
+      "serviceActions": {
+        "debt": "StartDebugging",
+        "access_control": "StartDebugging"
+      }
+    },
+    "AccessControl Swagger": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
+      "composeLaunchServiceName": "access_control",
+      "serviceActions": {
+        "debt": "StartDebugging",
+        "access_control": "StartDebugging"
+      }
+    } 
   }
 }
