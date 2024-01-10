@@ -7,7 +7,7 @@ namespace DebtManager.Api;
 [ExcludeFromCodeCoverage]
 public static partial class IServiceCollectionExtensions
 {
-    public static IServiceCollection AddDealControllers(
+    public static IServiceCollection AddApi(
         this IServiceCollection services)
     {
         services.AddControllers(options =>
@@ -18,7 +18,7 @@ public static partial class IServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddDealRepository(
+    public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         IConfiguration configuration)
     {

@@ -11,10 +11,10 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services
-            .AddDealRepository(builder.Configuration)
+            .AddInfrastructure(builder.Configuration)
             .AddApplication()
+            .AddApi()
             .AddSwaggerGen()
-            .AddDealControllers()
             .AddAuthorization()
             .AddJwtAuthentication(builder.Configuration);
 
