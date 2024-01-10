@@ -27,7 +27,6 @@ services:
       - debt_db_data:/var/lib/postgresal/data
     environment:
       - POSTGRES_DB=debt
-#      - POSTGRES_PASSWORD_FILE=/run/secrets/debt_db_password
       - POSTGRES_USER=debt
       - POSTGRES_PASSWORD=1234
     expose:
@@ -48,7 +47,6 @@ services:
       - access_control_db_data:/var/lib/postgresal/data
     environment:
       - POSTGRES_DB=access_control
-#      - POSTGRES_PASSWORD_FILE=/run/secrets/access_control_db_password
       - POSTGRES_USER=access_control
       - POSTGRES_PASSWORD=1234
     expose:
@@ -61,8 +59,3 @@ services:
 volumes:
   debt_db_data:    
   access_control_db_data:
-secrets:
-  debt_db_password:
-    file: Secrets/debt_db_password
-  access_control_db_password:
-    file: Secrets/access_control_db_password
