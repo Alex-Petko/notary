@@ -14,7 +14,7 @@ public static class IServiceCollectionExtensions
 
         services.AddAutoMapper(assembly);
 
-        services.AddValidatorsFromAssembly(assembly);
+        services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
 
         services.AddMediatR(configuration =>
         {

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using System.Linq.Expressions;
 
-namespace Shared.FluentValidation.Extensions;
+namespace Shared.FluentValidation;
 
 public static class IRuleBuilderExtensions
 {

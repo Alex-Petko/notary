@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Global;
-using Shared.FluentValidation.Extensions;
+using Shared.FluentValidation;
 
 namespace AccessControl.Application;
 

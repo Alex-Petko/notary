@@ -3,9 +3,9 @@ using Shared.FluentValidation;
 
 namespace DebtManager.Application;
 
-internal class DebtStatusRequestValidator<T> : AbstractValidator<T> where T : DebtStatusRequest
+internal sealed class GetDebtRequestValidator : AbstractValidator<GetDebtRequest>
 {
-    public DebtStatusRequestValidator()
+    public GetDebtRequestValidator()
     {
         RuleFor(x => x.DebtId)
             .NotEmptyWithMessage();

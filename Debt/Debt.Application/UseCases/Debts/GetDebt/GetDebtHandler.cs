@@ -17,7 +17,7 @@ internal sealed class GetDebtHandler : IRequestHandler<GetDebtRequest, GetDebtDt
 
     public async Task<GetDebtDto?> Handle(GetDebtRequest request, CancellationToken cancellationToken)
     {
-        var entity = await _unitOfWork.Debts.FindAsync(request.Id);
+        var entity = await _unitOfWork.Debts.FindAsync(request.DebtId);
         return entity is not null ? _mapper.Map<GetDebtDto>(entity) : null;
     }
 }

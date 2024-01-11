@@ -1,6 +1,3 @@
 ﻿namespace AccessControl.Application;
 
-public sealed record CreateTokenRequest(
-    string Login,
-    string Password)
-    : RequestBase(Login, Password);
+public sealed record CreateTokenRequest : RequestBase;

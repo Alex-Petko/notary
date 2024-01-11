@@ -19,7 +19,7 @@ public static class IServiceCollectionExtensions
             config.AddMaps(assembly);
         });
 
-        services.AddValidatorsFromAssembly(assembly);
+        services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
 
         services.AddMediatR(configuration =>
         {

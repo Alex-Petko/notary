@@ -1,7 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using DebtManager.Application;
 using FluentValidation.TestHelper;
-using Shared.FluentValidation.Extensions;
+using Shared.FluentValidation;
 
 namespace DebtManager.Tests;
 
@@ -12,7 +12,10 @@ public class DebtStatusRequestValidatorTests
     {
         // Arrange
         var validator = new DebtStatusRequestValidator<DebtStatusRequest>();
-        var request = new DebtStatusRequest(default);
+        var request = new DebtStatusRequest
+        {
+            DebtId = default
+        };
 
         // Act
         var result = await validator.TestValidateAsync(request);

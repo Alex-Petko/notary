@@ -1,5 +1,6 @@
 using AccessControl.Application;
 using AccessControl.Infrastructure;
+using Shared.FluentValidation;
 using System.Diagnostics.CodeAnalysis;
 
 namespace AccessControl.Api;
@@ -21,7 +22,9 @@ internal sealed class Program
         builder.Services.AddOptions<JwtOptions>().Bind(section);
         builder.Services.AddHttpContextAccessor();
 
-        builder.Services.AddControllers();
+        builder.Services
+            .AddControllers()
+            .AddAutoValidation();
 
         var app = builder.Build();
 

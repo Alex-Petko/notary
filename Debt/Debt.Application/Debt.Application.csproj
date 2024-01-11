@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.Attributes\Shared.Attributes.csproj" />
-    <ProjectReference Include="..\..\Shared\Shared.FluentValidation.Extensions\Shared.FluentValidation.Extensions.csproj" />
+    <ProjectReference Include="..\..\Shared\Shared.FluentValidation\Shared.FluentValidation.csproj" />
     <ProjectReference Include="..\Debt.Infrastructure\Debt.Infrastructure.csproj" />
 	<InternalsVisibleTo Include="Debt.Tests"/>
 	<InternalsVisibleTo Include="DynamicProxyGenAssembly2"/>

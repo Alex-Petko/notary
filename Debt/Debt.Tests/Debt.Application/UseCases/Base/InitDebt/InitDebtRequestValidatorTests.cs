@@ -2,8 +2,9 @@
 using DebtManager.Application;
 using FluentValidation.TestHelper;
 using Global;
-using Shared.FluentValidation.Extensions;
+using Shared.FluentValidation;
 using Shared.Tests;
+using static Global.Constraints;
 
 namespace DebtManager.Tests;
 
@@ -24,18 +25,15 @@ public class InitDebtRequestValidatorTests
 
         var request = new InitDebtRequest
         {
-            Login = login,
-            Sum = sum,
-            Begin = now,
-            End = now,
+            Body = new (login, sum, now, now)
         };
 
         // Act
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.GreaterThan<InitDebtRequest, DateTime>(x => x.End, x => x.Begin);
-        result.ShouldHaveValidationErrorFor(x => x.End).WithErrorMessage(message);
+        var message = ValidationErrorMessages.GreaterThan<InitDebtRequest, DateTime>(x => x.Body.End, x => x.Body.Begin);
+        result.ShouldHaveValidationErrorFor(x => x.Body.End).WithErrorMessage(message);
     }
 
     [Theory, AutoData]
@@ -46,17 +44,15 @@ public class InitDebtRequestValidatorTests
 
         var request = new InitDebtRequest
         {
-            Login = login,
-            Sum = sum,
-            Begin = End,
+            Body = new(login, sum, End)
         };
 
         // Act
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.LessThanOrEqualTo<InitDebtRequest, DateTime>(x => x.Begin, Begin);
-        result.ShouldHaveValidationErrorFor(x => x.Begin).WithErrorMessage(message);
+        var message = ValidationErrorMessages.LessThanOrEqualTo<InitDebtRequest, DateTime>(x => x.Body.Begin, Begin);
+        result.ShouldHaveValidationErrorFor(x => x.Body.Begin).WithErrorMessage(message);
     }
 
     [Theory, AutoData]
@@ -65,10 +61,7 @@ public class InitDebtRequestValidatorTests
         // Arrange
         var request = new InitDebtRequest
         {
-            Login = login,
-            Sum = sum,
-            Begin = Begin,
-            End = null,
+            Body = new(login, sum, Begin, null)
         };
 
         var validator = new InitDebtRequestValidator<InitDebtRequest>();
@@ -88,18 +81,15 @@ public class InitDebtRequestValidatorTests
 
         var request = new InitDebtRequest
         {
-            Login = null!,
-            Sum = sum,
-            Begin = Begin,
-            End = End,
+            Body = new(null!, sum, Begin)
         };
 
         // Act
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.NotEmpty<InitDebtRequest, string>(x => x.Login);
-        result.ShouldHaveValidationErrorFor(x => x.Login).WithErrorMessage(message);
+        var message = ValidationErrorMessages.NotEmpty<InitDebtRequest, string>(x => x.Body.Login);
+        result.ShouldHaveValidationErrorFor(x => x.Body.Login).WithErrorMessage(message);
     }
 
     [Theory, AutoData]
@@ -110,18 +100,15 @@ public class InitDebtRequestValidatorTests
 
         var request = new InitDebtRequest
         {
-            Login = TestHelper.String(LoginMaxLength + 1),
-            Sum = sum,
-            Begin = Begin,
-            End = End,
+            Body = new(TestHelper.String(LoginMaxLength + 1), sum, Begin)
         };
 
         // Act
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.MaximumLength<InitDebtRequest>(x => x.Login, LoginMaxLength);
-        result.ShouldHaveValidationErrorFor(x => x.Login).WithErrorMessage(message);
+        var message = ValidationErrorMessages.MaximumLength<InitDebtRequest>(x => x.Body.Login, LoginMaxLength);
+        result.ShouldHaveValidationErrorFor(x => x.Body.Login).WithErrorMessage(message);
     }
 
     [Theory, AutoData]
@@ -132,18 +119,16 @@ public class InitDebtRequestValidatorTests
 
         var request = new InitDebtRequest
         {
-            Login = login,
-            Sum = SumMin - 1,
-            Begin = Begin,
-            End = End,
+            Body = new(login, SumMin - 1, Begin, End)
+           
         };
 
         // Act
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.GreaterThan<InitDebtRequest, int>(x => x.Sum, SumMin - 1);
-        result.ShouldHaveValidationErrorFor(x => x.Sum).WithErrorMessage(message);
+        var message = ValidationErrorMessages.GreaterThan<InitDebtRequest, int>(x => x.Body.Sum, SumMin - 1);
+        result.ShouldHaveValidationErrorFor(x => x.Body.Sum).WithErrorMessage(message);
     }
 
     [Theory, AutoData]
@@ -152,10 +137,7 @@ public class InitDebtRequestValidatorTests
         // Arrange
         var request = new InitDebtRequest
         {
-            Login = login,
-            Sum = sum,
-            Begin = Begin,
-            End = End,
+            Body = new(login, sum, Begin, End)
         };
 
         var validator = new InitDebtRequestValidator<InitDebtRequest>();

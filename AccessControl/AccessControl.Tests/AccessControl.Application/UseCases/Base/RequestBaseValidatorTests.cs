@@ -1,23 +1,27 @@
 ﻿using AccessControl.Application;
 using AutoFixture.Xunit2;
 using FluentValidation.TestHelper;
-using Global;
-using Shared.FluentValidation.Extensions;
+using Shared.FluentValidation;
 using Shared.Tests;
+using static Global.Constraints;
 
 namespace AccessControl.Tests;
 
 public class RequestBaseValidatorTests
 {
-    private const int LoginMaxLength = Constraints.Login.MaxLength;
-    private const int PasswordMaxLength = Constraints.Password.MaxLength;
+    private const int LoginMaxLength = Login.MaxLength;
+    private const int PasswordMaxLength = Password.MaxLength;
 
     [Theory, AutoData]
     public async Task Login_GreaterThanMax_MaximumLengthErrorMessage(string password)
     {
         // Arrange
         var validator = new RequestBaseValidator<RequestBase>();
-        var request = new RequestBase(TestHelper.String(LoginMaxLength + 1), password);
+        var request = new RequestBase
+        {
+            Login = TestHelper.String(LoginMaxLength + 1),
+            Password = password
+        };
 
         // Act
         var result = await validator.TestValidateAsync(request);
@@ -33,7 +37,11 @@ public class RequestBaseValidatorTests
     {
         // Arrange
         var validator = new RequestBaseValidator<RequestBase>();
-        var request = new RequestBase(null!, password);
+        var request = new RequestBase
+        {
+            Login = null!,
+            Password = password
+        };
 
         // Act
         var result = await validator.TestValidateAsync(request);
@@ -49,7 +57,11 @@ public class RequestBaseValidatorTests
     {
         // Arrange
         var validator = new RequestBaseValidator<RequestBase>();
-        var request = new RequestBase(login, TestHelper.String(PasswordMaxLength + 1));
+        var request = new RequestBase
+        {
+            Login = login,
+            Password = TestHelper.String(PasswordMaxLength + 1)
+        };
 
         // Act
         var result = await validator.TestValidateAsync(request);
@@ -65,7 +77,11 @@ public class RequestBaseValidatorTests
     {
         // Arrange
         var validator = new RequestBaseValidator<RequestBase>();
-        var request = new RequestBase(login, null!);
+        var request = new RequestBase
+        {
+            Login = login,
+            Password = null!
+        };
 
         // Act
         var result = await validator.TestValidateAsync(request);
@@ -81,7 +97,11 @@ public class RequestBaseValidatorTests
     {
         // Arrange
         var validator = new RequestBaseValidator<RequestBase>();
-        var request = new RequestBase(login, password);
+        var request = new RequestBase
+        {
+            Login = login,
+            Password = password
+        };
 
         // Act
         var result = await validator.TestValidateAsync(request);

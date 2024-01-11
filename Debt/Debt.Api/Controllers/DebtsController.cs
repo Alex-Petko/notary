@@ -26,7 +26,7 @@ public class DebtsController : ControllerBase
         return Ok(debts);
     }
 
-    [HttpGet("{request.Id}")]
+    [HttpGet("{" + $"{nameof(request)}.{nameof(GetDebtRequest.DebtId)}" + "}")]
     [ProducesResponseType(typeof(GetDebtDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get(GetDebtRequest request)

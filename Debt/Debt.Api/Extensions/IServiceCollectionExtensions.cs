@@ -2,6 +2,7 @@
 using DebtManager.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Attributes;
+using Shared.FluentValidation;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DebtManager.Api;
@@ -25,7 +26,8 @@ public static partial class IServiceCollectionExtensions
             .AddControllers(options =>
             {
                 options.ValueProviderFactories.Add(new ClaimValueProviderFactory());
-            });
+            })
+            .AddAutoValidation();
 
         return services;
     }

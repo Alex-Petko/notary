@@ -35,13 +35,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Debt.Application", "Debt\De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Attributes", "Shared\Shared.Attributes\Shared.Attributes.csproj", "{ADE4B0BB-9F16-4790-8818-39587C83E201}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.FluentValidation.Extensions", "Shared\Shared.FluentValidation.Extensions\Shared.FluentValidation.Extensions.csproj", "{D98E86C4-E73F-44E7-B9D0-7251B70DE839}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.FluentValidation", "Shared\Shared.FluentValidation\Shared.FluentValidation.csproj", "{D98E86C4-E73F-44E7-B9D0-7251B70DE839}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Tests", "Shared\Shared.Tests\Shared.Tests.csproj", "{5109466C-79F6-4614-89F2-52E9BB2AE1EC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Global", "Global", "{93E18FC0-1058-490A-A68C-0E5F22010E24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Global.Constraints", "Global\Global.Constraints\Global.Constraints.csproj", "{FAFD0FBC-917D-4226-BF8F-74842214F926}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Global.Constraints", "Global\Global.Constraints\Global.Constraints.csproj", "{FAFD0FBC-917D-4226-BF8F-74842214F926}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

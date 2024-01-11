@@ -17,4 +17,4 @@ public sealed record InitDebtRequestBody(
     string Login,
     int Sum,
     DateTime? Begin,
-    DateTime? End);
+    DateTime? End = null);
