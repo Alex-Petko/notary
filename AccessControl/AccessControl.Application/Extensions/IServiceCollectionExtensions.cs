@@ -22,6 +22,7 @@ public static class IServiceCollectionExtensions
         });
 
         services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+        services.AddTransient<ITokenManager, TokenManager>();
 
         return services;
     }

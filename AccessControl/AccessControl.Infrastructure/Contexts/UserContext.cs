@@ -8,6 +8,7 @@ namespace AccessControl.Infrastructure;
 internal sealed class UserContext : DbContext
 {
     public DbSet<User> Users { get; set; } = null!;
+    public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
 
     public UserContext(DbContextOptions<UserContext> options) : base(options)
     {
@@ -16,5 +17,6 @@ internal sealed class UserContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new RefreshTokenEntityTypeConfiguration());
     }
 }

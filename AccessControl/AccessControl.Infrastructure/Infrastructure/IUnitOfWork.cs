@@ -5,4 +5,6 @@ namespace AccessControl.Infrastructure;
 public interface IUnitOfWork : IUnitOfWorkBase
 {
     IUserRepository Users { get; }
+
+    IRefreshTokenRepository RefreshTokens { get; }
 }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Debt.Api;
+namespace Shared.Attributes;
 
 public class OpenApiParameterRemover<T> : IOperationFilter
     where T : Attribute

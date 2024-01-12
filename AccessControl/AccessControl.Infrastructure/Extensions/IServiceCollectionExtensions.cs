@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Repositories;
 using System.Diagnostics.CodeAnalysis;
 
 namespace AccessControl.Infrastructure;
@@ -16,7 +17,9 @@ public static class IServiceCollectionExtensions
 
         services.AddEntityFrameworkNpgsql();
 
+        services.AddScoped<IUnitOfWorkBase, UnitOfWork>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
         services.AddTransient<ITransactions, Transactions>();
 
         return services;

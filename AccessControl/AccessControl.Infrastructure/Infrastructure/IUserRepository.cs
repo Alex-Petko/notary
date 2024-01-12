@@ -5,4 +5,5 @@ namespace AccessControl.Infrastructure;
 
 public interface IUserRepository : IRepositoryBase<User, string>
 {
+    public Task<bool> ContainsAsync(User user);
 }

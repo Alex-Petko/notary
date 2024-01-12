@@ -8,6 +8,7 @@ namespace DebtManager.Api;
 
 [Authorize]
 [ApiController]
+[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 [Route("[controller]")]
 public class DebtsController : ControllerBase
 {

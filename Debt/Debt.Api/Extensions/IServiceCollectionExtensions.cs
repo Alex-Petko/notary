@@ -1,5 +1,4 @@
-﻿using Debt.Api;
-using DebtManager.Infrastructure;
+﻿using DebtManager.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Attributes;
 using Shared.FluentValidation;

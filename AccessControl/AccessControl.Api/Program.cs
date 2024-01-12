@@ -1,6 +1,6 @@
 using AccessControl.Application;
-using AccessControl.Infrastructure;
-using Shared.FluentValidation;
+using Shared.IApplicationBuilderExtensions;
+using Shared.Repositories;
 using System.Diagnostics.CodeAnalysis;
 
 namespace AccessControl.Api;
@@ -12,40 +12,25 @@ internal sealed class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        var connectionString = builder.Configuration.GetConnectionString("Default");
         builder.Services
-            .AddInfrastructure(connectionString)
+            .AddInfrastructure(builder.Configuration)
             .AddApplication()
-            .AddSwaggerGen();
-
-        var section = builder.Configuration.GetSection("JwtOptions");
-        builder.Services.AddOptions<JwtOptions>().Bind(section);
-        builder.Services.AddHttpContextAccessor();
-
-        builder.Services
-            .AddControllers()
-            .AddAutoValidation();
+            .AddApi(builder.Configuration);
 
         var app = builder.Build();
+
+        app.ApplyMigration<Program>();
+
+        app.UseDeveloperExceptionPage();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.UseSwagger();
         app.UseSwaggerUI();
 
-        ILogger<Program> logger = null!;
-        try
-        {
-            using var scope = app.Services.CreateScope();
-            using var repository = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-            logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-            repository.Migrate();
-        }
-        catch (Exception e)
-        {
-            logger!.LogError(e, e.Message);
-        }
-
         app.MapControllers();
+
         app.Run();
     }
 }

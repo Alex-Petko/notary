@@ -22,7 +22,7 @@ namespace DebtManager.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("DealProject.Domain.Debt", b =>
+            modelBuilder.Entity("DebtManager.Domain.Debt", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

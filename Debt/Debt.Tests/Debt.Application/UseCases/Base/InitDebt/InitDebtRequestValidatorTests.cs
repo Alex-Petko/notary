@@ -4,7 +4,6 @@ using FluentValidation.TestHelper;
 using Global;
 using Shared.FluentValidation;
 using Shared.Tests;
-using static Global.Constraints;
 
 namespace DebtManager.Tests;
 
@@ -25,7 +24,7 @@ public class InitDebtRequestValidatorTests
 
         var request = new InitDebtRequest
         {
-            Body = new (login, sum, now, now)
+            Body = new(login, sum, now, now)
         };
 
         // Act
@@ -120,7 +119,6 @@ public class InitDebtRequestValidatorTests
         var request = new InitDebtRequest
         {
             Body = new(login, SumMin - 1, Begin, End)
-           
         };
 
         // Act
