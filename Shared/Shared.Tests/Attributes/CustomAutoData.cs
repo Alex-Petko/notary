@@ -7,7 +7,6 @@ public sealed class CustomAutoData : AutoDataAttribute
 {
     public CustomAutoData() : base(FixtureFactory)
     {
-        
     }
 
     private static IFixture FixtureFactory()

@@ -20,7 +20,7 @@ public static class TestHelper
         var controller = controllerCtr(mediator.Object);
         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-        return (controller, () => 
+        return (controller, () =>
             {
                 mediator.Verify(x => x.Send(It.IsAny<TRequest>(), It.IsAny<CancellationToken>()), Times.Once);
                 mediator.VerifyNoOtherCalls();

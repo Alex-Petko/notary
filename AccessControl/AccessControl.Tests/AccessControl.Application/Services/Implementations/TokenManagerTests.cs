@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Moq;
 using Shared.Tests;
-using System.Net;
 
 namespace Application.Services;
 

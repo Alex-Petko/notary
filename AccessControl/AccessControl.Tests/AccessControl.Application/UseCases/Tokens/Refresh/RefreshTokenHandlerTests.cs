@@ -7,7 +7,6 @@ namespace Application.UseCases;
 
 public class RefreshTokenHandlerTests
 {
-
     [Theory, CustomAutoData]
     public async Task Handle_Ok_OkResult(RefreshTokenRequest request, CancellationToken cancellationToken)
     {

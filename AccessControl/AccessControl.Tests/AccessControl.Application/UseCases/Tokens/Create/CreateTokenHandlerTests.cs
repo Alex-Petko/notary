@@ -10,7 +10,6 @@ namespace Application.UseCases;
 
 public class CreateTokenHandlerTests
 {
-
     [Theory, CustomAutoData]
     public async Task Handle_Ok_OkResult(CreateTokenRequest request, CancellationToken cancellationToken, User user)
     {
