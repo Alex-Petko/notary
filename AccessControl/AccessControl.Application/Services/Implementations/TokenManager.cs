@@ -58,7 +58,7 @@ internal class TokenManager : ITokenManager
         _httpContextAccessor.HttpContext!.Response.Cookies.Append("JwtBearer", jwt, jwtCookie);
 
         var rtCookie = CreateCookieOptions(options.Rt);
-        _httpContextAccessor.HttpContext!.Response.Cookies.Append("RT", rt, rtCookie);   
+        _httpContextAccessor.HttpContext!.Response.Cookies.Append("RT", rt, rtCookie);
     }
 
     private string Sign(Token token, Details details, in DateTime now)

@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using Shared.Attributes;
+using NSwag.Annotations;
 
 namespace DebtManager.Application;
 
 public sealed record GetDebtRequest : IRequest<GetDebtDto?>
 {
-    [SwaggerIgnore]
+    [OpenApiIgnore]
     public Guid DebtId { get; init; }
 }

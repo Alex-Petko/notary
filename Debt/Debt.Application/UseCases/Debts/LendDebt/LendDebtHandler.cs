@@ -14,5 +14,5 @@ internal sealed class LendDebtHandler : InitDebtHandler<LendDebtRequest>
 
     protected override string GetBorrowerLogin(LendDebtRequest request) => request.Body.Login;
 
-    protected override string GetLenderLogin(LendDebtRequest request) => request?.Sub ?? throw new NotImplementedException();
+    protected override string GetLenderLogin(LendDebtRequest request) => request?.Login ?? throw new NotImplementedException();
 }

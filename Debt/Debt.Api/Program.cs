@@ -1,6 +1,6 @@
 using DebtManager.Application;
-using System.Diagnostics.CodeAnalysis;
 using Shared.IApplicationBuilderExtensions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DebtManager.Api;
 
@@ -16,18 +16,15 @@ internal class Program
             .AddApplication()
             .AddApi(builder.Configuration);
 
-
         var app = builder.Build();
 
-        app.ApplyMigration<Program>();
-
-        app.UseDeveloperExceptionPage();
-
-        app.UseAuthentication();
-        app.UseAuthorization();
-
-        app.UseSwagger();
-        app.UseSwaggerUI();
+        app
+            .ApplyMigration<Program>()
+            .UseDeveloperExceptionPage()
+            .UseAuthentication()
+            .UseAuthorization()
+            .UseOpenApi()
+            .UseSwaggerUi();
 
         app.MapControllers();
 

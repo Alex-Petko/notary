@@ -1,6 +1,5 @@
 using AccessControl.Application;
 using Shared.IApplicationBuilderExtensions;
-using Shared.Repositories;
 using System.Diagnostics.CodeAnalysis;
 
 namespace AccessControl.Api;
@@ -19,15 +18,16 @@ internal sealed class Program
 
         var app = builder.Build();
 
-        app.ApplyMigration<Program>();
+        app
+            .ApplyMigration<Program>()
 
-        app.UseDeveloperExceptionPage();
+            .UseDeveloperExceptionPage()
 
-        app.UseAuthentication();
-        app.UseAuthorization();
+            .UseAuthentication()
+            .UseAuthorization()
 
-        app.UseSwagger();
-        app.UseSwaggerUI();
+            .UseOpenApi()
+            .UseSwaggerUi();
 
         app.MapControllers();
 

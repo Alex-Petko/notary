@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics.CodeAnalysis;
 using Shared.Repositories;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Shared.IApplicationBuilderExtensions;
 

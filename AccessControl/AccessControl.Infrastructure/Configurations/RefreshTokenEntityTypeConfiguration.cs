@@ -30,6 +30,5 @@ internal sealed class RefreshTokenEntityTypeConfiguration : IEntityTypeConfigura
             .HasOne(refreshToken => refreshToken.User)
             .WithOne(user => user.RefreshToken)
             .HasForeignKey<RefreshToken>(refreshToken => refreshToken.Login);
- 
     }
 }

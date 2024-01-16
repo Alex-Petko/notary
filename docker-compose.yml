@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Debt/Debt.Api/Dockerfile
     ports:
-      - "10001:80"
+      - "127.0.0.1:10001:80"
   access_control:
     image: ${DOCKER_REGISTRY-}access_control
     container_name: access_control
@@ -15,7 +15,7 @@ services:
       context: .
       dockerfile: AccessControl/AccessControl.Api/Dockerfile
     ports:
-      - "10002:80"
+      - "127.0.0.1:10002:80"
   debt_db:
     image: postgres
     container_name: debt_db
@@ -28,7 +28,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234
     expose:
-      - "8001:5432"
+      - "127.0.0.1:8001:5432"
     healthcheck:
       test: [ "CMD", "pg_isready" ]
       interval: 10s
@@ -46,7 +46,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234
     expose:
-      - 5432
+      - "127.0.0.1:8002:5432"
     healthcheck:
       test: [ "CMD", "pg_isready" ]
       interval: 10s

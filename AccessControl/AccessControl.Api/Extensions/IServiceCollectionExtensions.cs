@@ -18,11 +18,7 @@ public static partial class IServiceCollectionExtensions
         services
            .AddHttpContextAccessor()
            .Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true)
-           .AddSwaggerGen(options =>
-           {
-               options.OperationFilter<OpenApiParameterRemover<FromClaimAttribute>>();
-               options.OperationFilter<OpenApiParameterRemover<SwaggerIgnoreAttribute>>();
-           })
+           .AddOpenApiDocument()
            .AddAuthorization()
            .AddJwtAuthentication(configuration)
            .AddControllers(options =>
