@@ -10,8 +10,9 @@ public record InitDebtRequest : IRequest<Guid>
     [FromBody]
     public InitDebtRequestBody Body { get; set; } = null!;
 
-    [FromSubClaim, OpenApiIgnore]
-    public string Login { get; set; }
+    [FromSubClaim]
+    [OpenApiIgnore]
+    public string Login { get; set; } = null!;
 }
 
 public sealed record InitDebtRequestBody(

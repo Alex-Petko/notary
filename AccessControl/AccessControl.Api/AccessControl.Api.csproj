@@ -7,24 +7,15 @@
     <UserSecretsId>e4e298ff-04ef-4d5b-83a7-bccdc51b763d</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
-	<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
-    <PackageReference Include="NSwag.MSBuild" Version="14.0.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.IApplicationBuilderExtensions\Shared.IApplicationBuilderExtensions.csproj" />
     <ProjectReference Include="..\AccessControl.Application\AccessControl.Application.csproj" />
   </ItemGroup>
-
-  <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
-    <Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net60) run AccessControl.nswag /variables:Configuration=$(Configuration)" />
-  </Target>
 	
 </Project>

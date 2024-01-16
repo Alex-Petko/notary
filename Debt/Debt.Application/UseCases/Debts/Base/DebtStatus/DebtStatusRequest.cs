@@ -11,6 +11,7 @@ public record class DebtStatusRequest : IRequest<DealStatusType?>
     [FromBody]
     public Guid DebtId { get; init; }
 
-    [FromSubClaim, OpenApiIgnore]
+    [FromSubClaim]
+    [OpenApiIgnore]
     public string Login { get; init; } = null!;
 }

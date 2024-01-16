@@ -34,23 +34,23 @@ namespace Debt.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> LendAsync(InitDebtRequestBody body, string sub = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<System.Guid> LendAsync(InitDebtRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Guid> BorrowAsync(InitDebtRequestBody body, string sub = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<System.Guid> BorrowAsync(InitDebtRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<DealStatusType> AcceptAsync(System.Guid debtId, string sub = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<DealStatusType> AcceptAsync(System.Guid debtId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<DealStatusType> CancelAsync(System.Guid debtId, string sub = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<DealStatusType> CancelAsync(System.Guid debtId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<DealStatusType> CloseAsync(System.Guid debtId, string sub = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<DealStatusType> CloseAsync(System.Guid debtId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -271,7 +271,7 @@ namespace Debt.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> LendAsync(InitDebtRequestBody body, string sub = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<System.Guid> LendAsync(InitDebtRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -293,12 +293,6 @@ namespace Debt.Client
                     if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
                     // Operation Path: "Debts/lend"
                     urlBuilder_.Append("Debts/lend");
-            urlBuilder_.Append('?');
-            if (sub != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("sub")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sub, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-            }
-            urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -364,7 +358,7 @@ namespace Debt.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Guid> BorrowAsync(InitDebtRequestBody body, string sub = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<System.Guid> BorrowAsync(InitDebtRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -386,12 +380,6 @@ namespace Debt.Client
                     if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
                     // Operation Path: "Debts/borrow"
                     urlBuilder_.Append("Debts/borrow");
-            urlBuilder_.Append('?');
-            if (sub != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("sub")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sub, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-            }
-            urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -457,7 +445,7 @@ namespace Debt.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<DealStatusType> AcceptAsync(System.Guid debtId, string sub = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<DealStatusType> AcceptAsync(System.Guid debtId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (debtId == null)
                 throw new System.ArgumentNullException("debtId");
@@ -479,12 +467,6 @@ namespace Debt.Client
                     if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
                     // Operation Path: "Debts/accept"
                     urlBuilder_.Append("Debts/accept");
-            urlBuilder_.Append('?');
-            if (sub != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("sub")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sub, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-            }
-            urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -560,7 +542,7 @@ namespace Debt.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<DealStatusType> CancelAsync(System.Guid debtId, string sub = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<DealStatusType> CancelAsync(System.Guid debtId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (debtId == null)
                 throw new System.ArgumentNullException("debtId");
@@ -582,12 +564,6 @@ namespace Debt.Client
                     if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
                     // Operation Path: "Debts/cancel"
                     urlBuilder_.Append("Debts/cancel");
-            urlBuilder_.Append('?');
-            if (sub != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("sub")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sub, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-            }
-            urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -663,7 +639,7 @@ namespace Debt.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<DealStatusType> CloseAsync(System.Guid debtId, string sub = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<DealStatusType> CloseAsync(System.Guid debtId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (debtId == null)
                 throw new System.ArgumentNullException("debtId");
@@ -685,12 +661,6 @@ namespace Debt.Client
                     if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
                     // Operation Path: "Debts/close"
                     urlBuilder_.Append("Debts/close");
-            urlBuilder_.Append('?');
-            if (sub != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("sub")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sub, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
-            }
-            urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
