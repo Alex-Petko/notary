@@ -5,7 +5,7 @@ using Shared.FluentValidation;
 using Shared.Tests;
 using static Global.Constraints;
 
-namespace AccessControl.Tests;
+namespace Application.UseCases;
 
 public class RequestBaseValidatorTests
 {

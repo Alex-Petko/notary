@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Tests;
 
-namespace AccessControl.Tests;
+namespace Api.Controllers;
 
 public class UsersControllerTests
 {
