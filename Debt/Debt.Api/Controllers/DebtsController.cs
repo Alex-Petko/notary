@@ -20,6 +20,7 @@ public class DebtsController : ControllerBase
     }
 
     [HttpGet]
+    [ResponseCache(Duration = 30)]
     [ProducesResponseType(typeof(IEnumerable<GetDebtDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll()
     {
@@ -28,6 +29,7 @@ public class DebtsController : ControllerBase
     }
 
     [HttpGet("{" + $"{nameof(request)}.{nameof(GetDebtRequest.DebtId)}" + "}")]
+    [ResponseCache(Duration = 30)]
     [ProducesResponseType(typeof(GetDebtDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get(GetDebtRequest request)
