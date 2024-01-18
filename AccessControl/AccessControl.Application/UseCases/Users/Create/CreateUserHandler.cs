@@ -8,19 +8,33 @@ namespace AccessControl.Application;
 
 internal sealed class CreateUserHandler : IRequestHandler<CreateUserRequest, IActionResult>
 {
-    private readonly ITransactions _transactions;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IPasswordHasher _passwordHasher;
 
-    public CreateUserHandler(ITransactions transactions, IMapper mapper)
+    public CreateUserHandler(
+        IUnitOfWork unitOfWork,
+        IMapper mapper,
+        IPasswordHasher passwordHasher)
     {
-        _transactions = transactions;
+        _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<IActionResult> Handle(CreateUserRequest request, CancellationToken cancellationToken)
     {
+        var dbUser = await _unitOfWork.Users.FindAsync(request.Login);
+        if (dbUser is not null)
+            return new ConflictResult();
+
         var user = _mapper.Map<User>(request);
 
-        return await _transactions.TryCreateAsync(user) ? new OkResult() : new ConflictResult();
+        user.PasswordHash = _passwordHasher.HashPassword(user, request.Password);
+
+        _unitOfWork.Users.Add(user);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return new OkResult();
     }
 }

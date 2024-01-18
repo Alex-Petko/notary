@@ -20,8 +20,6 @@ public static class IServiceCollectionExtensions
         services.AddScoped<IUnitOfWorkBase, UnitOfWork>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        services.AddTransient<ITransactions, Transactions>();
-
         return services;
     }
 }

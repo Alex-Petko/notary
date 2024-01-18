@@ -9,6 +9,8 @@ namespace AccessControl.Infrastructure;
 [ExcludeFromCodeCoverage]
 internal sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
 {
+    private const int PasswordHashLength = 84;
+
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder
@@ -21,6 +23,6 @@ internal sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<Use
         builder
             .Property(x => x.PasswordHash)
             .IsRequired()
-            .HasMaxLength(Constraints.Password.MaxLength);
+            .HasMaxLength(PasswordHashLength);
     }
 }
