@@ -8,10 +8,10 @@ public class DateTimeProviderTests
     public void UtcNow_Ok_Ok()
     {
         // Arrange
-        var provider = new DateTimeProvider();
+        var provider = new NowGetService();
 
         // Act
-        var utcNow = provider.UtcNow;
+        var utcNow = provider.Now;
 
         // Assert
         Assert.Equal(0, DateTime.UtcNow.Subtract(utcNow).Milliseconds);

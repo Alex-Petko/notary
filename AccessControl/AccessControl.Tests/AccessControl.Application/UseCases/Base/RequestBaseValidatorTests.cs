@@ -16,8 +16,8 @@ public class RequestBaseValidatorTests
     public async Task Login_GreaterThanMax_MaximumLengthErrorMessage(string password)
     {
         // Arrange
-        var validator = new RequestBaseValidator<RequestBase>();
-        var request = new RequestBase
+        var validator = new CredentialsValidator<Credentials>();
+        var request = new Credentials
         {
             Login = TestHelper.String(LoginMaxLength + 1),
             Password = password
@@ -27,7 +27,7 @@ public class RequestBaseValidatorTests
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.MaximumLength<RequestBase>(x => x.Login, LoginMaxLength);
+        var message = ValidationErrorMessages.MaximumLength<Credentials>(x => x.Login, LoginMaxLength);
         result.ShouldHaveValidationErrorFor(x => x.Login)
             .WithErrorMessage(message);
     }
@@ -36,8 +36,8 @@ public class RequestBaseValidatorTests
     public async Task Login_Null_NotEmptyErrorMessage(string password)
     {
         // Arrange
-        var validator = new RequestBaseValidator<RequestBase>();
-        var request = new RequestBase
+        var validator = new CredentialsValidator<Credentials>();
+        var request = new Credentials
         {
             Login = null!,
             Password = password
@@ -47,7 +47,7 @@ public class RequestBaseValidatorTests
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.NotEmpty<RequestBase, string>(x => x.Login);
+        var message = ValidationErrorMessages.NotEmpty<Credentials, string>(x => x.Login);
         result.ShouldHaveValidationErrorFor(x => x.Login)
             .WithErrorMessage(message);
     }
@@ -56,8 +56,8 @@ public class RequestBaseValidatorTests
     public async Task Password_GreaterThanMax_MaximumLengthErrorMessage(string login)
     {
         // Arrange
-        var validator = new RequestBaseValidator<RequestBase>();
-        var request = new RequestBase
+        var validator = new CredentialsValidator<Credentials>();
+        var request = new Credentials
         {
             Login = login,
             Password = TestHelper.String(PasswordMaxLength + 1)
@@ -67,7 +67,7 @@ public class RequestBaseValidatorTests
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.MaximumLength<RequestBase>(x => x.Password, PasswordMaxLength);
+        var message = ValidationErrorMessages.MaximumLength<Credentials>(x => x.Password, PasswordMaxLength);
         result.ShouldHaveValidationErrorFor(x => x.Password)
             .WithErrorMessage(message);
     }
@@ -76,8 +76,8 @@ public class RequestBaseValidatorTests
     public async Task Password_Null_NotEmptyErrorMessage(string login)
     {
         // Arrange
-        var validator = new RequestBaseValidator<RequestBase>();
-        var request = new RequestBase
+        var validator = new CredentialsValidator<Credentials>();
+        var request = new Credentials
         {
             Login = login,
             Password = null!
@@ -87,7 +87,7 @@ public class RequestBaseValidatorTests
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.NotEmpty<RequestBase, string>(x => x.Password);
+        var message = ValidationErrorMessages.NotEmpty<Credentials, string>(x => x.Password);
         result.ShouldHaveValidationErrorFor(x => x.Password)
             .WithErrorMessage(message);
     }
@@ -96,8 +96,8 @@ public class RequestBaseValidatorTests
     public async Task Validate_Ok_Ok(string login, string password)
     {
         // Arrange
-        var validator = new RequestBaseValidator<RequestBase>();
-        var request = new RequestBase
+        var validator = new CredentialsValidator<Credentials>();
+        var request = new Credentials
         {
             Login = login,
             Password = password

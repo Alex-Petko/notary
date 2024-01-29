@@ -21,7 +21,8 @@ public static class IServiceCollectionExtensions
             configuration.RegisterServicesFromAssembly(assembly);
         });
 
-        services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+        services.AddScoped<INowGetService, NowGetService>();
+
         services.AddTransient<ITokenManager, TokenManager>();
         services.AddTransient<IPasswordHasher, PasswordHasher>();
 

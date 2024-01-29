@@ -3,6 +3,7 @@ using AccessControl.Application;
 using AutoFixture.Xunit2;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 using Shared.Tests;
 
 namespace Api.Controllers;
@@ -10,20 +11,39 @@ namespace Api.Controllers;
 public class TokensControllerTests
 {
     [Theory, AutoData]
-    public async Task Create_Ok_Ok(CreateTokenRequest request, CancellationToken cancellationToken)
+    internal async Task Create_Ok_Ok(CreateTokenCommand command, CancellationToken cancellationToken)
     {
         // Arrange
-        var (controller, mediatorVerify) = Sut<CreateTokenRequest, IActionResult>(new OkResult());
+        var (controller, mediator) = Sut();
+        mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(CreateTokenCommandResult.Ok);
 
         // Act
-        var result = await controller.Create(request, cancellationToken);
+        var result = await controller.CreateCommand(command, cancellationToken);
 
         // Assert
         Assert.IsType<OkResult>(result);
-        mediatorVerify();
+
+        mediator.Verify(x => x.Send(command, cancellationToken), Times.Once);
+        mediator.VerifyNoOtherCalls();
     }
 
-    private static (TokensController, Action) Sut<TRequest, TResponse>(TResponse response)
-       where TRequest : IRequest<TResponse>
-        => TestHelper.Sut<TokensController, TRequest, TResponse>(x => new(x), response);
+    [Theory, AutoData]
+    internal async Task Create_AuthenticationFail_NotFound(CreateTokenCommand command, CancellationToken cancellationToken)
+    {
+        // Arrange
+        var (controller, mediator) = Sut();
+        mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(CreateTokenCommandResult.AuthenticationFail);
+
+        // Act
+        var result = await controller.CreateCommand(command, cancellationToken);
+
+        // Assert
+        Assert.IsType<NotFoundResult>(result);
+
+        mediator.Verify(x => x.Send(command, cancellationToken), Times.Once);
+        mediator.VerifyNoOtherCalls();
+    }
+
+    private static (TokensController, Mock<IMediator>) Sut()
+        => TestHelper.Sut<TokensController>(x => new(x));
 }

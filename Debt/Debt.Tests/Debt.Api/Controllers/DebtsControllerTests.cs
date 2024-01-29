@@ -1,183 +1,219 @@
-using AutoFixture.Xunit2;
 using DebtManager.Api;
 using DebtManager.Application;
 using DebtManager.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 using Shared.Tests;
 
 namespace DebtManager.Tests;
 
 public class DebtsControllerTests
 {
-    [Theory, AutoData]
-    public async Task GetAll_OkObjectResult(List<GetDebtDto> result)
+    [Theory, CustomAutoData]
+    public async Task GetAll_OkObjectResult(List<GetDebtDto> result, GetAllDebtsRequest query, CancellationToken cancellationToken)
     {
         // Arrange
-        var (controller, mediatorVerify) = Sut<GetAllDebtsRequest, IEnumerable<GetDebtDto>>(result);
+        var (controller, mediator) = Sut();
+        mediator.Setup(x => x.Send(query, cancellationToken)).ReturnsAsync(result);
 
         // Act
-        var actionResult = await controller.GetAll();
+        var actionResult = await controller.GetAll(cancellationToken);
 
         //Assert
         var okObjectResult = Assert.IsType<OkObjectResult>(actionResult);
         Assert.Equal(result, okObjectResult.Value);
-        mediatorVerify();
+
+        mediator.Verify(x => x.Send(query, cancellationToken), Times.Once);
+        mediator.VerifyNoOtherCalls();
     }
 
-    [Theory, AutoData]
-    public async Task Get_OkObjectResult(GetDebtRequest request, GetDebtDto response)
+    [Theory, CustomAutoData]
+    public async Task Get_OkObjectResult(GetDebtDto response, GetDebtRequest query, CancellationToken cancellationToken)
     {
         // Arrange
-        var (controller, mediatorVerify) = Sut<GetDebtRequest, GetDebtDto?>(response);
+        var (controller, mediator) = Sut();
+        mediator.Setup(x => x.Send(query, cancellationToken)).ReturnsAsync(response);
 
         // Act
-        var actionResult = await controller.Get(request);
+        var actionResult = await controller.Get(query, cancellationToken);
 
         //Assert
         var okObjectResult = Assert.IsType<OkObjectResult>(actionResult);
         var resultDto = Assert.IsType<GetDebtDto>(okObjectResult.Value);
+
         Assert.Equal(response, resultDto);
-        mediatorVerify();
+
+        mediator.Verify(x => x.Send(query, cancellationToken), Times.Once);
+        mediator.VerifyNoOtherCalls();
     }
 
-    [Theory, AutoData]
-    public async Task Get_NotFoundResult(GetDebtRequest request)
+    [Theory, CustomAutoData]
+    public async Task Get_NotFoundResult(GetDebtRequest query, CancellationToken cancellationToken)
     {
         // Arrange
-        var (controller, mediatorVerify) = Sut<GetDebtRequest, GetDebtDto?>(null);
-
+        var (controller, mediator) = Sut();
+        mediator.Setup(x => x.Send(query, cancellationToken)).ReturnsAsync((GetDebtDto?)null);
         // Act
-        var actionResult = await controller.Get(request);
+        var actionResult = await controller.Get(query, cancellationToken);
 
         //Assert
         Assert.IsType<NotFoundResult>(actionResult);
-        mediatorVerify();
+
+        mediator.Verify(x => x.Send(query, cancellationToken), Times.Once);
+        mediator.VerifyNoOtherCalls();
     }
 
-    [Theory, AutoData]
-    public async Task Lend_CreatedResult(LendDebtRequest request, Guid response)
+    [Theory, CustomAutoData]
+    public async Task Lend_CreatedResult(LendDebtRequest command, CancellationToken cancellationToken, Guid response)
     {
         // Arrange
-        var (controller, mediatorVerify) = Sut<LendDebtRequest, Guid>(response);
+        var (controller, mediator) = Sut();
+        mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(response);
 
         // Act
-        var actionResult = await controller.Lend(request);
+        var actionResult = await controller.Lend(command, cancellationToken);
 
         //Assert
         var createdResult = Assert.IsType<CreatedResult>(actionResult);
         var createdGuid = Assert.IsType<Guid>(createdResult.Value);
         Assert.Equal(response, createdGuid);
-        mediatorVerify();
+
+        mediator.Verify(x => x.Send(command, cancellationToken), Times.Once);
+        mediator.VerifyNoOtherCalls();
     }
 
-    [Theory, AutoData]
-    public async Task Borrow_CreatedResult(BorrowDebtRequest request, Guid response)
+    [Theory, CustomAutoData]
+    public async Task Borrow_CreatedResult(BorrowDebtRequest command, CancellationToken cancellationToken, Guid response)
     {
         // Arrange
-        var (controller, mediatorVerify) = Sut<BorrowDebtRequest, Guid>(response);
+        var (controller, mediator) = Sut();
+        mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(response);
 
         // Act
-        var actionResult = await controller.Borrow(request);
+        var actionResult = await controller.Borrow(command, cancellationToken);
 
         //Assert
         var createdResult = Assert.IsType<CreatedResult>(actionResult);
         var createdGuid = Assert.IsType<Guid>(createdResult.Value);
+
         Assert.Equal(response, createdGuid);
-        mediatorVerify();
+
+        mediator.Verify(x => x.Send(command, cancellationToken), Times.Once);
+        mediator.VerifyNoOtherCalls();
     }
 
-    [Theory, AutoData]
-    public async Task Accept_OkObjectResult(AcceptDebtRequest request, DealStatusType response)
+    [Theory, CustomAutoData]
+    public async Task Accept_OkObjectResult(AcceptDebtRequest command, CancellationToken cancellationToken, DealStatusType response)
     {
         // Arrange
-        var (controller, mediatorVerify) = Sut<AcceptDebtRequest, DealStatusType?>(response);
+        var (controller, mediator) = Sut();
+        mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(response);
 
         // Act
-        var actionResult = await controller.Accept(request);
+        var actionResult = await controller.Accept(command, cancellationToken);
 
         //Assert
         var okObjectResult = Assert.IsType<OkObjectResult>(actionResult);
         var resultStatus = Assert.IsType<DealStatusType>(okObjectResult.Value);
+
         Assert.Equal(response, resultStatus);
-        mediatorVerify();
+
+        mediator.Verify(x => x.Send(command, cancellationToken), Times.Once);
+        mediator.VerifyNoOtherCalls();
     }
 
-    [Theory, AutoData]
-    public async Task Accept_BadRequestResult(AcceptDebtRequest request)
+    [Theory, CustomAutoData]
+    public async Task Accept_BadRequestResult(AcceptDebtRequest command, CancellationToken cancellationToken)
     {
         // Arrange
-        var (controller, mediatorVerify) = Sut<AcceptDebtRequest, DealStatusType?>(null);
+        var (controller, mediator) = Sut();
+        mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync((DealStatusType?)null);
 
         // Act
-        var actionResult = await controller.Accept(request);
+        var actionResult = await controller.Accept(command, cancellationToken);
 
         //Assert
         Assert.IsType<BadRequestResult>(actionResult);
-        mediatorVerify();
+
+        mediator.Verify(x => x.Send(command, cancellationToken), Times.Once);
+        mediator.VerifyNoOtherCalls();
     }
 
-    [Theory, AutoData]
-    public async Task Cancel_OkObjectResult(CancelDebtRequest request, DealStatusType response)
+    [Theory, CustomAutoData]
+    public async Task Cancel_OkObjectResult(CancelDebtRequest command, CancellationToken cancellationToken, DealStatusType response)
     {
         // Arrange
-        var (controller, mediatorVerify) = Sut<CancelDebtRequest, DealStatusType?>(response);
+        var (controller, mediator) = Sut();
+        mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(response);
 
         // Act
-        var actionResult = await controller.Cancel(request);
+        var actionResult = await controller.Cancel(command, cancellationToken);
 
         //Assert
         var okObjectResult = Assert.IsType<OkObjectResult>(actionResult);
         var resultStatus = Assert.IsType<DealStatusType>(okObjectResult.Value);
+
         Assert.Equal(response, resultStatus);
-        mediatorVerify();
+
+        mediator.Verify(x => x.Send(command, cancellationToken), Times.Once);
+        mediator.VerifyNoOtherCalls();
     }
 
-    [Theory, AutoData]
-    public async Task Cancel_BadRequestResult(CancelDebtRequest request)
+    [Theory, CustomAutoData]
+    public async Task Cancel_BadRequestResult(CancelDebtRequest command, CancellationToken cancellationToken)
     {
         // Arrange
-        var (controller, mediatorVerify) = Sut<CancelDebtRequest, DealStatusType?>(null);
+        var (controller, mediator) = Sut();
+        mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync((DealStatusType?)null);
 
         // Act
-        var actionResult = await controller.Cancel(request);
+        var actionResult = await controller.Cancel(command, cancellationToken);
 
         //Assert
         Assert.IsType<BadRequestResult>(actionResult);
-        mediatorVerify();
+
+        mediator.Verify(x => x.Send(command, cancellationToken), Times.Once);
+        mediator.VerifyNoOtherCalls();
     }
 
-    [Theory, AutoData]
-    public async Task Close_OkObjectResult(CloseDebtRequest request, DealStatusType response)
+    [Theory, CustomAutoData]
+    public async Task Close_OkObjectResult(CloseDebtRequest command, CancellationToken cancellationToken, DealStatusType response)
     {
         // Arrange
-        var (controller, mediatorVerify) = Sut<CloseDebtRequest, DealStatusType?>(response);
+        var (controller, mediator) = Sut();
+        mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(response);
 
         // Act
-        var actionResult = await controller.Close(request);
+        var actionResult = await controller.Close(command, cancellationToken);
 
         //Assert
         var okObjectResult = Assert.IsType<OkObjectResult>(actionResult);
         var resultStatus = Assert.IsType<DealStatusType>(okObjectResult.Value);
+
         Assert.Equal(response, resultStatus);
-        mediatorVerify();
+
+        mediator.Verify(x => x.Send(command, cancellationToken), Times.Once);
+        mediator.VerifyNoOtherCalls();
     }
 
-    [Theory, AutoData]
-    public async Task Close_BadRequestResult(CloseDebtRequest request)
+    [Theory, CustomAutoData]
+    public async Task Close_BadRequestResult(CloseDebtRequest command, CancellationToken cancellationToken)
     {
         // Arrange
-        var (controller, mediatorVerify) = Sut<CloseDebtRequest, DealStatusType?>(null);
+        var (controller, mediator) = Sut();
+        mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync((DealStatusType?)null);
 
         // Act
-        var actionResult = await controller.Close(request);
+        var actionResult = await controller.Close(command, cancellationToken);
 
         //Assert
         Assert.IsType<BadRequestResult>(actionResult);
-        mediatorVerify();
+
+        mediator.Verify(x => x.Send(command, cancellationToken), Times.Once);
+        mediator.VerifyNoOtherCalls();
     }
 
-    private static (DebtsController, Action) Sut<TRequest, TResponse>(TResponse response)
-       where TRequest : IRequest<TResponse>
-        => TestHelper.Sut<DebtsController, TRequest, TResponse>(x => new(x), response);
+    private static (DebtsController, Mock<IMediator>) Sut()
+        => TestHelper.Sut<DebtsController>(x => new(x));
 }

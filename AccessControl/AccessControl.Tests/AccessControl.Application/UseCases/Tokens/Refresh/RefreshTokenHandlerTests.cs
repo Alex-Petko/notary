@@ -1,4 +1,5 @@
 ﻿using AccessControl.Application;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shared.Tests;
@@ -8,28 +9,32 @@ namespace Application.UseCases;
 public class RefreshTokenHandlerTests
 {
     [Theory, CustomAutoData]
-    public async Task Handle_Ok_OkResult(RefreshTokenRequest request, CancellationToken cancellationToken)
+    internal async Task Handle_Ok_OkResult(RefreshTokenCommand command, CancellationToken cancellationToken, TokenManagerDto tokenManagerDto)
     {
         // Arrange
-        var (handler, tokenManager) = Sut();
+        var (handler, tokenManager, mapper) = Sut();
+        mapper.Setup(x => x.Map<TokenManagerDto>(command)).Returns(tokenManagerDto);
 
         // Act
-        var result = await handler.Handle(request, cancellationToken);
+        await handler.Handle(command, cancellationToken);
 
         // Assert
-        Assert.IsType<OkResult>(result);
+        mapper.Verify(x => x.Map<TokenManagerDto>(command), Times.Once);
+        mapper.VerifyNoOtherCalls();
 
-        tokenManager.Verify(x => x.UpdateAsync(request.Login), Times.Once());
+        tokenManager.Verify(x => x.UpdateAsync(tokenManagerDto, cancellationToken), Times.Once);
         tokenManager.VerifyNoOtherCalls();
     }
 
-    private (RefreshTokenHandler, Mock<ITokenManager>) Sut()
+    private static (RefreshTokenCommandHandler, Mock<ITokenManager>, Mock<IMapper>) Sut()
     {
         var tokenManager = new Mock<ITokenManager>();
+        var mapper = new Mock<IMapper>();
 
         return (
-            new RefreshTokenHandler(tokenManager.Object),
-            tokenManager
+            new RefreshTokenCommandHandler(tokenManager.Object, mapper.Object),
+            tokenManager,
+            mapper
         );
     }
 }

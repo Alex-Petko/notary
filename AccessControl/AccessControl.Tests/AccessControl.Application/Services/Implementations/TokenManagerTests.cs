@@ -1,6 +1,5 @@
 ﻿using AccessControl.Application;
 using AccessControl.Domain;
-using AccessControl.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -11,22 +10,19 @@ namespace Application.Services;
 public class TokenManagerTests
 {
     [Theory, CustomAutoData]
-    public async Task UpdateAsync_RTExist_Ok(string login, RefreshToken refreshToken, JwtOptions options)
+    internal async Task UpdateAsync_RTExist_Ok(TokenManagerDto dto, JwtOptions options, CancellationToken cancellationToken)
     {
         // Arrange
-        var (manager, unitOfWork, dateTimeProvider, httpContextAccessor, jwtOptions, cookie, httpContext) = Sut();
+        var (manager, commandProvider, nowGetService, httpContextAccessor, jwtOptions, cookie, httpContext) = Sut();
 
-        unitOfWork.Setup(x => x.RefreshTokens.FindAsync(login)).ReturnsAsync(refreshToken);
         jwtOptions.Setup(x => x.Value).Returns(options);
 
         // Act
-        await manager.UpdateAsync(login);
+        await manager.UpdateAsync(dto, cancellationToken);
 
         // Assert;
-        unitOfWork.Verify(x => x.RefreshTokens.FindAsync(login), Times.Once);
-        unitOfWork.Verify(x => x.SaveChangesAsync(default), Times.Once);
-        unitOfWork.Verify(x => x.RefreshTokens.Add(It.IsAny<RefreshToken>()), Times.Never);
-        unitOfWork.VerifyNoOtherCalls();
+        commandProvider.Verify(x => x.UpdateRefreshToken(dto.Login, It.IsAny<string>(), nowGetService.Object.Now, cancellationToken), Times.Once);
+        commandProvider.VerifyNoOtherCalls();
 
         httpContextAccessor.Verify(x => x.HttpContext, Times.Exactly(2));
 
@@ -39,44 +35,8 @@ public class TokenManagerTests
         httpContext.VerifyNoOtherCalls();
         httpContextAccessor.VerifyNoOtherCalls();
 
-        dateTimeProvider.Verify(x => x.UtcNow, Times.AtLeastOnce);
-        dateTimeProvider.VerifyNoOtherCalls();
-
-        jwtOptions.Verify(x => x.Value, Times.AtLeastOnce);
-        jwtOptions.VerifyNoOtherCalls();
-    }
-
-    [Theory, CustomAutoData]
-    public async Task UpdateAsync_RTNotExist_Ok(string login, JwtOptions options)
-    {
-        // Arrange
-        var (manager, unitOfWork, dateTimeProvider, httpContextAccessor, jwtOptions, cookie, httpContext) = Sut();
-
-        unitOfWork.Setup(x => x.RefreshTokens.FindAsync(login)).ReturnsAsync((RefreshToken?)null);
-        jwtOptions.Setup(x => x.Value).Returns(options);
-
-        // Act
-        await manager.UpdateAsync(login);
-
-        // Assert;
-        unitOfWork.Verify(x => x.RefreshTokens.FindAsync(login), Times.Once);
-        unitOfWork.Verify(x => x.SaveChangesAsync(default), Times.Once);
-        unitOfWork.Verify(x => x.RefreshTokens.Add(It.IsAny<RefreshToken>()), Times.Once);
-        unitOfWork.VerifyNoOtherCalls();
-
-        httpContextAccessor.Verify(x => x.HttpContext, Times.Exactly(2));
-
-        httpContext.Verify(x => x.Response, Times.Exactly(2));
-
-        cookie.Verify(x => x.Append("JwtBearer", It.IsAny<string>(), It.IsAny<CookieOptions>()), Times.Once);
-        cookie.Verify(x => x.Append("RT", It.IsAny<string>(), It.IsAny<CookieOptions>()), Times.Once);
-
-        cookie.VerifyNoOtherCalls();
-        httpContext.VerifyNoOtherCalls();
-        httpContextAccessor.VerifyNoOtherCalls();
-
-        dateTimeProvider.Verify(x => x.UtcNow, Times.AtLeastOnce);
-        dateTimeProvider.VerifyNoOtherCalls();
+        nowGetService.Verify(x => x.Now, Times.AtLeastOnce);
+        nowGetService.VerifyNoOtherCalls();
 
         jwtOptions.Verify(x => x.Value, Times.AtLeastOnce);
         jwtOptions.VerifyNoOtherCalls();
@@ -84,8 +44,8 @@ public class TokenManagerTests
 
     private (
         TokenManager,
-        Mock<IUnitOfWork>,
-        Mock<IDateTimeProvider>,
+        Mock<ICommandProvider>,
+        Mock<INowGetService>,
         Mock<IHttpContextAccessor>,
         Mock<IOptionsSnapshot<JwtOptions>>,
         Mock<IResponseCookies>,
@@ -93,12 +53,12 @@ public class TokenManagerTests
         )
             Sut()
     {
-        var unitOfWork = new Mock<IUnitOfWork>();
-        var dateTimeProvider = new Mock<IDateTimeProvider>();
+        var commandProvider = new Mock<ICommandProvider>();
+        var dateTimeProvider = new Mock<INowGetService>();
         var httpContextAccessor = new Mock<IHttpContextAccessor>();
         var jwtOptions = new Mock<IOptionsSnapshot<JwtOptions>>();
 
-        dateTimeProvider.Setup(x => x.UtcNow).Returns(DateTime.UtcNow);
+        dateTimeProvider.Setup(x => x.Now).Returns(DateTime.UtcNow);
 
         var httpContext = new Mock<HttpContext>();
         var cookie = new Mock<IResponseCookies>();
@@ -106,8 +66,8 @@ public class TokenManagerTests
         httpContextAccessor.Setup(x => x.HttpContext).Returns(httpContext.Object);
 
         return (
-            new TokenManager(unitOfWork.Object, dateTimeProvider.Object, httpContextAccessor.Object, jwtOptions.Object),
-            unitOfWork,
+            new TokenManager(commandProvider.Object, dateTimeProvider.Object, httpContextAccessor.Object, jwtOptions.Object),
+            commandProvider,
             dateTimeProvider,
             httpContextAccessor,
             jwtOptions,

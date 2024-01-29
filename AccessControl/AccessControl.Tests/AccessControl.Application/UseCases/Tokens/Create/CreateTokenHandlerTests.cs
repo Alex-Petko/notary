@@ -1,8 +1,5 @@
 ﻿using AccessControl.Application;
-using AccessControl.Domain;
-using AccessControl.Infrastructure;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using Moq;
 using Shared.Tests;
 
@@ -11,108 +8,105 @@ namespace Application.UseCases;
 public class CreateTokenHandlerTests
 {
     [Theory, CustomAutoData]
-    public async Task Handle_Ok_OkResult(CreateTokenRequest request, CancellationToken cancellationToken, User user)
+    internal async Task Handle_Ok_OkResult(
+        CreateTokenCommand command,
+        CancellationToken cancellationToken,
+        AuthenticationDto authenticationDto,
+        TokenManagerDto tokenManagerDto)
     {
         // Arrange
-        var (handler, tokenManager, passwordHasher, unitOfWork) = Sut();
-        unitOfWork.Setup(x => x.Users.FindAsync(request.Login)).ReturnsAsync(user);
-        passwordHasher.Setup(x => x.VerifyHashedPassword(user, user.PasswordHash, request.Password)).Returns(PasswordVerificationResult.Success);
+        var (handler, authenticationService, tokenManager, mapper) = Sut();
+
+        mapper.Setup(x => x.Map<AuthenticationDto>(command)).Returns(authenticationDto);
+        mapper.Setup(x => x.Map<TokenManagerDto>(command)).Returns(tokenManagerDto);
+
+        authenticationService.Setup(x => x.AuthenticateAsync(authenticationDto, cancellationToken)).ReturnsAsync(AuthenticationResult.Ok);
 
         // Act
-        var result = await handler.Handle(request, cancellationToken);
+        var result = await handler.Handle(command, cancellationToken);
 
         // Assert
-        Assert.IsType<OkResult>(result);
+        var createTokenCommandResult = Assert.IsType<CreateTokenCommandResult>(result);
+        Assert.Equal(CreateTokenCommandResult.Ok, createTokenCommandResult);
 
-        unitOfWork.Verify(x => x.Users.FindAsync(request.Login), Times.Once);
-        unitOfWork.VerifyNoOtherCalls();
+        mapper.Verify(x => x.Map<AuthenticationDto>(command), Times.Once);
+        mapper.Verify(x => x.Map<TokenManagerDto>(command), Times.Once);
+        mapper.VerifyNoOtherCalls();
 
-        passwordHasher.Verify(x => x.VerifyHashedPassword(user, user.PasswordHash, request.Password), Times.Once);
-        passwordHasher.VerifyNoOtherCalls();
+        authenticationService.Verify(x => x.AuthenticateAsync(authenticationDto, cancellationToken), Times.Once);
+        authenticationService.VerifyNoOtherCalls();
 
-        tokenManager.Verify(x => x.UpdateAsync(request.Login), Times.Once);
+        tokenManager.Verify(x => x.UpdateAsync(tokenManagerDto, cancellationToken), Times.Once);
         tokenManager.VerifyNoOtherCalls();
     }
 
     [Theory, CustomAutoData]
-    public async Task Handle_PasswordCorrectButRehashNeeded_OkResult(CreateTokenRequest request, CancellationToken cancellationToken, User user)
+    internal async Task Handle_UserNotFound_AuthenticationFail(
+        CreateTokenCommand command,
+        CancellationToken cancellationToken,
+        AuthenticationDto authenticationDto)
     {
         // Arrange
-        var (handler, tokenManager, passwordHasher, unitOfWork) = Sut();
-        unitOfWork.Setup(x => x.Users.FindAsync(request.Login)).ReturnsAsync(user);
-        passwordHasher.Setup(x => x.VerifyHashedPassword(user, user.PasswordHash, request.Password)).Returns(PasswordVerificationResult.SuccessRehashNeeded);
+        var (handler, authenticationService, tokenManager, mapper) = Sut();
+        mapper.Setup(x => x.Map<AuthenticationDto>(command)).Returns(authenticationDto);
+
+        authenticationService.Setup(x => x.AuthenticateAsync(authenticationDto, cancellationToken)).ReturnsAsync(AuthenticationResult.UserNotFound);
 
         // Act
-        var result = await handler.Handle(request, cancellationToken);
+        var result = await handler.Handle(command, cancellationToken);
 
         // Assert
-        Assert.IsType<OkResult>(result);
+        var createTokenCommandResult = Assert.IsType<CreateTokenCommandResult>(result);
+        Assert.Equal(CreateTokenCommandResult.AuthenticationFail, createTokenCommandResult);
 
-        unitOfWork.Verify(x => x.Users.FindAsync(request.Login), Times.Once);
-        unitOfWork.VerifyNoOtherCalls();
+        mapper.Verify(x => x.Map<AuthenticationDto>(command), Times.Once);
+        mapper.VerifyNoOtherCalls();
 
-        passwordHasher.Verify(x => x.VerifyHashedPassword(user, user.PasswordHash, request.Password), Times.Once);
-        passwordHasher.VerifyNoOtherCalls();
-
-        tokenManager.Verify(x => x.UpdateAsync(request.Login), Times.Once);
-        tokenManager.VerifyNoOtherCalls();
-    }
-
-    [Theory, CustomAutoData]
-    public async Task Handle_UserNotFound_NotFoundResult(CreateTokenRequest request, CancellationToken cancellationToken)
-    {
-        // Arrange
-        var (handler, tokenManager, passwordHasher, unitOfWork) = Sut();
-        unitOfWork.Setup(x => x.Users.FindAsync(request.Login)).ReturnsAsync((User)null!);
-
-        // Act
-        var result = await handler.Handle(request, cancellationToken);
-
-        // Assert
-        Assert.IsType<NotFoundResult>(result);
-
-        unitOfWork.Verify(x => x.Users.FindAsync(request.Login), Times.Once);
-        unitOfWork.VerifyNoOtherCalls();
-
-        passwordHasher.VerifyNoOtherCalls();
+        authenticationService.Verify(x => x.AuthenticateAsync(authenticationDto, cancellationToken), Times.Once);
+        authenticationService.VerifyNoOtherCalls();
 
         tokenManager.VerifyNoOtherCalls();
     }
 
     [Theory, CustomAutoData]
-    public async Task Handle_PasswordIncorrect_NotFoundResult(CreateTokenRequest request, CancellationToken cancellationToken, User user)
+    internal async Task Handle_PasswordIncorrect_AuthenticationFail(
+        CreateTokenCommand command,
+        CancellationToken cancellationToken,
+        AuthenticationDto authenticationDto)
     {
         // Arrange
-        var (handler, tokenManager, passwordHasher, unitOfWork) = Sut();
-        unitOfWork.Setup(x => x.Users.FindAsync(request.Login)).ReturnsAsync(user);
-        passwordHasher.Setup(x => x.VerifyHashedPassword(user, user.PasswordHash, request.Password)).Returns(PasswordVerificationResult.Failed);
+        var (handler, authenticationService, tokenManager, mapper) = Sut();
+        mapper.Setup(x => x.Map<AuthenticationDto>(command)).Returns(authenticationDto);
+
+        authenticationService.Setup(x => x.AuthenticateAsync(authenticationDto, cancellationToken)).ReturnsAsync(AuthenticationResult.PasswordIncorrect);
 
         // Act
-        var result = await handler.Handle(request, cancellationToken);
+        var result = await handler.Handle(command, cancellationToken);
 
         // Assert
-        Assert.IsType<NotFoundResult>(result);
+        var createTokenCommandResult = Assert.IsType<CreateTokenCommandResult>(result);
+        Assert.Equal(CreateTokenCommandResult.AuthenticationFail, createTokenCommandResult);
 
-        unitOfWork.Verify(x => x.Users.FindAsync(request.Login), Times.Once);
-        unitOfWork.VerifyNoOtherCalls();
+        mapper.Verify(x => x.Map<AuthenticationDto>(command), Times.Once);
+        mapper.VerifyNoOtherCalls();
 
-        passwordHasher.Verify(x => x.VerifyHashedPassword(user, user.PasswordHash, request.Password), Times.Once);
-        passwordHasher.VerifyNoOtherCalls();
+        authenticationService.Verify(x => x.AuthenticateAsync(authenticationDto, cancellationToken), Times.Once);
+        authenticationService.VerifyNoOtherCalls();
 
         tokenManager.VerifyNoOtherCalls();
     }
 
-    private (CreateTokenHandler, Mock<ITokenManager>, Mock<IPasswordHasher>, Mock<IUnitOfWork>) Sut()
+    private (CreateTokenCommandHandler, Mock<IAuthenticationService>, Mock<ITokenManager>, Mock<IMapper>) Sut()
     {
+        var authenticationService = new Mock<IAuthenticationService>();
         var tokenManager = new Mock<ITokenManager>();
-        var unitOfWork = new Mock<IUnitOfWork>();
-        var passwordHasher = new Mock<IPasswordHasher>();
+        var mapper = new Mock<IMapper>();
 
         return (
-            new CreateTokenHandler(tokenManager.Object, unitOfWork.Object, passwordHasher.Object),
+            new CreateTokenCommandHandler(authenticationService.Object, tokenManager.Object, mapper.Object),
+            authenticationService,
             tokenManager,
-            passwordHasher,
-            unitOfWork
+            mapper
         );
     }
 }

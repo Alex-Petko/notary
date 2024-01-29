@@ -1,4 +1,4 @@
-﻿using AccessControl.Application;
+﻿using AccessControl.Domain;
 using AccessControl.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Attributes;
@@ -12,7 +12,7 @@ public static partial class IServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var section = configuration.GetSection("JwtOptions");
+        var section = configuration.GetRequiredSection("JwtOptions");
         services.AddOptions<JwtOptions>().Bind(section);
 
         services

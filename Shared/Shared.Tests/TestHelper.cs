@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Global;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -7,37 +8,17 @@ namespace Shared.Tests;
 
 public static class TestHelper
 {
-    public static string String(int length = 128) => new string('x', length);
+    public static string String(int length) => new string('x', length);
 
-    public static (T, Action) Sut<T, TRequest, TResponse>(
-        Func<IMediator, T> controllerCtr,
-        TResponse response)
+    public static (T, Mock<IMediator>) Sut<T>(
+        Func<IMediator, T> controllerCtr)
         where T : ControllerBase
-        where TRequest : IRequest<TResponse>
     {
-        var mediator = MediatorMock<TRequest, TResponse>(response);
+        var mediator = new Mock<IMediator>();
 
         var controller = controllerCtr(mediator.Object);
         controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
-        return (controller, () =>
-            {
-                mediator.Verify(x => x.Send(It.IsAny<TRequest>(), It.IsAny<CancellationToken>()), Times.Once);
-                mediator.VerifyNoOtherCalls();
-            }
-        );
-    }
-
-    public static Mock<IMediator> MediatorMock<TRequest, TResponse>(TResponse response)
-        where TRequest : IRequest<TResponse>
-    {
-        var mediator = new Mock<IMediator>();
-        mediator
-            .Setup(x => x.Send(
-                It.IsAny<TRequest>(),
-                It.IsAny<CancellationToken>()))
-            .ReturnsAsync(response);
-
-        return mediator;
+        return (controller, mediator);
     }
 }

@@ -1,4 +1,4 @@
-﻿using AccessControl.Application;
+﻿using AccessControl.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -30,7 +30,7 @@ public static partial class IServiceCollectionExtensions
                     ValidateLifetime = true,
 
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Rt.Key))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.RefreshTokenDetails.Key))
                 };
 
                 options.MapInboundClaims = false;

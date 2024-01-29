@@ -22,9 +22,9 @@ public class DebtsController : ControllerBase
     [HttpGet]
     [ResponseCache(Duration = 30)]
     [ProducesResponseType(typeof(IEnumerable<GetDebtDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
-        var debts = await _mediator.Send(new GetAllDebtsRequest());
+        var debts = await _mediator.Send(new GetAllDebtsRequest(), cancellationToken);
         return Ok(debts);
     }
 
@@ -32,52 +32,52 @@ public class DebtsController : ControllerBase
     [ResponseCache(Duration = 30)]
     [ProducesResponseType(typeof(GetDebtDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get(GetDebtRequest request)
+    public async Task<IActionResult> Get(GetDebtRequest request, CancellationToken cancellationToken)
     {
-        var debt = await _mediator.Send(request);
+        var debt = await _mediator.Send(request, cancellationToken);
         return debt is not null ? Ok(debt) : NotFound();
     }
 
     [HttpPost("lend")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Lend(LendDebtRequest request)
+    public async Task<IActionResult> Lend(LendDebtRequest request, CancellationToken cancellationToken)
     {
-        var id = await _mediator.Send(request);
+        var id = await _mediator.Send(request, cancellationToken);
         return Created("", id);
     }
 
     [HttpPost("borrow")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Borrow(BorrowDebtRequest request)
+    public async Task<IActionResult> Borrow(BorrowDebtRequest request, CancellationToken cancellationToken)
     {
-        var id = await _mediator.Send(request);
+        var id = await _mediator.Send(request, cancellationToken);
         return Created("", id);
     }
 
     [HttpPost("accept")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Accept(AcceptDebtRequest request)
+    public async Task<IActionResult> Accept(AcceptDebtRequest request, CancellationToken cancellationToken)
     {
-        var status = await _mediator.Send(request);
+        var status = await _mediator.Send(request, cancellationToken);
         return status is not null ? Ok(status) : BadRequest();
     }
 
     [HttpPost("cancel")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Cancel(CancelDebtRequest request)
+    public async Task<IActionResult> Cancel(CancelDebtRequest request, CancellationToken cancellationToken)
     {
-        var status = await _mediator.Send(request);
+        var status = await _mediator.Send(request, cancellationToken);
         return status is not null ? Ok(status) : BadRequest();
     }
 
     [HttpPost("close")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Close(CloseDebtRequest request)
+    public async Task<IActionResult> Close(CloseDebtRequest request, CancellationToken cancellationToken)
     {
-        var status = await _mediator.Send(request);
+        var status = await _mediator.Send(request, cancellationToken);
         return status is not null ? Ok(status) : BadRequest();
     }
 }

@@ -13,7 +13,7 @@ namespace Rent.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
     [Migration("20240129073532_init")]
-    partial class init
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
