@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AccessControl.Infrastructure.Migrations
 {
-    [DbContext(typeof(UserContext))]
+    [DbContext(typeof(Context))]
     [Migration("20240118121110_ChangedPasswordHashLengthFrom128To84")]
     partial class ChangedPasswordHashLengthFrom128To84
     {

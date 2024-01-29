@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\Shared.Repositories\Shared.Repositories.csproj" />
     <ProjectReference Include="..\Debt.Application\Debt.Application.csproj" />
   </ItemGroup>
 

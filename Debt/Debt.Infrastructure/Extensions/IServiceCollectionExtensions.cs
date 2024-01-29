@@ -1,22 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DebtManager.Application;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Repositories;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DebtManager.Infrastructure;
 
-[ExcludeFromCodeCoverage]
 public static class IServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, string connectionString)
     {
-        services.AddDbContext<DealContext>(options =>
+        services.AddDbContext<Context>(options =>
         {
             options.UseNpgsql(connectionString);
         });
 
-        services.AddScoped<IUnitOfWorkBase, UnitOfWork>();
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<ICommandProvider, CommandProvider>();
+        services.AddScoped<Application.IQueryProvider, QueryProvider>();
 
         return services;
     }

@@ -21,18 +21,18 @@ public class DebtsController : ControllerBase
 
     [HttpGet]
     [ResponseCache(Duration = 30)]
-    [ProducesResponseType(typeof(IEnumerable<GetDebtDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(IEnumerable<GetDebtQueryResult>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAllDebtsQuery(CancellationToken cancellationToken)
     {
-        var debts = await _mediator.Send(new GetAllDebtsRequest(), cancellationToken);
+        var debts = await _mediator.Send(new GetAllDebtsQuery(), cancellationToken);
         return Ok(debts);
     }
 
-    [HttpGet("{" + $"{nameof(request)}.{nameof(GetDebtRequest.DebtId)}" + "}")]
+    [HttpGet("{" + $"{nameof(request)}.{nameof(Application.GetDebtQuery.DebtId)}" + "}")]
     [ResponseCache(Duration = 30)]
-    [ProducesResponseType(typeof(GetDebtDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GetDebtQueryResult), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get(GetDebtRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetDebtQuery(GetDebtQuery request, CancellationToken cancellationToken)
     {
         var debt = await _mediator.Send(request, cancellationToken);
         return debt is not null ? Ok(debt) : NotFound();
@@ -40,7 +40,7 @@ public class DebtsController : ControllerBase
 
     [HttpPost("lend")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Lend(LendDebtRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> LendDebtCommand(LendDebtCommand request, CancellationToken cancellationToken)
     {
         var id = await _mediator.Send(request, cancellationToken);
         return Created("", id);
@@ -48,7 +48,7 @@ public class DebtsController : ControllerBase
 
     [HttpPost("borrow")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Borrow(BorrowDebtRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> BorrowDebtCommand(BorrowDebtCommand request, CancellationToken cancellationToken)
     {
         var id = await _mediator.Send(request, cancellationToken);
         return Created("", id);
@@ -57,7 +57,7 @@ public class DebtsController : ControllerBase
     [HttpPost("accept")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Accept(AcceptDebtRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> AcceptDebtCommand(AcceptDebtCommand request, CancellationToken cancellationToken)
     {
         var status = await _mediator.Send(request, cancellationToken);
         return status is not null ? Ok(status) : BadRequest();
@@ -66,7 +66,7 @@ public class DebtsController : ControllerBase
     [HttpPost("cancel")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Cancel(CancelDebtRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CancelDebtCommand(CancelDebtCommand request, CancellationToken cancellationToken)
     {
         var status = await _mediator.Send(request, cancellationToken);
         return status is not null ? Ok(status) : BadRequest();
@@ -75,7 +75,7 @@ public class DebtsController : ControllerBase
     [HttpPost("close")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Close(CloseDebtRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CloseDebtCommand(CloseDebtCommand request, CancellationToken cancellationToken)
     {
         var status = await _mediator.Send(request, cancellationToken);
         return status is not null ? Ok(status) : BadRequest();

@@ -18,7 +18,7 @@ public class TokenManagerTests
         jwtOptions.Setup(x => x.Value).Returns(options);
 
         // Act
-        await manager.UpdateAsync(dto, cancellationToken);
+        await manager.RefreshAsync(dto, cancellationToken);
 
         // Assert;
         commandProvider.Verify(x => x.UpdateRefreshToken(dto.Login, It.IsAny<string>(), nowGetService.Object.Now, cancellationToken), Times.Once);

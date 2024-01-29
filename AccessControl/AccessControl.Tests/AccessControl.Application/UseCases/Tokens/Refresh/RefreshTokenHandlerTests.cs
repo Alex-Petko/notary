@@ -22,7 +22,7 @@ public class RefreshTokenHandlerTests
         mapper.Verify(x => x.Map<TokenManagerDto>(command), Times.Once);
         mapper.VerifyNoOtherCalls();
 
-        tokenManager.Verify(x => x.UpdateAsync(tokenManagerDto, cancellationToken), Times.Once);
+        tokenManager.Verify(x => x.RefreshAsync(tokenManagerDto, cancellationToken), Times.Once);
         tokenManager.VerifyNoOtherCalls();
     }
 

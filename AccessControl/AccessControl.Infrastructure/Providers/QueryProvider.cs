@@ -7,7 +7,7 @@ internal class QueryProvider : Application.IQueryProvider
 {
     public IQuerySetProvider<User> Users { get; }
 
-    public QueryProvider(UserContext context)
+    public QueryProvider(Context context)
     {
         Users = new QuerySetProvider<User>(context.Users);
     }

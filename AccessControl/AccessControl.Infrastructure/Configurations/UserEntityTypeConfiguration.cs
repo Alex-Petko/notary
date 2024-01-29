@@ -2,11 +2,9 @@
 using Global;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Diagnostics.CodeAnalysis;
 
 namespace AccessControl.Infrastructure;
 
-[ExcludeFromCodeCoverage]
 internal sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
 {
     private const int PasswordHashLength = 84;

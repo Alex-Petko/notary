@@ -1,11 +1,9 @@
 using DebtManager.Application;
 using DebtManager.Infrastructure;
 using Shared.IApplicationBuilderExtensions;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DebtManager.Api;
 
-[ExcludeFromCodeCoverage]
 internal class Program
 {
     private static void Main(string[] args)
@@ -20,7 +18,7 @@ internal class Program
         var app = builder.Build();
 
         app
-            .ApplyMigration<Program, DealContext>()
+            .ApplyMigration<Program, Context>()
 
             .UseDeveloperExceptionPage()
 

@@ -2,11 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Shared.IApplicationBuilderExtensions;
 
-[ExcludeFromCodeCoverage]
 public static class IApplicationBuilderExtensions
 {
     public static IApplicationBuilder ApplyMigration<T, TContext>(

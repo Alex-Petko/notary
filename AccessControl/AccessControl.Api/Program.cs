@@ -1,11 +1,9 @@
 using AccessControl.Application;
 using AccessControl.Infrastructure;
 using Shared.IApplicationBuilderExtensions;
-using System.Diagnostics.CodeAnalysis;
 
 namespace AccessControl.Api;
 
-[ExcludeFromCodeCoverage]
 internal sealed class Program
 {
     private static void Main(string[] args)
@@ -20,7 +18,7 @@ internal sealed class Program
         var app = builder.Build();
 
         app
-            .ApplyMigration<Program, UserContext>()
+            .ApplyMigration<Program, Context>()
 
             .UseDeveloperExceptionPage()
 

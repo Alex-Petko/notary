@@ -2,5 +2,7 @@
 
 internal interface ITokenManager
 {
-    Task UpdateAsync(TokenManagerDto dto, CancellationToken cancellationToken = default);
+    Task CreateAsync(TokenManagerDto dto, CancellationToken cancellationToken = default);
+
+    Task<RefreshResult> RefreshAsync(TokenManagerDto dto, CancellationToken cancellationToken = default);
 }

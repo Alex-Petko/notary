@@ -30,10 +30,12 @@ public sealed class TokensController : ControllerBase
     [HttpPost("refresh")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> RefreshCommand(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
-        await _mediator.Send(request, cancellationToken);
-        return Ok();
+        var result = await _mediator.Send(request, cancellationToken);
+
+        return result == RefreshTokenCommandResult.Ok ? Ok() : BadRequest();
     }
 }

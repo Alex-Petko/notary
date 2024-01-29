@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DebtManager.Infrastructure.Migrations
 {
-    [DbContext(typeof(DealContext))]
+    [DbContext(typeof(Context))]
     partial class DealContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -52,7 +52,7 @@ namespace DebtManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Debt");
+                    b.ToTable("Debts");
                 });
 #pragma warning restore 612, 618
         }

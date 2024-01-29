@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DebtManager.Infrastructure;
 
-[ExcludeFromCodeCoverage]
 internal sealed class DebtEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Debt>
 {
     public void Configure(EntityTypeBuilder<Domain.Debt> builder)

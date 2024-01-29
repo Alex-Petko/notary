@@ -17,7 +17,7 @@ public sealed class UsersController : ControllerBase
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<IActionResult> Create([FromBody] CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateCommand([FromBody] CreateUserCommand request, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(request, cancellationToken);
         return result == CreateUserCommandResult.Ok ? Ok() : Conflict();

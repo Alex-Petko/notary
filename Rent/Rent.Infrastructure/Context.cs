@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Rent.Domain;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Rent.Infrastructure;
 
-[ExcludeFromCodeCoverage]
 public sealed class Context : DbContext
 {
     public DbSet<FileDescription> TemplateDescriptions { get; set; }

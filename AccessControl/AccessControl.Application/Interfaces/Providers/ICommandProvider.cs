@@ -6,11 +6,18 @@ public interface ICommandProvider
 {
     ICommandSetProvider<User> Users { get; }
 
-    Task UpdateRefreshToken(
-         string login,
-         string newRefreshTokenString,
-         DateTime timestamp,
-         CancellationToken cancellationToken = default);
+    Task CreateRT(
+       string login,
+       string newRefreshTokenString,
+       DateTime timestamp,
+       CancellationToken cancellationToken = default);
+
+    Task<RefreshRTResult> TryRefreshRT(
+        string login,
+        string newRefreshTokenString,
+        string oldRefreshTokenString,
+        DateTime timestamp,
+        CancellationToken cancellationToken = default);
 
     Task<bool> TryCreateUserAsync(
         User user,

@@ -19,10 +19,10 @@ public class InitDebtRequestValidatorTests
     public async Task Begin_EqualToEnd_GreaterThanErrorMessage(string login, int sum)
     {
         // Arrange
-        var validator = new InitDebtRequestValidator<InitDebtRequest>();
+        var validator = new CreateDebtCommandValidator<CreateDebtCommand>();
         var now = Begin;
 
-        var request = new InitDebtRequest
+        var request = new CreateDebtCommand
         {
             Body = new(login, sum, now, now)
         };
@@ -31,7 +31,7 @@ public class InitDebtRequestValidatorTests
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.GreaterThan<InitDebtRequest, DateTime>(x => x.Body.End, x => x.Body.Begin);
+        var message = ValidationErrorMessages.GreaterThan<CreateDebtCommand, DateTime>(x => x.Body.End, x => x.Body.Begin);
         result.ShouldHaveValidationErrorFor(x => x.Body.End).WithErrorMessage(message);
     }
 
@@ -39,9 +39,9 @@ public class InitDebtRequestValidatorTests
     public async Task Begin_GreaterThanNow_LessThanOrEqualToErrorMessage(string login, int sum)
     {
         // Arrange
-        var validator = new InitDebtRequestValidator<InitDebtRequest>();
+        var validator = new CreateDebtCommandValidator<CreateDebtCommand>();
 
-        var request = new InitDebtRequest
+        var request = new CreateDebtCommand
         {
             Body = new(login, sum, End)
         };
@@ -50,7 +50,7 @@ public class InitDebtRequestValidatorTests
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.LessThanOrEqualTo<InitDebtRequest, DateTime>(x => x.Body.Begin, Begin);
+        var message = ValidationErrorMessages.LessThanOrEqualTo<CreateDebtCommand, DateTime>(x => x.Body.Begin, Begin);
         result.ShouldHaveValidationErrorFor(x => x.Body.Begin).WithErrorMessage(message);
     }
 
@@ -58,12 +58,12 @@ public class InitDebtRequestValidatorTests
     public async Task End_Null_Ok(string login, int sum)
     {
         // Arrange
-        var request = new InitDebtRequest
+        var request = new CreateDebtCommand
         {
             Body = new(login, sum, Begin, null)
         };
 
-        var validator = new InitDebtRequestValidator<InitDebtRequest>();
+        var validator = new CreateDebtCommandValidator<CreateDebtCommand>();
 
         // Act
         var result = await validator.TestValidateAsync(request);
@@ -76,9 +76,9 @@ public class InitDebtRequestValidatorTests
     public async Task Login_Empty_EmptyErrorMessage(int sum)
     {
         // Arrange
-        var validator = new InitDebtRequestValidator<InitDebtRequest>();
+        var validator = new CreateDebtCommandValidator<CreateDebtCommand>();
 
-        var request = new InitDebtRequest
+        var request = new CreateDebtCommand
         {
             Body = new(null!, sum, Begin)
         };
@@ -87,7 +87,7 @@ public class InitDebtRequestValidatorTests
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.NotEmpty<InitDebtRequest, string>(x => x.Body.Login);
+        var message = ValidationErrorMessages.NotEmpty<CreateDebtCommand, string>(x => x.Body.Login);
         result.ShouldHaveValidationErrorFor(x => x.Body.Login).WithErrorMessage(message);
     }
 
@@ -95,9 +95,9 @@ public class InitDebtRequestValidatorTests
     public async Task Login_GreaterThanMax_MaximumLengthErrorMessage(int sum)
     {
         // Arrange
-        var validator = new InitDebtRequestValidator<InitDebtRequest>();
+        var validator = new CreateDebtCommandValidator<CreateDebtCommand>();
 
-        var request = new InitDebtRequest
+        var request = new CreateDebtCommand
         {
             Body = new(TestHelper.String(LoginMaxLength + 1), sum, Begin)
         };
@@ -106,7 +106,7 @@ public class InitDebtRequestValidatorTests
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.MaximumLength<InitDebtRequest>(x => x.Body.Login, LoginMaxLength);
+        var message = ValidationErrorMessages.MaximumLength<CreateDebtCommand>(x => x.Body.Login, LoginMaxLength);
         result.ShouldHaveValidationErrorFor(x => x.Body.Login).WithErrorMessage(message);
     }
 
@@ -114,9 +114,9 @@ public class InitDebtRequestValidatorTests
     public async Task Sum_LessThanMin_GreaterThanErrorMessage(string login)
     {
         // Arrange
-        var validator = new InitDebtRequestValidator<InitDebtRequest>();
+        var validator = new CreateDebtCommandValidator<CreateDebtCommand>();
 
-        var request = new InitDebtRequest
+        var request = new CreateDebtCommand
         {
             Body = new(login, SumMin - 1, Begin, End)
         };
@@ -125,7 +125,7 @@ public class InitDebtRequestValidatorTests
         var result = await validator.TestValidateAsync(request);
 
         // Assert
-        var message = ValidationErrorMessages.GreaterThan<InitDebtRequest, int>(x => x.Body.Sum, SumMin - 1);
+        var message = ValidationErrorMessages.GreaterThan<CreateDebtCommand, int>(x => x.Body.Sum, SumMin - 1);
         result.ShouldHaveValidationErrorFor(x => x.Body.Sum).WithErrorMessage(message);
     }
 
@@ -133,12 +133,12 @@ public class InitDebtRequestValidatorTests
     public async Task Validate_Ok_Ok(string login, int sum)
     {
         // Arrange
-        var request = new InitDebtRequest
+        var request = new CreateDebtCommand
         {
             Body = new(login, sum, Begin, End)
         };
 
-        var validator = new InitDebtRequestValidator<InitDebtRequest>();
+        var validator = new CreateDebtCommandValidator<CreateDebtCommand>();
 
         // Act
         var result = await validator.TestValidateAsync(request);

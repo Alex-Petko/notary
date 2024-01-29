@@ -27,7 +27,7 @@ internal sealed class CreateTokenCommandHandler : IRequestHandler<CreateTokenCom
             return CreateTokenCommandResult.AuthenticationFail;
 
         var tokenManagerDto = _mapper.Map<TokenManagerDto>(command);
-        await _tokenManager.UpdateAsync(tokenManagerDto, cancellationToken);
+        await _tokenManager.CreateAsync(tokenManagerDto, cancellationToken);
 
         return CreateTokenCommandResult.Ok;
     }

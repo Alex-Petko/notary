@@ -1,8 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿namespace AccessControl.Domain;
 
-namespace AccessControl.Domain;
-
-[ExcludeFromCodeCoverage]
 public sealed class User
 {
     public string Login { get; set; } = null!;

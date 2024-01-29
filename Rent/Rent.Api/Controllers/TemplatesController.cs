@@ -29,7 +29,7 @@ public class TemplatesController : ControllerBase
         if (stream == null)
             return NotFound();
 
-        return File(stream, "text/text");
+        return File(stream, "application/msword");
 
     }
 
@@ -41,6 +41,6 @@ public class TemplatesController : ControllerBase
         var command = new AddTemplateCommand(new FormFileProxy(formFile));
         var result = await _mediator.Send(command, cancellationToken);
 
-        return result ? Created () : Conflict();
+        return result ? Created() : Conflict();
     }
 }

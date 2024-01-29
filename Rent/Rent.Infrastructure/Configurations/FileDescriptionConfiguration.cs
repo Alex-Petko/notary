@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Rent.Domain;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Rent.Infrastructure;
 
-[ExcludeFromCodeCoverage]
 internal sealed class FileDescriptionConfiguration : IEntityTypeConfiguration<FileDescription>
 {
     public void Configure(EntityTypeBuilder<FileDescription> builder)

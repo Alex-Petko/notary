@@ -2,11 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Shared.Attributes;
 using Shared.FluentValidation;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DebtManager.Api;
 
-[ExcludeFromCodeCoverage]
 public static partial class IServiceCollectionExtensions
 {
     public static IServiceCollection AddApi(

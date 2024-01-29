@@ -3,7 +3,7 @@ using MediatR;
 
 namespace AccessControl.Application;
 
-internal sealed class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand>
+internal sealed class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, RefreshTokenCommandResult>
 {
     private readonly ITokenManager _tokenManager;
     private readonly IMapper _mapper;
@@ -16,9 +16,14 @@ internal sealed class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenC
         _mapper = mapper;
     }
 
-    public async Task Handle(RefreshTokenCommand command, CancellationToken cancellationToken)
+    public async Task<RefreshTokenCommandResult> Handle(RefreshTokenCommand command, CancellationToken cancellationToken)
     {
         var tokenManagerDto = _mapper.Map<TokenManagerDto>(command);
-        await _tokenManager.UpdateAsync(tokenManagerDto, cancellationToken);
+        var result = await _tokenManager.RefreshAsync(tokenManagerDto, cancellationToken);
+
+        if (result != RefreshResult.Ok)
+            return RefreshTokenCommandResult.Fail;
+
+        return RefreshTokenCommandResult.Ok;
     }
 }

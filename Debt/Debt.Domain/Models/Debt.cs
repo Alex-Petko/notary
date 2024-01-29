@@ -1,8 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿namespace DebtManager.Domain;
 
-namespace DebtManager.Domain;
-
-[ExcludeFromCodeCoverage]
 public sealed class Debt
 {
     private DateTime? _begin;

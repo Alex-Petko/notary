@@ -24,14 +24,16 @@ internal sealed class TokenManager : ITokenManager
         _jwtOptions = jwtOptions;
     }
 
-    public async Task UpdateAsync(TokenManagerDto dto, CancellationToken cancellationToken = default)
+    public async Task CreateAsync(
+        TokenManagerDto dto,
+        CancellationToken cancellationToken = default)
     {
         var options = _jwtOptions.Value;
 
         var token = new Token(dto.Login);
         var rt = Sign(token, options.RefreshTokenDetails);
 
-        await _commandProvider.UpdateRefreshToken(dto.Login, rt, _nowGetService.Now, cancellationToken);
+        await _commandProvider.CreateRT(dto.Login, rt, _nowGetService.Now, cancellationToken);
 
         var jwt = Sign(token, options.JSONWebTokenDetails);
         var jwtCookie = CreateCookieOptions(options.JSONWebTokenDetails);
@@ -39,6 +41,30 @@ internal sealed class TokenManager : ITokenManager
 
         var rtCookie = CreateCookieOptions(options.RefreshTokenDetails);
         _httpContextAccessor.HttpContext!.Response.Cookies.Append("RT", rt, rtCookie);
+    }
+
+    public async Task<RefreshResult> RefreshAsync(TokenManagerDto dto, CancellationToken cancellationToken = default)
+    {
+        var options = _jwtOptions.Value;
+
+        var token = new Token(dto.Login);
+        var rt = Sign(token, options.RefreshTokenDetails);
+
+        var oldRt = _httpContextAccessor.HttpContext!.Request.Cookies["RT"]!;
+
+        var result = await _commandProvider.TryRefreshRT(dto.Login, rt, oldRt, _nowGetService.Now, cancellationToken);
+
+        if (result != RefreshRTResult.Ok)
+            return RefreshResult.TokenInvalid;
+
+        var jwt = Sign(token, options.JSONWebTokenDetails);
+        var jwtCookie = CreateCookieOptions(options.JSONWebTokenDetails);
+        _httpContextAccessor.HttpContext!.Response.Cookies.Append("JwtBearer", jwt, jwtCookie);
+
+        var rtCookie = CreateCookieOptions(options.RefreshTokenDetails);
+        _httpContextAccessor.HttpContext!.Response.Cookies.Append("RT", rt, rtCookie);
+
+        return RefreshResult.Ok;
     }
 
     private string Sign(Token token, Details details)

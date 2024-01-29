@@ -11,9 +11,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DebtManager.Infrastructure.Migrations
 {
-    [DbContext(typeof(DealContext))]
+    [DbContext(typeof(Context))]
     [Migration("20231215142251_init")]
-    partial class init
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
