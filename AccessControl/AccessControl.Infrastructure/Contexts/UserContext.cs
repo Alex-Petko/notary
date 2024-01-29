@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace AccessControl.Infrastructure;
 
 [ExcludeFromCodeCoverage]
-internal sealed class UserContext : DbContext
+public sealed class UserContext : DbContext
 {
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;

@@ -1,4 +1,5 @@
 using AccessControl.Application;
+using AccessControl.Infrastructure;
 using Shared.IApplicationBuilderExtensions;
 using System.Diagnostics.CodeAnalysis;
 
@@ -19,7 +20,7 @@ internal sealed class Program
         var app = builder.Build();
 
         app
-            .ApplyMigration<Program>()
+            .ApplyMigration<Program, UserContext>()
 
             .UseDeveloperExceptionPage()
 

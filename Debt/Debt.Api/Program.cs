@@ -1,4 +1,5 @@
 using DebtManager.Application;
+using DebtManager.Infrastructure;
 using Shared.IApplicationBuilderExtensions;
 using System.Diagnostics.CodeAnalysis;
 
@@ -19,7 +20,7 @@ internal class Program
         var app = builder.Build();
 
         app
-            .ApplyMigration<Program>()
+            .ApplyMigration<Program, DealContext>()
             .UseDeveloperExceptionPage()
             .UseAuthentication()
             .UseAuthorization()

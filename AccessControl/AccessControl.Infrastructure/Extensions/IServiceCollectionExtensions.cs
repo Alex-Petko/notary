@@ -15,8 +15,6 @@ public static class IServiceCollectionExtensions
             options.UseNpgsql(connectionString);
         });
 
-        services.AddEntityFrameworkNpgsql();
-
         services.AddScoped<IUnitOfWorkBase, UnitOfWork>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 

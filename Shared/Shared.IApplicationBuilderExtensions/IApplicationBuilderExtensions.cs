@@ -9,8 +9,9 @@ namespace Shared.IApplicationBuilderExtensions;
 [ExcludeFromCodeCoverage]
 public static class IApplicationBuilderExtensions
 {
-    public static IApplicationBuilder ApplyMigration<T>(
+    public static IApplicationBuilder ApplyMigration<T, TContext>(
         this IApplicationBuilder app)
+        where TContext : DbContext
     {
         ILogger<T> logger = null!;
         try
@@ -18,7 +19,7 @@ public static class IApplicationBuilderExtensions
             using var scope = app.ApplicationServices.CreateScope();
             logger = scope.ServiceProvider.GetRequiredService<ILogger<T>>();
 
-            using var context = scope.ServiceProvider.GetRequiredService<DbContext>();
+            using var context = scope.ServiceProvider.GetRequiredService<TContext>();
             context.Database.Migrate();
         }
         catch (Exception e)
