@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.IApplicationBuilderExtensions\Shared.IApplicationBuilderExtensions.csproj" />
-    <ProjectReference Include="..\Debt.Application\Debt.Application.csproj" />
+    <ProjectReference Include="..\Debt.Infrastructure\Debt.Infrastructure.csproj" />
   </ItemGroup>
 	
 </Project>
