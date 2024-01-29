@@ -224,6 +224,29 @@ public static class IRuleBuilderExtensions
             .WithMessage(ValidationErrorMessages.LessThanOrEqualTo(memberName, valueToCompare));
     }
 
+    /// <summary>
+    /// Defines a 'any of' validator on the current rule builder.
+    /// Adds a default error message.
+    /// The validation will succeed if the property value is equaling to any value of values.
+    /// The validation will fail if the property value is not equaling to any value of values.
+    /// </summary>
+    /// <typeparam name="T">Type of object being validated</typeparam>
+    /// <typeparam name="TProperty">Type of property being validated</typeparam>
+    /// <param name="ruleBuilder">The rule builder on which the validator should be defined</param>
+    /// <param name="values">The value containing valid set</param>
+    /// <returns></returns>
+    public static IRuleBuilderOptions<T, TProperty> EqualToAnyWithMessage<T, TProperty>(
+        this IRuleBuilder<T, TProperty> ruleBuilder,
+        IEnumerable<TProperty> values)
+        where TProperty : IComparable<TProperty>, IComparable
+    {
+        string memberName = GetMemberName(ruleBuilder);
+
+        return ruleBuilder
+            .Must(x => values.Contains(x))
+            .WithMessage(ValidationErrorMessages.EqualToAny(memberName, values));
+    }
+
     private static string GetMemberName<T, TProperty>(IRuleBuilder<T, TProperty> builder)
     {
         string memberName = null!;

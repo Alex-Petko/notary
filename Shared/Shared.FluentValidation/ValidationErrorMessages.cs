@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Linq;
 
 namespace Shared.FluentValidation;
 
@@ -277,6 +278,35 @@ public static class ValidationErrorMessages
         => $"The {memberName} must be less than or equal to {valueToCompare}";
 
     #endregion LessThanOrEqualTo
+
+    #region EqualToAny
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TProperty"></typeparam>
+    /// <param name="expression"></param>
+    /// <param name="values"></param>
+    /// <returns>"The {memberName} must be any of [{string.Join(", ", values)}]"</returns>
+    public static string EqualToAny<T, TProperty>(
+        Expression<Func<T, TProperty>> expression,
+        IEnumerable<TProperty> values)
+        where TProperty : IComparable<TProperty>, IComparable
+        => EqualToAny(GetMemberName(expression), values);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TProperty"></typeparam>
+    /// <param name="memberName"></param>
+    /// <param name="values"></param>
+    /// <returns>"The {memberName} must be any of [{string.Join(", ", values)}]"</returns>
+    public static string EqualToAny<TProperty>(
+        string memberName,
+        IEnumerable<TProperty> values)
+        where TProperty : IComparable<TProperty>, IComparable
+        => $"The {memberName} must be any of [{string.Join(", ", values)}]";
+    #endregion
 
     private static string GetMemberName<T, TProperty>(Expression<Func<T, TProperty>> expression)
         => ((MemberExpression)expression.Body).Member.Name;

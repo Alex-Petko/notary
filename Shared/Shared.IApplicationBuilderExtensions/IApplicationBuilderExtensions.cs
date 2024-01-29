@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Shared.Repositories;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Shared.IApplicationBuilderExtensions;
@@ -18,8 +18,8 @@ public static class IApplicationBuilderExtensions
             using var scope = app.ApplicationServices.CreateScope();
             logger = scope.ServiceProvider.GetRequiredService<ILogger<T>>();
 
-            using var repository = scope.ServiceProvider.GetRequiredService<IUnitOfWorkBase>();
-            repository.Migrate();
+            using var context = scope.ServiceProvider.GetRequiredService<DbContext>();
+            context.Database.Migrate();
         }
         catch (Exception e)
         {
