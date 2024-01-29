@@ -32,6 +32,10 @@ public static partial class IServiceCollectionExtensions
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Default");
+
+        if (string.IsNullOrEmpty(connectionString))
+            throw new ArgumentNullException(nameof(connectionString));
+
         services.AddInfrastructure(connectionString);
 
         return services;

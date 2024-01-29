@@ -13,8 +13,8 @@ internal sealed class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services
-            .AddInfrastructure(builder.Configuration)
             .AddApplication()
+            .AddInfrastructure(builder.Configuration)
             .AddApi(builder.Configuration);
 
         var app = builder.Build();

@@ -4,7 +4,9 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "access_control": "StartDebugging"
+        "debt": "StartDebugging",
+        "access_control": "StartDebugging",
+        "rent": "StartDebugging"
       }
     },
     "Debt Swagger": {
@@ -15,7 +17,8 @@
       "composeLaunchServiceName": "debt",
       "serviceActions": {
         "debt": "StartDebugging",
-        "access_control": "StartDebugging"
+        "access_control": "StartDebugging",
+        "rent": "StartDebugging"
       }
     },
     "AccessControl Swagger": {
@@ -26,7 +29,20 @@
       "composeLaunchServiceName": "access_control",
       "serviceActions": {
         "debt": "StartDebugging",
-        "access_control": "StartDebugging"
+        "access_control": "StartDebugging",
+        "rent": "StartDebugging"
+      }
+    },
+    "Rent Swagger": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
+      "composeLaunchServiceName": "rent",
+      "serviceActions": {
+        "debt": "StartDebugging",
+        "access_control": "StartDebugging",
+        "rent": "StartDebugging"
       }
     }
   }

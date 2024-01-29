@@ -13,17 +13,20 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services
-            .AddInfrastructure(builder.Configuration)
             .AddApplication()
+            .AddInfrastructure(builder.Configuration)
             .AddApi(builder.Configuration);
 
         var app = builder.Build();
 
         app
             .ApplyMigration<Program, DealContext>()
+
             .UseDeveloperExceptionPage()
+
             .UseAuthentication()
             .UseAuthorization()
+
             .UseOpenApi()
             .UseSwaggerUi();
 

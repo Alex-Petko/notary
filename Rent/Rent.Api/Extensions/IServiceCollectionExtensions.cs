@@ -1,31 +1,23 @@
-﻿using AccessControl.Application;
-using AccessControl.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
-using Shared.Attributes;
+﻿using Microsoft.AspNetCore.Mvc;
+using Rent.Infrastructure;
 using Shared.FluentValidation;
 
-namespace AccessControl.Api;
+namespace Rent.Api;
 
 public static partial class IServiceCollectionExtensions
 {
     public static IServiceCollection AddApi(
-        this IServiceCollection services,
-        IConfiguration configuration)
+        this IServiceCollection services)
     {
-        var section = configuration.GetSection("JwtOptions");
-        services.AddOptions<JwtOptions>().Bind(section);
 
         services
            .AddHttpContextAccessor()
            .Configure<ApiBehaviorOptions>(options => options.SuppressInferBindingSourcesForParameters = true)
            .AddOpenApiDocument()
-           .AddAuthorization()
-           .AddJwtAuthentication(configuration)
-           .AddControllers(options =>
-           {
-               options.ValueProviderFactories.Add(new ClaimValueProviderFactory());
-           })
+           .AddControllers()
            .AddAutoValidation();
+
+        services.AddSingleton<Application.IWebHostEnvironment, WebHostEnvironmentProxy>();
 
         return services;
     }
