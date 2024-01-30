@@ -16,7 +16,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.IApplicationBuilderExtensions\Shared.IApplicationBuilderExtensions.csproj" />
+    <ProjectReference Include="..\..\Shared\Shared.Json\Shared.Json.csproj" />
     <ProjectReference Include="..\Debt.Infrastructure\Debt.Infrastructure.csproj" />
+	<InternalsVisibleTo Include="Notary.Tests" />
+	<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
   </ItemGroup>
 	
 </Project>

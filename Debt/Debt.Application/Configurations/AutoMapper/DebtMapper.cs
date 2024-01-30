@@ -9,6 +9,9 @@ internal sealed class DebtMapper : Profile
     {
         CreateMap<Debt, GetDebtQueryResult>();
 
-        CreateMap<CreateDebtCommand, Debt>();
+        var mapExpression = CreateMap<CreateDebtCommand, Debt>();
+        mapExpression.IncludeMembers(x => x.Body);
+
+        CreateMap<CreateDebtCommandBody, Debt>();
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shared.Attributes;
 using Shared.FluentValidation;
+using Shared.Json;
 
 namespace DebtManager.Api;
 
@@ -19,6 +20,10 @@ public static partial class IServiceCollectionExtensions
             .AddControllers(options =>
             {
                 options.ValueProviderFactories.Add(new ClaimValueProviderFactory());
+            })
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new DateTimeOffsetConverter());
             })
             .AddAutoValidation();
 

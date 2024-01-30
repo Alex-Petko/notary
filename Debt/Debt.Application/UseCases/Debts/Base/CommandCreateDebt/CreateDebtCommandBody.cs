@@ -3,5 +3,5 @@
 public sealed record CreateDebtCommandBody(
     string Login,
     int Sum,
-    DateTime? Begin,
-    DateTime? End = null);
+    DateTimeOffset? Begin,
+    DateTimeOffset? End = null);

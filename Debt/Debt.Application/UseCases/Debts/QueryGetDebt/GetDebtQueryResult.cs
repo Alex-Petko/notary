@@ -14,7 +14,7 @@ public sealed class GetDebtQueryResult
 
     public DealStatusType Status { get; set; }
 
-    public DateTime Begin { get; set; }
+    public DateTimeOffset Begin { get; set; }
 
-    public DateTime? End { get; set; } = null;
+    public DateTimeOffset? End { get; set; } = null;
 }

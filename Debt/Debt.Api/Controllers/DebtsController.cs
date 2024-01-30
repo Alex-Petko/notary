@@ -8,7 +8,7 @@ namespace DebtManager.Api;
 
 [Authorize]
 [ApiController]
-[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+[ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
 [Route("[controller]")]
 public class DebtsController : ControllerBase
 {
@@ -31,7 +31,7 @@ public class DebtsController : ControllerBase
     [HttpGet("{" + $"{nameof(request)}.{nameof(Application.GetDebtQuery.DebtId)}" + "}")]
     [ResponseCache(Duration = 30)]
     [ProducesResponseType(typeof(GetDebtQueryResult), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetDebtQuery(GetDebtQuery request, CancellationToken cancellationToken)
     {
         var debt = await _mediator.Send(request, cancellationToken);
@@ -56,7 +56,7 @@ public class DebtsController : ControllerBase
 
     [HttpPost("accept")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AcceptDebtCommand(AcceptDebtCommand request, CancellationToken cancellationToken)
     {
         var status = await _mediator.Send(request, cancellationToken);
@@ -65,7 +65,7 @@ public class DebtsController : ControllerBase
 
     [HttpPost("cancel")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CancelDebtCommand(CancelDebtCommand request, CancellationToken cancellationToken)
     {
         var status = await _mediator.Send(request, cancellationToken);
@@ -74,7 +74,7 @@ public class DebtsController : ControllerBase
 
     [HttpPost("close")]
     [ProducesResponseType(typeof(DealStatusType), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CloseDebtCommand(CloseDebtCommand request, CancellationToken cancellationToken)
     {
         var status = await _mediator.Send(request, cancellationToken);

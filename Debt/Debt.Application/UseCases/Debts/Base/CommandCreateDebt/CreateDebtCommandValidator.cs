@@ -18,7 +18,7 @@ internal class CreateDebtCommandValidator<T> : AbstractValidator<T> where T : Cr
             .When(x => x.Body is not null);
 
         RuleFor(x => x.Body.Begin)
-            .LessThanOrEqualToWithMessage(DateTime.UtcNow)
+            .LessThanOrEqualToWithMessage(DateTimeOffset.UtcNow.AddMinutes(5))
             .When(x => x.Body is not null);
 
         RuleFor(x => x.Body.End)
