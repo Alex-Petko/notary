@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shared.Tests;
 
-namespace DebtManager.Tests;
+namespace Api.Controllers;
 
 public class DebtsControllerTests
 {

@@ -2,10 +2,9 @@
 using DebtManager.Application;
 using FluentValidation.TestHelper;
 using Global;
-using Shared.FluentValidation;
 using Shared.Tests;
 
-namespace DebtManager.Tests;
+namespace Application.Validators;
 
 public class CreateDebtCommandValidatorTests
 {

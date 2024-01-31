@@ -4,7 +4,7 @@ using FluentValidation.TestHelper;
 using Shared.Tests;
 using static Global.Constraints;
 
-namespace DebtManager.Tests;
+namespace Application.Validators;
 
 public class ChangeDebtStatusCommandValidatorTests
 {
