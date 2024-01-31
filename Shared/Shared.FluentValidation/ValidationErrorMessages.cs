@@ -12,11 +12,11 @@ public static class ValidationErrorMessages
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="expression"></param>
+    /// <param name="memberAccessor"></param>
     /// <returns>"The {memberName} cannot be empty"</returns>
     public static string NotEmpty<T, TProperty>(
-        Expression<Func<T, TProperty>> expression)
-        => NotEmpty(GetMemberName(expression));
+        Expression<Func<T, TProperty>> memberAccessor)
+        => NotEmpty(GetMemberName(memberAccessor));
 
     /// <summary>
     ///
@@ -36,13 +36,13 @@ public static class ValidationErrorMessages
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="expression"></param>
+    /// <param name="memberAccessor"></param>
     /// <param name="maximumLength"></param>
     /// <returns>"The {memberName} length must not exceed {maximumLength}"</returns>
     public static string MaximumLength<T>(
-        Expression<Func<T, string>> expression,
+        Expression<Func<T, string>> memberAccessor,
         int maximumLength)
-        => MaximumLength(GetMemberName(expression), maximumLength);
+        => MaximumLength(GetMemberName(memberAccessor), maximumLength);
 
     /// <summary>
     ///
@@ -64,28 +64,28 @@ public static class ValidationErrorMessages
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="expression"></param>
+    /// <param name="memberAccessor"></param>
     /// <param name="valueToCompare"></param>
     /// <returns>"The {memberName} must be greater than {valueToCompare}"</returns>
     public static string GreaterThan<T, TProperty>(
-        Expression<Func<T, TProperty>> expression,
+        Expression<Func<T, TProperty>> memberAccessor,
         TProperty valueToCompare)
         where TProperty : IComparable<TProperty>, IComparable
-        => GreaterThan(GetMemberName(expression), valueToCompare);
+        => GreaterThan(GetMemberName(memberAccessor), valueToCompare);
 
     /// <summary>
     ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="expression"></param>
+    /// <param name="memberAccessor"></param>
     /// <param name="valueToCompare"></param>
     /// <returns>"The {memberName} must be greater than {valueToCompare}"</returns>
     public static string GreaterThan<T, TProperty>(
-        Expression<Func<T, TProperty?>> expression,
+        Expression<Func<T, TProperty?>> memberAccessor,
         TProperty valueToCompare)
         where TProperty : struct, IComparable<TProperty>, IComparable
-        => GreaterThan(GetMemberName(expression), valueToCompare);
+        => GreaterThan(GetMemberName(memberAccessor), valueToCompare);
 
     /// <summary>
     ///
@@ -105,42 +105,42 @@ public static class ValidationErrorMessages
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="expression"></param>
-    /// <param name="expression2"></param>
-    /// <returns>"The {memberName} must be greater than the {expression2.Member.Name}"</returns>
+    /// <param name="memberAccessor"></param>
+    /// <param name="comparedMemberAccessor"></param>
+    /// <returns>"The {memberName} must be greater than the {comparedMemberAccessor.Member.Name}"</returns>
     public static string GreaterThan<T, TProperty>(
-        Expression<Func<T, TProperty>> expression,
-        Expression<Func<T, TProperty>> expression2)
+        Expression<Func<T, TProperty>> memberAccessor,
+        Expression<Func<T, TProperty>> comparedMemberAccessor)
         where TProperty : IComparable<TProperty>, IComparable
-        => GreaterThan(GetMemberName(expression), expression2);
+        => GreaterThan(GetMemberName(memberAccessor), comparedMemberAccessor);
 
     /// <summary>
     ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="expression"></param>
-    /// <param name="expression2"></param>
-    /// <returns>"The {memberName} must be greater than the {expression2.Member.Name}"</returns>
+    /// <param name="memberAccessor"></param>
+    /// <param name="comparedMemberAccessor"></param>
+    /// <returns>"The {memberName} must be greater than the {comparedMemberAccessor.Member.Name}"</returns>
     public static string GreaterThan<T, TProperty>(
-        Expression<Func<T, TProperty?>> expression,
-        Expression<Func<T, TProperty>> expression2)
+        Expression<Func<T, TProperty?>> memberAccessor,
+        Expression<Func<T, TProperty>> comparedMemberAccessor)
         where TProperty : struct, IComparable<TProperty>, IComparable
-        => GreaterThan(GetMemberName(expression), expression2);
+        => GreaterThan(GetMemberName(memberAccessor), comparedMemberAccessor);
 
     /// <summary>
     ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="expression"></param>
-    /// <param name="expression2"></param>
-    /// <returns>"The {memberName} must be greater than the {expression2.Member.Name}"</returns>
+    /// <param name="memberAccessor"></param>
+    /// <param name="comparedMemberAccessor"></param>
+    /// <returns>"The {memberName} must be greater than the {comparedMemberAccessor.Member.Name}"</returns>
     public static string GreaterThan<T, TProperty>(
-        Expression<Func<T, TProperty?>> expression,
-        Expression<Func<T, TProperty?>> expression2)
+        Expression<Func<T, TProperty?>> memberAccessor,
+        Expression<Func<T, TProperty?>> comparedMemberAccessor)
         where TProperty : struct, IComparable<TProperty>, IComparable
-        => GreaterThan(GetMemberName(expression), expression2);
+        => GreaterThan(GetMemberName(memberAccessor), comparedMemberAccessor);
 
     /// <summary>
     ///
@@ -148,13 +148,13 @@ public static class ValidationErrorMessages
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
     /// <param name="memberName"></param>
-    /// <param name="expression2"></param>
-    /// <returns>"The {memberName} must be greater than the {expression2.Member.Name}"</returns>
+    /// <param name="comparedMemberAccessor"></param>
+    /// <returns>"The {memberName} must be greater than the {comparedMemberAccessor.Member.Name}"</returns>
     public static string GreaterThan<T, TProperty>(
         string memberName,
-        Expression<Func<T, TProperty>> expression2)
+        Expression<Func<T, TProperty>> comparedMemberAccessor)
         where TProperty : IComparable<TProperty>, IComparable
-        => $"The {memberName} must be greater than the {GetMemberName(expression2)}";
+        => $"The {memberName} must be greater than the {GetMemberName(comparedMemberAccessor)}";
 
     /// <summary>
     ///
@@ -162,13 +162,13 @@ public static class ValidationErrorMessages
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
     /// <param name="memberName"></param>
-    /// <param name="expression2"></param>
-    /// <returns>"The {memberName} must be greater than the {expression2.Member.Name}"</returns>
+    /// <param name="comparedMemberAccessor"></param>
+    /// <returns>"The {memberName} must be greater than the {comparedMemberAccessor.Member.Name}"</returns>
     public static string GreaterThan<T, TProperty>(
         string memberName,
-        Expression<Func<T, TProperty?>> expression2)
+        Expression<Func<T, TProperty?>> comparedMemberAccessor)
         where TProperty : struct, IComparable<TProperty>, IComparable
-        => $"The {memberName} must be greater than the {GetMemberName(expression2)}";
+        => $"The {memberName} must be greater than the {GetMemberName(comparedMemberAccessor)}";
 
     #endregion GreaterThan
 
@@ -179,14 +179,14 @@ public static class ValidationErrorMessages
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="expression"></param>
+    /// <param name="memberAccessor"></param>
     /// <param name="valueToCompare"></param>
     /// <returns>"The {memberName} must be greater than or equal to {valueToCompare}"</returns>
     public static string GreaterThanOEqualTo<T, TProperty>(
-        Expression<Func<T, TProperty>> expression,
+        Expression<Func<T, TProperty>> memberAccessor,
         TProperty valueToCompare)
         where TProperty : IComparable<TProperty>, IComparable
-        => GreaterThanOrEqualTo(GetMemberName(expression), valueToCompare);
+        => GreaterThanOrEqualTo(GetMemberName(memberAccessor), valueToCompare);
 
     /// <summary>
     ///
@@ -210,14 +210,14 @@ public static class ValidationErrorMessages
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="expression"></param>
+    /// <param name="memberAccessor"></param>
     /// <param name="valueToCompare"></param>
     /// <returns>"The {memberName} must be less than {valueToCompare}"</returns>
     public static string LessThan<T, TProperty>(
-        Expression<Func<T, TProperty>> expression,
+        Expression<Func<T, TProperty>> memberAccessor,
         TProperty valueToCompare)
         where TProperty : IComparable<TProperty>, IComparable
-        => LessThan(GetMemberName(expression), valueToCompare);
+        => LessThan(GetMemberName(memberAccessor), valueToCompare);
 
     /// <summary>
     ///
@@ -241,28 +241,28 @@ public static class ValidationErrorMessages
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="expression"></param>
+    /// <param name="memberAccessor"></param>
     /// <param name="valueToCompare"></param>
     /// <returns>"The {memberName} must be less than or equal to {valueToCompare}"</returns>
     public static string LessThanOrEqualTo<T, TProperty>(
-        Expression<Func<T, TProperty>> expression,
+        Expression<Func<T, TProperty>> memberAccessor,
         TProperty valueToCompare)
         where TProperty : IComparable<TProperty>, IComparable
-        => LessThanOrEqualTo(GetMemberName(expression), valueToCompare);
+        => LessThanOrEqualTo(GetMemberName(memberAccessor), valueToCompare);
 
     /// <summary>
     ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="expression"></param>
+    /// <param name="memberAccessor"></param>
     /// <param name="valueToCompare"></param>
     /// <returns>"The {memberName} must be less than or equal to {valueToCompare}"</returns>
     public static string LessThanOrEqualTo<T, TProperty>(
-        Expression<Func<T, TProperty?>> expression,
+        Expression<Func<T, TProperty?>> memberAccessor,
         TProperty valueToCompare)
         where TProperty : struct, IComparable<TProperty>, IComparable
-        => LessThanOrEqualTo(GetMemberName(expression), valueToCompare);
+        => LessThanOrEqualTo(GetMemberName(memberAccessor), valueToCompare);
 
     /// <summary>
     ///
@@ -285,14 +285,14 @@ public static class ValidationErrorMessages
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    /// <param name="expression"></param>
+    /// <param name="memberAccessor"></param>
     /// <param name="values"></param>
     /// <returns>"The {memberName} must be any of [{string.Join(", ", values)}]"</returns>
     public static string EqualToAny<T, TProperty>(
-        Expression<Func<T, TProperty>> expression,
+        Expression<Func<T, TProperty>> memberAccessor,
         IEnumerable<TProperty> values)
         where TProperty : IComparable<TProperty>, IComparable
-        => EqualToAny(GetMemberName(expression), values);
+        => EqualToAny(GetMemberName(memberAccessor), values);
 
     /// <summary>
     /// 
@@ -308,6 +308,6 @@ public static class ValidationErrorMessages
         => $"The {memberName} must be any of [{string.Join(", ", values)}]";
     #endregion
 
-    private static string GetMemberName<T, TProperty>(Expression<Func<T, TProperty>> expression)
-        => ((MemberExpression)expression.Body).Member.Name;
+    private static string GetMemberName<T, TProperty>(Expression<Func<T, TProperty>> memberAccessor)
+        => ((MemberExpression)memberAccessor.Body).Member.Name;
 }

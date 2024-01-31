@@ -8,7 +8,7 @@ namespace Shared.Tests;
 
 public static class TestHelper
 {
-    public static string String(int length) => new string('x', length);
+    public static string String(int length) => new RandomString(length, length).ToString();
 
     public static (T, Mock<IMediator>) Sut<T>(
         Func<IMediator, T> controllerCtr)

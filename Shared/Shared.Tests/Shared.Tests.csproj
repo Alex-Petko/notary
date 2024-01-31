@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Global\Global.Constraints\Global.Constraints.csproj" />
+    <ProjectReference Include="..\Shared.FluentValidation\Shared.FluentValidation.csproj" />
   </ItemGroup>
 
 </Project>
