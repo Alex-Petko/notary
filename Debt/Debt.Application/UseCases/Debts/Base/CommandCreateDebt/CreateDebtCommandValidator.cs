@@ -8,7 +8,11 @@ internal class CreateDebtCommandValidator<T> : AbstractValidator<T> where T : Cr
 {
     public CreateDebtCommandValidator()
     {
-       RuleFor(x => x.Body.Login)
+        RuleFor(x => x.Login)
+            .NotEmptyWithMessage()
+            .MaximumLengthWithMessage(Constraints.Login.MaxLength);
+
+        RuleFor(x => x.Body.Login)
             .NotEmptyWithMessage()
             .MaximumLengthWithMessage(Constraints.Login.MaxLength)
             .When(x => x.Body is not null);
