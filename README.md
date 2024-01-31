@@ -49,7 +49,7 @@
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/Alex-Petko/dealproject/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/Alex-Petko/notary/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -87,7 +87,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Your Name - [@alex_petko](https://t.me/alex_petko) - petko.alexander.work@gmail.com
 
-Project Link: [https://github.com/Alex-Petko/dealproject](https://github.com/Alex-Petko/dealproject)
+Project Link: [https://github.com/Alex-Petko/notary](https://github.com/Alex-Petko/notary)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
