@@ -2,6 +2,7 @@ using DebtManager.Api;
 using DebtManager.Application;
 using DebtManager.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shared.Tests;
@@ -14,7 +15,9 @@ public class DebtsControllerTests
     public async Task GetAll_OkObjectResult(List<GetDebtQueryResult> result, GetAllDebtsQuery query, CancellationToken cancellationToken)
     {
         // Arrange
-        var (controller, mediator) = Sut();
+        var mediator = CreateMediator();
+        var controller = CreateController(mediator);
+
         mediator.Setup(x => x.Send(query, cancellationToken)).ReturnsAsync(result);
 
         // Act
@@ -32,7 +35,9 @@ public class DebtsControllerTests
     public async Task Get_OkObjectResult(GetDebtQueryResult response, GetDebtQuery query, CancellationToken cancellationToken)
     {
         // Arrange
-        var (controller, mediator) = Sut();
+        var mediator = CreateMediator();
+        var controller = CreateController(mediator);
+
         mediator.Setup(x => x.Send(query, cancellationToken)).ReturnsAsync(response);
 
         // Act
@@ -52,7 +57,9 @@ public class DebtsControllerTests
     public async Task Get_NotFoundResult(GetDebtQuery query, CancellationToken cancellationToken)
     {
         // Arrange
-        var (controller, mediator) = Sut();
+        var mediator = CreateMediator();
+        var controller = CreateController(mediator);
+
         mediator.Setup(x => x.Send(query, cancellationToken)).ReturnsAsync((GetDebtQueryResult?)null);
         // Act
         var actionResult = await controller.GetDebtQuery(query, cancellationToken);
@@ -68,7 +75,9 @@ public class DebtsControllerTests
     public async Task Lend_CreatedResult(LendDebtCommand command, CancellationToken cancellationToken, Guid response)
     {
         // Arrange
-        var (controller, mediator) = Sut();
+        var mediator = CreateMediator();
+        var controller = CreateController(mediator);
+
         mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(response);
 
         // Act
@@ -87,7 +96,9 @@ public class DebtsControllerTests
     public async Task Borrow_CreatedResult(BorrowDebtCommand command, CancellationToken cancellationToken, Guid response)
     {
         // Arrange
-        var (controller, mediator) = Sut();
+        var mediator = CreateMediator();
+        var controller = CreateController(mediator);
+
         mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(response);
 
         // Act
@@ -107,7 +118,9 @@ public class DebtsControllerTests
     public async Task Accept_OkObjectResult(AcceptDebtCommand command, CancellationToken cancellationToken, DealStatusType response)
     {
         // Arrange
-        var (controller, mediator) = Sut();
+        var mediator = CreateMediator();
+        var controller = CreateController(mediator);
+
         mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(response);
 
         // Act
@@ -127,7 +140,9 @@ public class DebtsControllerTests
     public async Task Accept_BadRequestResult(AcceptDebtCommand command, CancellationToken cancellationToken)
     {
         // Arrange
-        var (controller, mediator) = Sut();
+        var mediator = CreateMediator();
+        var controller = CreateController(mediator);
+
         mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync((DealStatusType?)null);
 
         // Act
@@ -144,7 +159,9 @@ public class DebtsControllerTests
     public async Task Cancel_OkObjectResult(CancelDebtCommand command, CancellationToken cancellationToken, DealStatusType response)
     {
         // Arrange
-        var (controller, mediator) = Sut();
+        var mediator = CreateMediator();
+        var controller = CreateController(mediator);
+
         mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(response);
 
         // Act
@@ -164,7 +181,9 @@ public class DebtsControllerTests
     public async Task Cancel_BadRequestResult(CancelDebtCommand command, CancellationToken cancellationToken)
     {
         // Arrange
-        var (controller, mediator) = Sut();
+        var mediator = CreateMediator();
+        var controller = CreateController(mediator);
+
         mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync((DealStatusType?)null);
 
         // Act
@@ -181,7 +200,9 @@ public class DebtsControllerTests
     public async Task Close_OkObjectResult(CloseDebtCommand command, CancellationToken cancellationToken, DealStatusType response)
     {
         // Arrange
-        var (controller, mediator) = Sut();
+        var mediator = CreateMediator();
+        var controller = CreateController(mediator);
+
         mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(response);
 
         // Act
@@ -201,7 +222,9 @@ public class DebtsControllerTests
     public async Task Close_BadRequestResult(CloseDebtCommand command, CancellationToken cancellationToken)
     {
         // Arrange
-        var (controller, mediator) = Sut();
+        var mediator = CreateMediator();
+        var controller = CreateController(mediator);
+
         mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync((DealStatusType?)null);
 
         // Act
@@ -214,6 +237,13 @@ public class DebtsControllerTests
         mediator.VerifyNoOtherCalls();
     }
 
-    private static (DebtsController, Mock<IMediator>) Sut()
-        => TestHelper.Sut<DebtsController>(x => new(x));
+    private static DebtsController CreateController(Mock<IMediator> mediator)
+    {
+        var controller = new DebtsController(mediator.Object);
+        controller.ControllerContext.HttpContext = new DefaultHttpContext();
+        return controller;
+    }
+
+    private static Mock<IMediator> CreateMediator()
+        => new Mock<IMediator>();
 }
