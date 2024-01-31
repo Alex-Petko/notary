@@ -3,8 +3,8 @@ using MediatR;
 
 namespace DebtManager.Application;
 
-internal abstract class ChangeDebtStatusCommandHandler<TRequest> : IRequestHandler<TRequest, DealStatusType?>
-    where TRequest : ChangeDebtStatusCommand
+internal abstract class ChangeDebtStatusCommandHandler<TCommand> : IRequestHandler<TCommand, DealStatusType?>
+    where TCommand : ChangeDebtStatusCommand
 {
     private readonly ICommandProvider _commandProvider;
 
@@ -13,7 +13,7 @@ internal abstract class ChangeDebtStatusCommandHandler<TRequest> : IRequestHandl
         _commandProvider = commandProvider;
     }
 
-    public async Task<DealStatusType?> Handle(TRequest command, CancellationToken cancellationToken)
+    public async Task<DealStatusType?> Handle(TCommand command, CancellationToken cancellationToken)
     {
         var debt = await _commandProvider.Debts.FindAsync(command.DebtId);
         if (debt == null)
