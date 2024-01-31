@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Global;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DebtManager.Infrastructure;
@@ -13,12 +14,12 @@ internal sealed class DebtEntityTypeConfiguration : IEntityTypeConfiguration<Dom
         builder
             .Property(x => x.BorrowerLogin)
             .IsRequired()
-            .HasMaxLength(128);
+            .HasMaxLength(Constraints.Login.MaxLength);
 
         builder
             .Property(x => x.LenderLogin)
             .IsRequired()
-            .HasMaxLength(128);
+            .HasMaxLength(Constraints.Login.MaxLength);
 
         builder
             .Property(x => x.Sum)
