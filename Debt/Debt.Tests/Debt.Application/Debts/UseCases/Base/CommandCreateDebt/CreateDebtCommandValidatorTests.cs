@@ -7,7 +7,7 @@ using Shared.Tests;
 
 namespace DebtManager.Tests;
 
-public class InitDebtRequestValidatorTests
+public class CreateDebtCommandValidatorTests
 {
     private const int LoginMaxLength = Constraints.Login.MaxLength;
     private const int SumMin = Constraints.Sum.Min;
