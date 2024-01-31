@@ -11,7 +11,7 @@ internal sealed class GetAllDebtsQueryHandler : IRequestHandler<GetAllDebtsQuery
         _queryProvider = queryProvider;
     }
 
-    public Task<IEnumerable<GetDebtQueryResult>> Handle(GetAllDebtsQuery request, CancellationToken cancellationToken)
+    public Task<IEnumerable<GetDebtQueryResult>> Handle(GetAllDebtsQuery query, CancellationToken cancellationToken)
     {
         return _queryProvider.Debts.GetAllAsync<GetDebtQueryResult>(cancellationToken);
     }
