@@ -31,7 +31,7 @@ internal abstract class CreateDebtCommandHandler<TCommand> : IRequestHandler<TCo
         return debt.Id;
     }
 
-    protected abstract string GetBorrowerLogin(TCommand request);
+    protected abstract string GetBorrowerLogin(TCommand command);
 
-    protected abstract string GetLenderLogin(TCommand request);
+    protected abstract string GetLenderLogin(TCommand command);
 }

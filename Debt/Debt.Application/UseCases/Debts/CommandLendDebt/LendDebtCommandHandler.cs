@@ -11,7 +11,7 @@ internal sealed class LendDebtCommandHandler : CreateDebtCommandHandler<LendDebt
     {
     }
 
-    protected override string GetBorrowerLogin(LendDebtCommand request) => request.Body.Login;
+    protected override string GetBorrowerLogin(LendDebtCommand command) => command.Body.Login;
 
-    protected override string GetLenderLogin(LendDebtCommand request) => request.Login;
+    protected override string GetLenderLogin(LendDebtCommand command) => command.Login;
 }
