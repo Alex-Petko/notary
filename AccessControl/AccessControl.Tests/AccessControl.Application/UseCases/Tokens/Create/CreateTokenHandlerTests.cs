@@ -36,7 +36,7 @@ public class CreateTokenHandlerTests
         authenticationService.Verify(x => x.AuthenticateAsync(authenticationDto, cancellationToken), Times.Once);
         authenticationService.VerifyNoOtherCalls();
 
-        tokenManager.Verify(x => x.RefreshAsync(tokenManagerDto, cancellationToken), Times.Once);
+        tokenManager.Verify(x => x.CreateAsync(tokenManagerDto, cancellationToken), Times.Once);
         tokenManager.VerifyNoOtherCalls();
     }
 
