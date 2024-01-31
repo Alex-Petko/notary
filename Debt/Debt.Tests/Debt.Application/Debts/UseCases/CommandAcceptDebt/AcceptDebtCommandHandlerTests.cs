@@ -1,5 +1,4 @@
 ﻿using AutoFixture.Xunit2;
-using AutoMapper;
 using DebtManager.Application;
 using DebtManager.Domain;
 using Moq;
@@ -44,7 +43,7 @@ public class AcceptDebtCommandHandlerTests
     }
 
     [Theory, AutoData]
-    public async Task Borrower_Ok_Ok(AcceptDebtCommand command, CancellationToken cancellationToken, Debt debt)
+    public async Task Borrower_LenderApproved_Opened(AcceptDebtCommand command, CancellationToken cancellationToken, Debt debt)
     {
         // Arrange
         var commandProvider = CreateCommandProvider();
@@ -104,7 +103,7 @@ public class AcceptDebtCommandHandlerTests
     }
 
     [Theory, AutoData]
-    public async Task Lender_Ok_Ok(AcceptDebtCommand command, CancellationToken cancellationToken, Debt debt)
+    public async Task Lender_BorrowerApproved_Opened(AcceptDebtCommand command, CancellationToken cancellationToken, Debt debt)
     {
         // Arrange
         var commandProvider = CreateCommandProvider();
