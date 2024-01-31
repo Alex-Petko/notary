@@ -70,7 +70,11 @@ internal class CommandProvider : ICommandProvider
             return RefreshRTResult.TokenNotFound;
 
         if (oldRtEntity.Data != oldRefreshTokenString)
+        {
+            // We remove the valid updated token from the BD to notify the user that Refresh token was compromised
+            _context.Remove(oldRtEntity);
             return RefreshRTResult.TokenInvalid;
+        }
 
         oldRtEntity.Data = newRefreshTokenString;
         oldRtEntity.Timestamp = timestamp;

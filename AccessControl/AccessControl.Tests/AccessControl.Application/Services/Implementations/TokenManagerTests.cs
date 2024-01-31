@@ -10,68 +10,152 @@ namespace Application.Services;
 public class TokenManagerTests
 {
     [Theory, CustomAutoData]
-    internal async Task UpdateAsync_RTExist_Ok(TokenManagerDto dto, JwtOptions options, CancellationToken cancellationToken)
+    internal async Task UpdateAsync_Ok_Ok(TokenManagerDto dto, JwtOptions options, CancellationToken cancellationToken, string oldRt)
     {
         // Arrange
-        var (manager, commandProvider, nowGetService, httpContextAccessor, jwtOptions, cookie, httpContext) = Sut();
+        var context = new Context();
 
-        jwtOptions.Setup(x => x.Value).Returns(options);
+        context.JwtOptions.Setup(x => x.Value).Returns(options);
+        context.HttpContext.Setup(x => x.Request.Cookies["RT"]).Returns(oldRt);
+        context.CommandProvider.Setup(x => x.TryRefreshRT(dto.Login, It.IsAny<string>(), oldRt, context.NowGetService.Object.Now, cancellationToken))
+            .ReturnsAsync(RefreshRTResult.Ok);
 
         // Act
-        await manager.RefreshAsync(dto, cancellationToken);
+        var result = await context.Manager.RefreshAsync(dto, cancellationToken);
 
         // Assert;
-        commandProvider.Verify(x => x.UpdateRefreshToken(dto.Login, It.IsAny<string>(), nowGetService.Object.Now, cancellationToken), Times.Once);
-        commandProvider.VerifyNoOtherCalls();
+        Assert.Equal(RefreshResult.Ok, result);
 
-        httpContextAccessor.Verify(x => x.HttpContext, Times.Exactly(2));
+        context.CommandProvider.Verify(x => x.TryRefreshRT(dto.Login, It.IsAny<string>(), oldRt, context.NowGetService.Object.Now, cancellationToken), Times.Once);
+        context.CommandProvider.VerifyNoOtherCalls();
 
-        httpContext.Verify(x => x.Response, Times.Exactly(2));
+        context.HttpContextAccessor.Verify(x => x.HttpContext, Times.Exactly(3));
 
-        cookie.Verify(x => x.Append("JwtBearer", It.IsAny<string>(), It.IsAny<CookieOptions>()), Times.Once);
-        cookie.Verify(x => x.Append("RT", It.IsAny<string>(), It.IsAny<CookieOptions>()), Times.Once);
+        context.HttpContext.Verify(x => x.Response, Times.Exactly(2));
+        context.HttpContext.Verify(x => x.Request, Times.Once);
 
-        cookie.VerifyNoOtherCalls();
-        httpContext.VerifyNoOtherCalls();
-        httpContextAccessor.VerifyNoOtherCalls();
+        context.RequestCookieCollection.Verify(x => x["RT"], Times.Once);
 
-        nowGetService.Verify(x => x.Now, Times.AtLeastOnce);
-        nowGetService.VerifyNoOtherCalls();
+        context.ResponseCookies.Verify(x => x.Append("JwtBearer", It.IsAny<string>(), It.IsAny<CookieOptions>()), Times.Once);
+        context.ResponseCookies.Verify(x => x.Append("RT", It.IsAny<string>(), It.IsAny<CookieOptions>()), Times.Once);
 
-        jwtOptions.Verify(x => x.Value, Times.AtLeastOnce);
-        jwtOptions.VerifyNoOtherCalls();
+        context.ResponseCookies.VerifyNoOtherCalls();
+        context.RequestCookieCollection.VerifyNoOtherCalls();
+
+        context.HttpContext.VerifyNoOtherCalls();
+        context.HttpContextAccessor.VerifyNoOtherCalls();
+
+        context.NowGetService.Verify(x => x.Now, Times.AtLeastOnce);
+        context.NowGetService.VerifyNoOtherCalls();
+
+        context.JwtOptions.Verify(x => x.Value, Times.AtLeastOnce);
+        context.JwtOptions.VerifyNoOtherCalls();
     }
 
-    private (
-        TokenManager,
-        Mock<ICommandProvider>,
-        Mock<INowGetService>,
-        Mock<IHttpContextAccessor>,
-        Mock<IOptionsSnapshot<JwtOptions>>,
-        Mock<IResponseCookies>,
-        Mock<HttpContext>
-        )
-            Sut()
+    [Theory, CustomAutoData]
+    internal async Task UpdateAsync_TokenInvalid_TokenInvalid(TokenManagerDto dto, JwtOptions options, CancellationToken cancellationToken, string oldRt)
     {
-        var commandProvider = new Mock<ICommandProvider>();
-        var dateTimeProvider = new Mock<INowGetService>();
-        var httpContextAccessor = new Mock<IHttpContextAccessor>();
-        var jwtOptions = new Mock<IOptionsSnapshot<JwtOptions>>();
+        // Arrange
+        var context = new Context();
 
-        dateTimeProvider.Setup(x => x.Now).Returns(DateTime.UtcNow);
+        context.JwtOptions.Setup(x => x.Value).Returns(options);
+        context.HttpContext.Setup(x => x.Request.Cookies["RT"]).Returns(oldRt);
+        context.CommandProvider.Setup(x => x.TryRefreshRT(dto.Login, It.IsAny<string>(), oldRt, context.NowGetService.Object.Now, cancellationToken))
+            .ReturnsAsync(RefreshRTResult.TokenInvalid);
 
-        var httpContext = new Mock<HttpContext>();
-        var cookie = new Mock<IResponseCookies>();
-        httpContext.Setup(x => x.Response.Cookies).Returns(cookie.Object);
-        httpContextAccessor.Setup(x => x.HttpContext).Returns(httpContext.Object);
+        // Act
+        var result = await context.Manager.RefreshAsync(dto, cancellationToken);
 
-        return (
-            new TokenManager(commandProvider.Object, dateTimeProvider.Object, httpContextAccessor.Object, jwtOptions.Object),
-            commandProvider,
-            dateTimeProvider,
-            httpContextAccessor,
-            jwtOptions,
-            cookie,
-            httpContext);
+        // Assert;
+        Assert.Equal(RefreshResult.TokenInvalid, result);
+
+        context.CommandProvider.Verify(x => x.TryRefreshRT(dto.Login, It.IsAny<string>(), oldRt, context.NowGetService.Object.Now, cancellationToken), Times.Once);
+        context.CommandProvider.VerifyNoOtherCalls();
+
+        context.HttpContextAccessor.Verify(x => x.HttpContext, Times.Once);
+
+        context.HttpContext.Verify(x => x.Request, Times.Once);
+
+        context.RequestCookieCollection.Verify(x => x["RT"], Times.Once);
+
+        context.ResponseCookies.VerifyNoOtherCalls();
+        context.RequestCookieCollection.VerifyNoOtherCalls();
+        context.HttpContext.VerifyNoOtherCalls();
+        context.HttpContextAccessor.VerifyNoOtherCalls();
+
+        context.NowGetService.Verify(x => x.Now, Times.AtLeastOnce);
+        context.NowGetService.VerifyNoOtherCalls();
+
+        context.JwtOptions.Verify(x => x.Value, Times.AtLeastOnce);
+        context.JwtOptions.VerifyNoOtherCalls();
     }
+
+    private class Context
+    {
+        private TokenManager? _manager;
+        private Mock<ICommandProvider>? _commandProvider;
+        private Mock<INowGetService>? _nowGetService;
+        private Mock<IHttpContextAccessor>? _httpContextAccessor;
+        private Mock<IOptionsSnapshot<JwtOptions>>? _jwtOptions;
+        private Mock<IResponseCookies>? _responseCookies;
+        private Mock<IRequestCookieCollection>? _requestCookieCollection;
+        private Mock<HttpContext>? _httpContext;
+
+        public Mock<ICommandProvider> CommandProvider => _commandProvider ??= new Mock<ICommandProvider>();
+
+        public Mock<INowGetService> NowGetService
+        {
+            get
+            {
+                if (_nowGetService == null)
+                {
+                    _nowGetService = new Mock<INowGetService>();
+                    _nowGetService.Setup(x => x.Now).Returns(DateTime.UtcNow);
+                }
+
+                return _nowGetService;
+            }
+        }
+
+        public Mock<IHttpContextAccessor> HttpContextAccessor
+        {
+            get
+            {
+                if (_httpContextAccessor == null)
+                {
+                    _httpContextAccessor = new Mock<IHttpContextAccessor>();
+                    _httpContextAccessor.Setup(x => x.HttpContext).Returns(HttpContext.Object);
+                }
+
+                return _httpContextAccessor;
+            }
+        }
+
+        public Mock<IOptionsSnapshot<JwtOptions>> JwtOptions => _jwtOptions ??= new Mock<IOptionsSnapshot<JwtOptions>>();
+
+        public Mock<IResponseCookies> ResponseCookies => _responseCookies ??= new Mock<IResponseCookies>();
+        public Mock<IRequestCookieCollection> RequestCookieCollection => _requestCookieCollection ??= new Mock<IRequestCookieCollection>();
+
+        public Mock<HttpContext> HttpContext
+        {
+            get
+            {
+                if (_httpContext == null)
+                {
+                    _httpContext = new Mock<HttpContext>();
+                    _httpContext.Setup(x => x.Response.Cookies).Returns(ResponseCookies.Object);
+                    _httpContext.Setup(x => x.Request.Cookies).Returns(RequestCookieCollection.Object);
+                }
+
+                return _httpContext;
+            }
+        }
+
+        public TokenManager Manager => _manager ??= new TokenManager(
+            CommandProvider.Object,
+            NowGetService.Object,
+            HttpContextAccessor.Object,
+            JwtOptions.Object);
+    }
+
 }
