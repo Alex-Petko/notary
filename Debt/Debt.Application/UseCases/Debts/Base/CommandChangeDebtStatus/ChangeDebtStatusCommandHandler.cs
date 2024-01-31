@@ -13,18 +13,18 @@ internal abstract class ChangeDebtStatusCommandHandler<TRequest> : IRequestHandl
         _commandProvider = commandProvider;
     }
 
-    public async Task<DealStatusType?> Handle(TRequest request, CancellationToken cancellationToken)
+    public async Task<DealStatusType?> Handle(TRequest command, CancellationToken cancellationToken)
     {
-        var debt = await _commandProvider.Debts.FindAsync(request.DebtId);
+        var debt = await _commandProvider.Debts.FindAsync(command.DebtId);
         if (debt == null)
             return null;
 
         var tempStatus = debt.Status;
 
-        if (debt.LenderLogin == request.Login)
+        if (debt.LenderLogin == command.Login)
             debt.Status = LenderHandler(debt.Status);
 
-        if (debt.BorrowerLogin == request.Login)
+        if (debt.BorrowerLogin == command.Login)
             debt.Status = BorrowerHandler(debt.Status);
 
         if (tempStatus != debt.Status)
