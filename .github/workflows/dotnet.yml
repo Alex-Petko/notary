@@ -29,7 +29,7 @@ jobs:
       run: dotnet --version
       
     - name: Debt Restore dependencies 
-      run: dotnet restore ./Debt/Tests.Api
+      run: dotnet restore ./Debt/Debt.Tests
       
     - name: Debt Build
       run: dotnet build ./Debt/Debt.Tests --no-restore
