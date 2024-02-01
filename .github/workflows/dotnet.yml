@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        projects: ['./Debt/Debt.Tests', './AccessControl/AccessControl.Tests']
         dotnet-version: ['6.0.x', '8.0.x']
         
     steps:
@@ -28,20 +29,11 @@ jobs:
     - name: Display dotnet version
       run: dotnet --version
       
-    - name: Debt Restore dependencies 
-      run: dotnet restore ./Debt/Debt.Tests
+    - name: Restore dependencies 
+      run: dotnet restore ${{ matrix.projects }}
+        
+    - name: Build
+      run: dotnet build ${{ matrix.projects }} --no-restore
       
-    - name: Debt Build
-      run: dotnet build ./Debt/Debt.Tests --no-restore
-      
-    - name: Debt Test
-      run: dotnet test ./Debt/Debt.Tests --no-build --verbosity normal
-
-    - name: AccessControl Restore dependencies 
-      run: dotnet restore ./AccessControl/AccessControl.Tests
-      
-    - name: AccessControl Build
-      run: dotnet build ./AccessControl/AccessControl.Tests --no-restore
-      
-    - name: AccessControl Test
-      run: dotnet test ./AccessControl/AccessControl.Tests --no-build --verbosity normal
+    - name: Test
+      run: dotnet test ${{ matrix.projects }} --no-build --verbosity normal
