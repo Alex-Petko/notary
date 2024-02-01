@@ -35,11 +35,15 @@ public static partial class IServiceCollectionExtensions
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("Default");
+        var redisConnectionString = configuration.GetConnectionString("Redis");
 
         if (string.IsNullOrEmpty(connectionString))
-            throw new ArgumentNullException(nameof(connectionString));
+            throw new ArgumentNullException("Default connection string");
 
-        services.AddInfrastructure(connectionString);
+        if (string.IsNullOrEmpty(redisConnectionString))
+            throw new ArgumentNullException("Redis connection string");
+
+        services.AddInfrastructure(connectionString, redisConnectionString);
 
         return services;
     }

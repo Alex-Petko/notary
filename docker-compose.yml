@@ -4,6 +4,9 @@ services:
   debt:
     image: ${DOCKER_REGISTRY-}debt
     container_name: debt
+    depends_on:
+      - debt_db
+      - cache
     build:
       context: .
       dockerfile: Debt/Debt.Api/Dockerfile
@@ -12,6 +15,9 @@ services:
   access_control:
     image: ${DOCKER_REGISTRY-}access_control
     container_name: access_control
+    depends_on:
+      - access_control_db
+      - cache
     build:
       context: .
       dockerfile: AccessControl/AccessControl.Api/Dockerfile
@@ -20,6 +26,8 @@ services:
   rent:
     image: ${DOCKER_REGISTRY-}rent
     container_name: rent
+    depends_on:
+      - rent_db
     build:
       context: .
       dockerfile: Rent/Rent.Api/Dockerfile
@@ -80,11 +88,25 @@ services:
       timeout: 5s
       retries: 5
 
+  cache:
+    image: redis:latest
+    container_name: cache
+    restart: always
+    ports:
+      - "127.0.0.1:6379:6379"
+    environment:
+      - REDIS_PASSWORD=test1234
+      - REDIS_PORT=6379
+      - REDIS_DATABASES=16
+    volumes:
+      - cache:/data
+
+
 # https://www.elastic.co/blog/getting-started-with-the-elastic-stack-and-docker-compose
 # docker cp es01:/usr/share/elasticsearch/config/certs/ca/ca.crt .
 # curl --cacert ca.crt -u elastic:test1234 https://localhost:9200
 # or (for Windows)
-# curl.exe --cacert ca.crt -u elastic:test1234 https://localhost:9200
+# curl.exe --cacert ca.crt -u elastic:test1234 https://localhost:9200 --insecure
   setup:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     container_name: setup
@@ -139,10 +161,14 @@ services:
       interval: 1s
       timeout: 5s
       retries: 120
+
   es01:
+# uncomment for first launch
+#
     #depends_on:
     #  setup:
     #    condition: service_healthy
+#
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     container_name: es01
     labels:
@@ -283,6 +309,8 @@ volumes:
   debt_db_data:    
   access_control_db_data:
   rent_db_data:
+  cache:
+    driver: local
   certs:
     driver: local
   esdata01:

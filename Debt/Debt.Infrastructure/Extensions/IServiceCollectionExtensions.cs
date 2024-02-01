@@ -6,11 +6,19 @@ namespace DebtManager.Infrastructure;
 
 public static class IServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, string connectionString)
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services, 
+        string connectionString, 
+        string redisConnectionString)
     {
         services.AddDbContext<Context>(options =>
         {
             options.UseNpgsql(connectionString);
+        });
+
+        services.AddStackExchangeRedisCache(opt =>
+        {
+            opt.Configuration = redisConnectionString;
         });
 
         services.AddScoped<ICommandProvider, CommandProvider>();
