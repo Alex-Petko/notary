@@ -41,6 +41,7 @@
 * [![ASP.NET Core][asp.net core-shield]][asp.net core-url]
 * [![Elasticstack][elasticstack-shield]][elasticstack-url]
 * [![Docker][docker-shield]][docker-url]
+* [![PostgreSQL][postgresql-shield]][postgresql-url]
   
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -103,3 +104,6 @@ Project Link: [https://github.com/Alex-Petko/notary](https://github.com/Alex-Pet
 [elasticstack-url]: https://www.elastic.co/elastic-stack
 [docker-shield]: https://img.shields.io/badge/docker-%23004B8D?style=for-the-badge&logo=docker
 [docker-url]: https://www.docker.com
+[postgresql-shield]: https://img.shields.io/badge/PostgreSQL-%23232F3E?style=for-the-badge&logo=postgresql
+[postgresql-url]: https://www.postgresql.org
+
