@@ -28,11 +28,20 @@ jobs:
     - name: Display dotnet version
       run: dotnet --version
       
-    - name: Restore dependencies
-      run: dotnet restore
+    - name: Debt.Api Restore dependencies 
+      run: dotnet restore debt/debt.api
       
-    - name: Build
-      run: dotnet build --no-restore
+    - name: Debt.Api Build
+      run: dotnet build debt/debt.api --no-restore
       
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Debt.Api Test
+      run: dotnet test debt/debt.tests --no-build --verbosity normal
+
+    - name: AccessControl.Api Restore dependencies 
+      run: dotnet restore accessControl/accessControl.api
+      
+    - name: AccessControl.Api Build
+      run: dotnet build accessControl/accessControl.api --no-restore
+      
+    - name: AccessControl.Api Test
+      run: dotnet test accessControl/accessControl.tests --no-build --verbosity normal
