@@ -29,19 +29,19 @@ jobs:
       run: dotnet --version
       
     - name: Debt.Api Restore dependencies 
-      run: dotnet restore debt/debt.api
+      run: dotnet restore ./debt/debt.api
       
     - name: Debt.Api Build
-      run: dotnet build debt/debt.api --no-restore
+      run: dotnet build ./debt/debt.api --no-restore
       
     - name: Debt.Api Test
-      run: dotnet test debt/debt.tests --no-build --verbosity normal
+      run: dotnet test ./debt/debt.tests --no-build --verbosity normal
 
     - name: AccessControl.Api Restore dependencies 
-      run: dotnet restore accessControl/accessControl.api
+      run: dotnet restore ./accessControl/accessControl.api
       
     - name: AccessControl.Api Build
-      run: dotnet build accessControl/accessControl.api --no-restore
+      run: dotnet build ./accessControl/accessControl.api --no-restore
       
     - name: AccessControl.Api Test
-      run: dotnet test accessControl/accessControl.tests --no-build --verbosity normal
+      run: dotnet test ./accessControl/accessControl.tests --no-build --verbosity normal
