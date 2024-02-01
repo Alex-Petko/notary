@@ -1,5 +1,6 @@
 using DebtManager.Application;
 using DebtManager.Infrastructure;
+using Serilog;
 using Shared.IApplicationBuilderExtensions;
 
 namespace DebtManager.Api;
@@ -15,12 +16,18 @@ internal class Program
             .AddInfrastructure(builder.Configuration)
             .AddApi(builder.Configuration);
 
+        builder.Host.UseSerilog(
+            (hostBuilderContext, loggerConfiguration) 
+            => loggerConfiguration.ReadFrom.Configuration(hostBuilderContext.Configuration));
+
         var app = builder.Build();
 
         app
             .ApplyMigration<Program, Context>()
 
             .UseDeveloperExceptionPage()
+
+            .UseSerilogRequestLogging()
 
             .UseAuthentication()
             .UseAuthorization()
