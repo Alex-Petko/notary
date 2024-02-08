@@ -17,7 +17,7 @@ public class UsersControllerTests
         mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(CreateUserCommandResult.Ok);
 
         // Act
-        var result = await controller.CreateCommand(command, cancellationToken);
+        var result = await controller.CreateUserCommand(command, cancellationToken);
 
         // Assert
         Assert.IsType<OkResult>(result);
@@ -34,7 +34,7 @@ public class UsersControllerTests
         mediator.Setup(x => x.Send(command, cancellationToken)).ReturnsAsync(CreateUserCommandResult.CreateUserFail);
 
         // Act
-        var result = await controller.CreateCommand(command, cancellationToken);
+        var result = await controller.CreateUserCommand(command, cancellationToken);
 
         // Assert
         Assert.IsType<ConflictResult>(result);

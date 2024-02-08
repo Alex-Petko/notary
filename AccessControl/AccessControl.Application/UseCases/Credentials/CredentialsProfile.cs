@@ -3,9 +3,9 @@ using AutoMapper;
 
 namespace AccessControl.Application;
 
-internal sealed class UserMapper : Profile
+internal sealed class CredentialsProfile : Profile
 {
-    public UserMapper()
+    public CredentialsProfile()
     {
         CreateMap<Credentials, User>();
     }

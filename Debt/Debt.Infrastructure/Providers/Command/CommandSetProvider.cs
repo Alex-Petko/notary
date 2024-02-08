@@ -3,7 +3,7 @@ using DebtManager.Application;
 
 namespace DebtManager.Infrastructure;
 
-internal class CommandSetProvider<TEntity> : ICommandSetProvider<TEntity>
+internal sealed class CommandSetProvider<TEntity> : ICommandSetProvider<TEntity>
     where TEntity : class
 {
     private readonly DbSet<TEntity> _dbSet;

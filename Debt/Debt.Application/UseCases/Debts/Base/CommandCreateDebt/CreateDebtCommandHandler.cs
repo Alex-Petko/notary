@@ -4,22 +4,28 @@ using MediatR;
 
 namespace DebtManager.Application;
 
-internal abstract class CreateDebtCommandHandler<TCommand> : IRequestHandler<TCommand, Guid>
+internal abstract class CreateDebtCommandHandler<TCommand> : IRequestHandler<TCommand, Guid?>
     where TCommand : CreateDebtCommand
 {
+    private readonly IQueryProvider _queryProvider;
     private readonly ICommandProvider _commandProvider;
     private readonly IMapper _mapper;
 
     protected abstract DealStatusType DealStatus { get; }
 
-    public CreateDebtCommandHandler(ICommandProvider commandProvider, IMapper mapper)
+    public CreateDebtCommandHandler(IQueryProvider queryProvider, ICommandProvider commandProvider, IMapper mapper)
     {
+        _queryProvider = queryProvider;
         _commandProvider = commandProvider;
         _mapper = mapper;
     }
-
-    public async Task<Guid> Handle(TCommand command, CancellationToken cancellationToken)
+    
+    public async Task<Guid?> Handle(TCommand command, CancellationToken cancellationToken)
     {
+        var user = await _queryProvider.Users.FindAsync(command.Body.Login, cancellationToken);
+        if (user is null)
+            return null;
+
         var debt = _mapper.Map<Debt>(command);
 
         debt.BorrowerLogin = GetBorrowerLogin(command);

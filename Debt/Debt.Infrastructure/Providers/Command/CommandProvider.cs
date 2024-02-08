@@ -3,7 +3,7 @@ using DebtManager.Domain;
 
 namespace DebtManager.Infrastructure;
 
-internal class CommandProvider : ICommandProvider
+internal sealed class CommandProvider : ICommandProvider
 {
     private readonly Context _context;
 

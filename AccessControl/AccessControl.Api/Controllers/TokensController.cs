@@ -16,9 +16,9 @@ public sealed class TokensController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateCommand([FromBody] CreateTokenCommand request, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateCommand([FromBody] CreateTokenCommand request, CancellationToken cancellationToken = default)
     {
         var result = await _mediator.Send(request, cancellationToken);
         if (result == CreateTokenCommandResult.AuthenticationFail)
@@ -29,10 +29,10 @@ public sealed class TokensController : ControllerBase
 
     [HttpPost("refresh")]
     [Authorize]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> RefreshCommand(RefreshTokenCommand request, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> RefreshCommand(RefreshTokenCommand request, CancellationToken cancellationToken = default)
     {
         var result = await _mediator.Send(request, cancellationToken);
 

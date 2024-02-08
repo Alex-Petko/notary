@@ -2,9 +2,18 @@
   "runtime": "Net60",
   "defaultVariables": null,
   "documentGenerator": {
-    "fromDocument": {
-      "json": "{\r\n  \"x-generator\": \"NSwag v14.0.1.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))\",\r\n  \"openapi\": \"3.0.0\",\r\n  \"info\": {\r\n    \"title\": \"My Title\",\r\n    \"version\": \"1.0.0\"\r\n  },\r\n  \"servers\": [\r\n    {\r\n      \"url\": \"http://localhost:10002\"\r\n    }\r\n  ],\r\n  \"paths\": {\r\n    \"/Tokens\": {\r\n      \"post\": {\r\n        \"tags\": [\r\n          \"Tokens\"\r\n        ],\r\n        \"operationId\": \"Tokens_Create\",\r\n        \"requestBody\": {\r\n          \"x-name\": \"request\",\r\n          \"content\": {\r\n            \"application/json\": {\r\n              \"schema\": {\r\n                \"$ref\": \"#/components/schemas/CreateTokenRequest\"\r\n              }\r\n            }\r\n          },\r\n          \"required\": true,\r\n          \"x-position\": 1\r\n        },\r\n        \"responses\": {\r\n          \"200\": {\r\n            \"description\": \"\"\r\n          },\r\n          \"404\": {\r\n            \"description\": \"\",\r\n            \"content\": {\r\n              \"application/json\": {\r\n                \"schema\": {\r\n                  \"$ref\": \"#/components/schemas/ProblemDetails\"\r\n                }\r\n              }\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"/Tokens/refresh\": {\r\n      \"post\": {\r\n        \"tags\": [\r\n          \"Tokens\"\r\n        ],\r\n        \"operationId\": \"Tokens_Refresh\",\r\n        \"responses\": {\r\n          \"200\": {\r\n            \"description\": \"\"\r\n          },\r\n          \"401\": {\r\n            \"description\": \"\",\r\n            \"content\": {\r\n              \"application/json\": {\r\n                \"schema\": {\r\n                  \"$ref\": \"#/components/schemas/ProblemDetails\"\r\n                }\r\n              }\r\n            }\r\n          },\r\n          \"404\": {\r\n            \"description\": \"\",\r\n            \"content\": {\r\n              \"application/json\": {\r\n                \"schema\": {\r\n                  \"$ref\": \"#/components/schemas/ProblemDetails\"\r\n                }\r\n              }\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"/Users\": {\r\n      \"put\": {\r\n        \"tags\": [\r\n          \"Users\"\r\n        ],\r\n        \"operationId\": \"Users_Create\",\r\n        \"requestBody\": {\r\n          \"x-name\": \"request\",\r\n          \"content\": {\r\n            \"application/json\": {\r\n              \"schema\": {\r\n                \"$ref\": \"#/components/schemas/CreateUserRequest\"\r\n              }\r\n            }\r\n          },\r\n          \"required\": true,\r\n          \"x-position\": 1\r\n        },\r\n        \"responses\": {\r\n          \"200\": {\r\n            \"description\": \"\"\r\n          },\r\n          \"409\": {\r\n            \"description\": \"\",\r\n            \"content\": {\r\n              \"application/json\": {\r\n                \"schema\": {\r\n                  \"$ref\": \"#/components/schemas/ProblemDetails\"\r\n                }\r\n              }\r\n            }\r\n          }\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"components\": {\r\n    \"schemas\": {\r\n      \"ProblemDetails\": {\r\n        \"type\": \"object\",\r\n        \"additionalProperties\": {\r\n          \"nullable\": true\r\n        },\r\n        \"properties\": {\r\n          \"type\": {\r\n            \"type\": \"string\",\r\n            \"nullable\": true\r\n          },\r\n          \"title\": {\r\n            \"type\": \"string\",\r\n            \"nullable\": true\r\n          },\r\n          \"status\": {\r\n            \"type\": \"integer\",\r\n            \"format\": \"int32\",\r\n            \"nullable\": true\r\n          },\r\n          \"detail\": {\r\n            \"type\": \"string\",\r\n            \"nullable\": true\r\n          },\r\n          \"instance\": {\r\n            \"type\": \"string\",\r\n            \"nullable\": true\r\n          }\r\n        }\r\n      },\r\n      \"CreateTokenRequest\": {\r\n        \"allOf\": [\r\n          {\r\n            \"$ref\": \"#/components/schemas/RequestBase\"\r\n          },\r\n          {\r\n            \"type\": \"object\",\r\n            \"additionalProperties\": false\r\n          }\r\n        ]\r\n      },\r\n      \"RequestBase\": {\r\n        \"type\": \"object\",\r\n        \"additionalProperties\": false,\r\n        \"properties\": {\r\n          \"login\": {\r\n            \"type\": \"string\"\r\n          },\r\n          \"password\": {\r\n            \"type\": \"string\"\r\n          }\r\n        }\r\n      },\r\n      \"CreateUserRequest\": {\r\n        \"allOf\": [\r\n          {\r\n            \"$ref\": \"#/components/schemas/RequestBase\"\r\n          },\r\n          {\r\n            \"type\": \"object\",\r\n            \"additionalProperties\": false\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  }\r\n}",
-      "url": "http://localhost:10002/swagger/v1/swagger.json",
+    "aspNetCoreToOpenApi": {
+      "project": "AccessControl.Api.csproj",
+      "documentName": "v1",
+      "msBuildProjectExtensionsPath": null,
+      "configuration": null,
+      "runtime": null,
+      "targetFramework": null,
+      "noBuild": false,
+      "msBuildOutputPath": null,
+      "verbose": true,
+      "workingDirectory": null,
+      "aspNetCoreEnvironment": null,
       "output": null,
       "newLineBehavior": "Auto"
     }
@@ -89,7 +98,7 @@
       "inlineNamedTuples": true,
       "inlineNamedAny": false,
       "generateDtoTypes": true,
-      "generateOptionalPropertiesAsNullable": false,
+      "generateOptionalPropertiesAsNullable": true,
       "generateNullableReferenceTypes": false,
       "templateDirectory": null,
       "serviceHost": null,

@@ -5,7 +5,7 @@ using Shared.Attributes;
 
 namespace DebtManager.Application;
 
-public record CreateDebtCommand : IRequest<Guid>
+public record CreateDebtCommand : IRequest<Guid?>
 {
     [FromBody]
     public CreateDebtCommandBody Body { get; set; } = null!;

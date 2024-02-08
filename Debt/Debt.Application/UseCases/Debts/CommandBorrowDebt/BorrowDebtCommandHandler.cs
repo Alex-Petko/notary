@@ -7,7 +7,14 @@ internal sealed class BorrowDebtCommandHandler : CreateDebtCommandHandler<Borrow
 {
     protected override DealStatusType DealStatus => DealStatusType.BorrowerApproved;
 
-    public BorrowDebtCommandHandler(ICommandProvider commandProvider, IMapper mapper) : base(commandProvider, mapper)
+    public BorrowDebtCommandHandler(
+        IQueryProvider queryProvider, 
+        ICommandProvider commandProvider, 
+        IMapper mapper) 
+        : base(
+            queryProvider, 
+            commandProvider, 
+            mapper)
     {
     }
 

@@ -16,7 +16,7 @@ internal sealed class GetDebtQueryHandler : IRequestHandler<GetDebtQuery, GetDeb
 
     public async Task<GetDebtQueryResult?> Handle(GetDebtQuery query, CancellationToken cancellationToken)
     {
-        var debt = await _queryProvider.Debts.FindAsync(query.DebtId);
+        var debt = await _queryProvider.Debts.FindAsync(query.DebtId, cancellationToken);
         var result = debt is not null ? _mapper.Map<GetDebtQueryResult>(debt) : null;
         return result;
     }

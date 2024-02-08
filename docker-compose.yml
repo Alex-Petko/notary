@@ -95,9 +95,8 @@ services:
     ports:
       - "127.0.0.1:6379:6379"
     environment:
-      - REDIS_PASSWORD=test1234
+      #- REDIS_PASSWORD=test1234
       - REDIS_PORT=6379
-      - REDIS_DATABASES=16
     volumes:
       - cache:/data
 

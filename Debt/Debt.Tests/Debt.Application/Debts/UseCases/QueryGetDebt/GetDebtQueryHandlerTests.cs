@@ -17,7 +17,7 @@ public class GetDebtQueryHandlerTests
 
         var handler = CreateHander(queryProvider, mapper);
 
-        queryProvider.Setup(x => x.Debts.FindAsync(query.DebtId)).ReturnsAsync(debt);
+        queryProvider.Setup(x => x.Debts.FindAsync(query.DebtId, cancellationToken)).ReturnsAsync(debt);
         mapper.Setup(x => x.Map<GetDebtQueryResult>(debt)).Returns(getDebtQueryResult);
 
         // Act
@@ -27,7 +27,7 @@ public class GetDebtQueryHandlerTests
         Assert.NotNull(result);
         Assert.Equal(getDebtQueryResult, result);
 
-        queryProvider.Verify(x => x.Debts.FindAsync(query.DebtId), Times.Once);
+        queryProvider.Verify(x => x.Debts.FindAsync(query.DebtId, cancellationToken), Times.Once);
         queryProvider.VerifyNoOtherCalls();
 
         mapper.Verify(x => x.Map<GetDebtQueryResult>(debt), Times.Once);
@@ -43,7 +43,7 @@ public class GetDebtQueryHandlerTests
 
         var handler = CreateHander(queryProvider, mapper);
 
-        queryProvider.Setup(x => x.Debts.FindAsync(query.DebtId)).ReturnsAsync((Debt?)null);
+        queryProvider.Setup(x => x.Debts.FindAsync(query.DebtId, cancellationToken)).ReturnsAsync((Debt?)null);
 
         // Act
         var result = await handler.Handle(query, cancellationToken);
@@ -51,7 +51,7 @@ public class GetDebtQueryHandlerTests
         // Assert
         Assert.Null(result);
 
-        queryProvider.Verify(x => x.Debts.FindAsync(query.DebtId), Times.Once);
+        queryProvider.Verify(x => x.Debts.FindAsync(query.DebtId, cancellationToken), Times.Once);
         queryProvider.VerifyNoOtherCalls();
 
         mapper.VerifyNoOtherCalls();

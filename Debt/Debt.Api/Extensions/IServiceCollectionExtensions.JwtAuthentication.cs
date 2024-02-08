@@ -1,4 +1,5 @@
-﻿using DebtManager.Application;
+﻿using DebtManager.Domain;
+using DebtManager.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -14,13 +15,13 @@ public static partial class IServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var jwtOptions = configuration
-            .GetRequiredSection(JwtOptionsSectionName)
-            .Get<JwtOptions>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
+
+                var jwtOptions = configuration.GetOptions<JwtOptions>();
+
                 options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = new()
                 {
