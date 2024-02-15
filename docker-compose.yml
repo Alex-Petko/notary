@@ -32,7 +32,8 @@ services:
       context: .
       dockerfile: Rent/Rent.Api/Dockerfile
     ports:
-      - "127.0.0.1:10003:80"
+      - "127.0.0.1:10003:8080"
+
   debt_db:
     image: postgres
     container_name: debt_db
