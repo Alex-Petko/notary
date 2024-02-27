@@ -3,10 +3,11 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-<h3 align="center">Notary</h3>
-  <p align="center">
-    Open source solution for working with regulations
-  </p>
+ <a href="https://github.com/Alex-Petko/notary">
+    <img src="assets/logo.png" alt="Logo" width="80" height="80">
+  </a>
+  <h3 align="center">Notary</h3>
+  <p align="center">Open source solution for working with regulations</p>
 </div>
 
 
