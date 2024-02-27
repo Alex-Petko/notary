@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        projects: ['./Debt/Debt.Tests', './AccessControl/AccessControl.Tests']
+        projects: ['./Src/Debt/Debt.Tests', './Src/AccessControl/AccessControl.Tests']
         
     steps:
     - uses: actions/checkout@v3
