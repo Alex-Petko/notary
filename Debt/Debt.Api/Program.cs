@@ -11,14 +11,11 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Host.UseSerilog();
         builder.Services
             .AddApplication()
             .AddInfrastructure(builder.Configuration)
             .AddApi(builder.Configuration);
-
-        builder.Host.UseSerilog(
-            (hostBuilderContext, loggerConfiguration) 
-            => loggerConfiguration.ReadFrom.Configuration(hostBuilderContext.Configuration));
 
         var app = builder.Build();
 
