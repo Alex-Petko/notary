@@ -9,7 +9,7 @@ services:
       - cache
     build:
       context: .
-      dockerfile: Debt/Debt.Api/Dockerfile
+      dockerfile: Src/Debt/Debt.Api/Dockerfile
     ports:
       - "127.0.0.1:10001:80"
   access_control:
@@ -20,7 +20,7 @@ services:
       - cache
     build:
       context: .
-      dockerfile: AccessControl/AccessControl.Api/Dockerfile
+      dockerfile: Src/AccessControl/AccessControl.Api/Dockerfile
     ports:
       - "127.0.0.1:10002:80"
   rent:
@@ -30,7 +30,7 @@ services:
       - rent_db
     build:
       context: .
-      dockerfile: Rent/Rent.Api/Dockerfile
+      dockerfile: Src/Rent/Rent.Api/Dockerfile
     ports:
       - "127.0.0.1:10003:8080"
 
